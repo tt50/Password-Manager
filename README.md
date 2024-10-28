@@ -1,6 +1,22 @@
-# Project Name
-Put here a short paragraph describing your project. 
-Adding an screenshot or a mockup of your application in action would be nice.  
+# Password Manager
+Password Manager Application 
+
+# Description
+Users will be able to create their own Password Manager accounts and will have a dashboard displaying stored User credentials. Usernames, associated user platform or nickname, will be displayed on the dashboard and passwords hidden, which can be revealed with a button click. Additional features on the dashboard will include a Password Generator to generate strong random passwords, and a Password Strength checker to evaluate security of users’ passwords.
+
+# Tools Used
+- Java
+- JavaFx
+- mySQL
+- Kotlin
+
+# Members 
+- Dex Giglio
+- Nur Siddiq
+- Tiffany Truong
+- Arvindh Velrajan
+- Jack Wylie
+
 
 ![This is a screenshot.](images.png)
 # How to run

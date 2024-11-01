@@ -3,7 +3,6 @@ import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
 import java.util.Base64;
 
-
 public class PasswordDecryption {
 
     public static String decryptPassword(String encryptedText, String encodedKey) throws Exception {

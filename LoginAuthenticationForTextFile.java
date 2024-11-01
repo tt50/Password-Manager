@@ -9,7 +9,7 @@ public class LoginAuthenticationForTextFile {
     private static final String PASSWORD_PATTERN = "Password:\"";
     private static final String KEY_PATTERN = "Key:\"";
 
-    public Boolean AuthenticationForTextFile(String usernameInput, String passwordInput) {
+    public boolean AuthenticationForTextFile(String usernameInput, String passwordInput) {
         String UsernameSearched = usernameInput;
         List<String> AssociatedPasswordAndKey;
         AssociatedPasswordAndKey = parseFile("StoredCredentals.txt",UsernameSearched);

@@ -6,6 +6,8 @@ import java.nio.file.Path;
 public class storeCredentials {
 
     private final String filename;
+    String[] tokens = null;
+    String updated = null;
 
     public storeCredentials(String file, String password, String user, String key){ //used if no text file exists
         filename = file;
@@ -53,11 +55,21 @@ public class storeCredentials {
         }
     }
 
+    private boolean writeUpdate(String updated){
+        try { //writes new content to file
+            FileWriter fw = new FileWriter(filename);
+            fw.write(updated);
+            fw.close();
+            return true;
+        } catch (IOException e) {
+            System.out.println("Error occurred while storing either password, username, or key");
+            return false;
+        }
+    }
+
     public boolean storePass(String password) {
         createFile(); //makes sure that the text file exists, and creates it if not
         String text = getText(); //gets all content from text file
-        String[] tokens = null;
-        String updated = null;
 
         try { //breaks down content on file by password, user, key and stores in array
             tokens = text.split(",");
@@ -69,23 +81,13 @@ public class storeCredentials {
             return false;
         }
 
-        try { //writes new contents to file
-            FileWriter fw = new FileWriter(filename);
-            fw.write(updated);
-            fw.close();
-            return true;
-        } catch (IOException e) {
-            System.out.println("Error occurred while storing password");
-            return false;
-        }
+        return writeUpdate(updated);
     }
 
     public boolean storeUser(String user){
         createFile(); //makes sure that the text file exists, and creates it if not
         String text = getText(); //gets all content from text file
-        String[] tokens = null;
-        String updated = null;
-
+        
         try { //breaks down content on file by password, user, key and stores in array
             tokens = text.split(",");
             user = "USER: " + user + ","; //prepares the new username for storage
@@ -96,22 +98,12 @@ public class storeCredentials {
             return false;
         }
 
-        try { //writes new contents to file
-            FileWriter fw = new FileWriter(filename);
-            fw.write(updated);
-            fw.close();
-            return true;
-        } catch (IOException e) {
-            System.out.println("Error occurred while storing username");
-            return false;
-        }
+        return writeUpdate(updated);
     }
 
     public boolean storeKey(String key){
         createFile(); //makes sure that the text file exists, and creates it if not
         String text = getText(); //gets all content from text file
-        String[] tokens = null;
-        String updated = null;
 
         try { //breaks down content on file by password, user, key and stores in array
             tokens = text.split(",");
@@ -123,15 +115,7 @@ public class storeCredentials {
             return false;
         }
 
-        try { //writes new contents to file
-            FileWriter fw = new FileWriter(filename);
-            fw.write(updated);
-            fw.close();
-            return true;
-        } catch (IOException e) {
-            System.out.println("Error occurred while storing password");
-            return false;
-        }
+        return writeUpdate(updated);
     }
 
     public static void main(String[] args) { //an example of how the class works

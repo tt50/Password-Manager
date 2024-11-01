@@ -1,9 +1,7 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ProjectRootManager" version="2" default="true" project-jdk-name="openjdk-23" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/out" />
   </component>
-
   <component name="ProjectJdkTable">
     <jdk version="2" name="openjdk-23" type="JavaSDK" />
     <jdk version="2" name="JDK_18" type="JavaSDK" />

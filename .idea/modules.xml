@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/JavaFxModule_PasswordManager/JavaFxModule_PasswordManager.iml" filepath="$PROJECT_DIR$/JavaFxModule_PasswordManager/JavaFxModule_PasswordManager.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/project-02-passwordmanager.iml" filepath="$PROJECT_DIR$/.idea/project-02-passwordmanager.iml" />
     </modules>
   </component>

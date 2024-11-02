@@ -1,4 +1,4 @@
-package com.example.javafxmodule_passwordmanager;
+package com.example.modulejavafx;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;

@@ -1,4 +1,4 @@
-module com.example.javafxmodule_passwordmanager {
+module com.example.modulejavafx {
     requires javafx.controls;
     requires javafx.fxml;
     requires javafx.web;
@@ -11,6 +11,6 @@ module com.example.javafxmodule_passwordmanager {
     requires eu.hansolo.tilesfx;
     requires com.almasb.fxgl.all;
 
-    opens com.example.javafxmodule_passwordmanager to javafx.fxml;
-    exports com.example.javafxmodule_passwordmanager;
+    opens com.example.modulejavafx to javafx.fxml;
+    exports com.example.modulejavafx;
 }

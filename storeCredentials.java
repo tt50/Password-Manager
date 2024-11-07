@@ -14,7 +14,14 @@ public class storeCredentials {
         String contents = "PASS: " + password + "," + "USER: " + user + "," + "KEY: " + key;
         createFile();
         try { //writes content to file
-            FileWriter fw = new FileWriter(filename);
+            FileWriter fw = new FileWriter(filename, true);
+
+            // if file is not empty add a newline
+            String text = getText();
+            if (text != null && !text.trim().isEmpty()) {
+                fw.write("\r\n"); // add newline if the file has content
+            }
+
             fw.write(contents);
             fw.close();
         } catch (IOException e) {
@@ -58,6 +65,13 @@ public class storeCredentials {
     private boolean writeUpdate(String updated){
         try { //writes new content to file
             FileWriter fw = new FileWriter(filename);
+
+            // if file is not empty add a newline
+            String text = getText();
+            if (text != null && !text.trim().isEmpty()) {
+                fw.write("\r\n"); // add newline if the file has content
+            }
+
             fw.write(updated);
             fw.close();
             return true;
@@ -123,7 +137,7 @@ public class storeCredentials {
         System.out.println("Content prior after file is created: \n");
         file.printFile();
 
-        storeCredentials update_file = new storeCredentials("test.txt");
+        storeCredentials update_file = new storeCredentials("StoredCredentials.txt");
 
         update_file.storePass("newPass");
         System.out.println("\nContent after updating password: \n");

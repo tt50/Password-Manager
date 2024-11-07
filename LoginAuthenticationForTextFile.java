@@ -5,51 +5,83 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class LoginAuthenticationForTextFile {
-    private static final String USERNAME_PATTERN = "Username:\"";
-    private static final String PASSWORD_PATTERN = "Password:\"";
-    private static final String KEY_PATTERN = "Key:\"";
+    private static final String USERNAME_PATTERN = "USER: ";
+    private static final String PASSWORD_PATTERN = "PASS: ";
+    private static final String KEY_PATTERN = "KEY: ";
 
-    public boolean AuthenticationForTextFile(String usernameInput, String passwordInput) {
-        String UsernameSearched = usernameInput;
-        List<String> AssociatedPasswordAndKey;
-        AssociatedPasswordAndKey = parseFile("StoredCredentals.txt",UsernameSearched);
-        if(AssociatedPasswordAndKey == null ) //|| AssociatedPasswordAndKey.size() < 2)
+    public boolean AuthenticationForTextFile(String usernameInput, String passwordInput) throws Exception {
+        if (usernameInput == null || passwordInput == null) {
+            System.out.println("Error: empty username or password ");
             return false;
-        String AssociatedPassword = AssociatedPasswordAndKey.get(0);
-        //String AssociatedKey = AssociatedPasswordAndKey.get(1);
-        //String DecryptedPassword;
-        //DecryptedPassword = Decrypt(AssociatedPassword,AssociatedKey);
-        //return passwordInput.equals(DecryptedPassword);
-        return passwordInput.equals(AssociatedPassword);
+        }
+
+        List<String> AccountInfo;
+        UsernameEncryption EncryptUsername = new UsernameEncryption(); // Instance of UsernameEncryption
+        PasswordEncryptionForExistingLogin encryptLoginPassword = new PasswordEncryptionForExistingLogin(); // Instance of PasswordEncryptionForExistingLogin
+
+        // Encrypt the username input
+        String encryptedLoginUsername = EncryptUsername.EncryptedUsername(usernameInput);
+        System.out.println("Encrypted Username: " + encryptedLoginUsername);
+
+        // parse the txt file for the username
+        AccountInfo = parseFile("StoredCredentials.txt", encryptedLoginUsername);
+        if (AccountInfo == null || AccountInfo.size() < 3)
+            return false;
+        String AssociatedUsername = AccountInfo.get(0);
+        String AssociatedPassword = AccountInfo.get(1);
+        String AssociatedKey = AccountInfo.get(2);
+
+        // Encrypt the password input and get the result
+        String encryptedLoginPassword = encryptLoginPassword.EncryptedLoginPassword(passwordInput, AssociatedKey);
+
+        //Testing output
+        System.out.println("Associated Username: " + AssociatedUsername);
+        System.out.println("Associated Password: " + AssociatedPassword);
+        System.out.println("Associated Key: " + AssociatedKey);
+        System.out.println("Encrypted Username Input: " + encryptedLoginUsername);
+        System.out.println("Encrypted Password Input: " + encryptedLoginPassword);
+
+        if (!AssociatedUsername.equals(encryptedLoginUsername))
+            return false;
+
+        return AssociatedPassword.equals(encryptedLoginPassword);
     }
 
     public List<String> parseFile(String fileName, String usernameSearched) {
-        List<String> PasswordAndKey = new ArrayList<>();
+        List<String> accountInfo = new ArrayList<>();
 
         try (BufferedReader br = new BufferedReader(new FileReader(fileName))) {
             String line;
             while ((line = br.readLine()) != null) {
-                int usernameStartIndex = line.indexOf(USERNAME_PATTERN) + USERNAME_PATTERN.length();
-                int usernameEndIndex = line.indexOf("\"", usernameStartIndex);
-                String username = line.substring(usernameStartIndex, usernameEndIndex).trim();
-                if (username.equals(usernameSearched)) {
-                    int passwordStartIndex = line.indexOf(PASSWORD_PATTERN) + PASSWORD_PATTERN.length();
-                    int passwordEndIndex = line.indexOf("\"", passwordStartIndex);
-                    String password = line.substring(passwordStartIndex, passwordEndIndex).trim();
-                    PasswordAndKey.add(password);
+                int usernameStartIndex = line.indexOf(USERNAME_PATTERN);
+                int passwordStartIndex = line.indexOf(PASSWORD_PATTERN);
+                int keyStartIndex = line.indexOf(KEY_PATTERN);
+                if (passwordStartIndex == 0 && usernameStartIndex > passwordStartIndex && keyStartIndex > usernameStartIndex) {
+                    System.out.println("|"+usernameSearched+"|");
 
-                    //int keyStartIndex = line.indexOf(KEY_PATTERN) + KEY_PATTERN.length();
-                    //int keyEndIndex = line.indexOf("\"", keyStartIndex);
-                   // String key = line.substring(keyStartIndex, keyEndIndex).trim();
-                   // PasswordAndKey.add(key);
+                    String password = line.substring(passwordStartIndex + PASSWORD_PATTERN.length(), usernameStartIndex).replace(",","").trim();
+                    String username = line.substring(usernameStartIndex + USERNAME_PATTERN.length(), keyStartIndex).replace(",","").trim();
+                    String key = line.substring(keyStartIndex + KEY_PATTERN.length()).replace(",","").trim();
 
-                    return PasswordAndKey; // Return
+                    System.out.println("Parsed Username: |" + username + "|");
+                    System.out.println("Parsed Password: |" + password + "|");
+                    System.out.println("Parsed Key: |" + key + "|");
+
+                    if (username.equals(usernameSearched)) {
+                        System.out.println("username found");
+
+                        accountInfo.add(username);
+                        accountInfo.add(password);
+                        accountInfo.add(key);
+                        return accountInfo;
+                    }
                 }
             }
         } catch (IOException e) {
             System.err.println("Error reading file: " + e.getMessage());
         }
-        System.out.println("fail here");
-        return null; // Username was not found in .txt file.
+        System.out.println("Login Fail, username not found");
+        return null; // Username was not found in .txt file
     }
+
 }

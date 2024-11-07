@@ -1,3 +1,6 @@
+How to get the application working.
+
+--VM option arguments--
 Windows:
 --module-path javafx-sdk-23.0.1WINDOWS/lib --add-modules javafx.controls,javafx.fxml,javafx.graphics
 
@@ -9,6 +12,7 @@ Click three dots next to run.
 Open configuration edit.
 Set module as project02_passwordmanager.
 Click modify options, select the 'add VM option'.
+Paste in the VM option argument that matches your OS.
 For the main class, click the button next to it and save as LoginScreen.
 
 Library Configuration:

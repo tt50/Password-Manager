@@ -11,6 +11,11 @@ module com.example.modulejavafx {
     requires eu.hansolo.tilesfx;
     requires com.almasb.fxgl.all;
 
+    requires eu.hansolo.fx.countries;
+    requires eu.hansolo.fx.heatmap;
+    requires eu.hansolo.toolboxfx;
+    requires eu.hansolo.toolbox;
+
     opens com.example.modulejavafx to javafx.fxml;
     exports com.example.modulejavafx;
 }

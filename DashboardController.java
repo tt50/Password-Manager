@@ -10,10 +10,28 @@ import javafx.scene.Scene;
 import javafx.scene.Node;
 
 public class DashboardController {
-
+    @FXML
+    private TextField plainTextData;
+    @FXML
+    private Label encryptionTestLabel;
     @FXML
     public void settingButtonClicked(ActionEvent event){
         switchToSettingsScene(event);
+    }
+
+    private final UsernameEncryption EncryptUsername = new UsernameEncryption();
+
+    // feature interface test
+    // returns the value of an encrypted username
+    @FXML
+    public void encryptionTestButtonClicked(ActionEvent event) throws Exception {
+        String plainText = plainTextData.getText();
+        if(plainText != null){
+            String encryptedUsername = EncryptUsername.EncryptedUsername(plainText);
+            encryptionTestLabel.setText("Original username: '" + plainText + "'  Encrypted Username: '" + encryptedUsername +"'");
+        } else{
+            encryptionTestLabel.setText("Invalid input");
+        }
     }
 
     private void switchToSettingsScene(ActionEvent event){

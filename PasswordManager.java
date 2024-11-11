@@ -1,22 +1,35 @@
 import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
-import javafx.scene.control.Hyperlink;
-import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import javafx.scene.control.Label;
 
-public class LoginScreen extends Application {
+public class PasswordManager extends Application {
     public static void main(String[] args) {
         launch(args);
     }
 
     @Override
     public void start(Stage primaryStage) {
-        LoginAuthenticationForTextFile auth = new LoginAuthenticationForTextFile(); // Instance of LoginAuthenticationForTextFile
+        try {
+            // Load the Login Scene from FXML
+            Parent root = FXMLLoader.load(getClass().getResource("LoginScene.fxml"));
+            Scene loginScene = new Scene(root);
+
+            primaryStage.setScene(loginScene);
+            primaryStage.setTitle("Password Manager");
+            primaryStage.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+}
+/*
+    private void launchLoginScreen(Stage primaryStage){
+
+    }
+    private Stage primaryStage;
+    LoginAuthenticationForTextFile auth = new LoginAuthenticationForTextFile(); // Instance of LoginAuthenticationForTextFile
         primaryStage.setTitle("Password Manager Application");
 
         // Create elements for the login page
@@ -39,9 +52,19 @@ public class LoginScreen extends Application {
             // Add login checks here
             try {
                 boolean LoginCheck = auth.AuthenticationForTextFile(usernameInput, passwordInput);
-                if (LoginCheck) {
+                if (LoginCheck) { //Login was sucessful, dashboard is now displayed
                     resultLabel.setText("Login successful!");
-                } else {
+
+                    Label newDashboardLabel = new Label("Dashboard");
+                    Button settingPageButton = new Button("[Settings]");
+
+                    this.primaryStage = primaryStage;
+                    // Layout for dashboard
+                    VBox dashboardLayout = new VBox(10);
+                    primaryStage.setScene(new Scene(new DashboardPage(), 800, 600));
+                    primaryStage.show();
+
+                } else { // login failed
                     resultLabel.setText("Login failed.");
                 }
             } catch (Exception e) {
@@ -62,9 +85,11 @@ public class LoginScreen extends Application {
         PasswordField createAcc_passwordField = new PasswordField();
         Button createAcc_button = new Button("Create Account");
 
+        // Login sucess and failure labels
         Label successLabel = new Label();
         Label errorLabel = new Label();
 
+        // Hyperlink to login page
         Hyperlink loginPageLink = new Hyperlink("Back to Login Page");
 
         // create account button action
@@ -73,7 +98,7 @@ public class LoginScreen extends Application {
             String CreateAcc_passwordInput = createAcc_passwordField.getText();
             try {
                 boolean isAccountCreated = CreateNewAccount.CreateNewAcc(CreateAcc_usernameInput, CreateAcc_passwordInput);
-                if(isAccountCreated) {
+                if (isAccountCreated) {
                     // Account was created
                     successLabel.setText("Account successfully created!");
                     successLabel.setStyle("-fx-text-fill: green;");
@@ -97,24 +122,54 @@ public class LoginScreen extends Application {
         newAccountLayout.getChildren().addAll(newAccountLabel, createAcc_usernameLabel, createAcc_usernameField, createAcc_passwordLabel, createAcc_passwordField, createAcc_button, successLabel, errorLabel, loginPageLink);
         Scene accountCreationScene = new Scene(newAccountLayout, 800, 600);
 
-        // Hyperlink actions to switch scenes
-        createAccountLink.setOnAction(e -> primaryStage.setScene(accountCreationScene));
+
+        settingPageButton.setOnAction(event -> {
+                    // Layout for dashboard
+                    // VBox dashboardLayout = new VBox(10);
+                }
+
+
+                // Hyperlink actions to switch scenes
+                createAccountLink.setOnAction(e -> primaryStage.setScene(accountCreationScene));
         loginPageLink.setOnAction(e -> primaryStage.setScene(loginScene));
 
         // Set the initial scene and show the stage
         primaryStage.setScene(loginScene);
         primaryStage.show();
+
+
+        // Elements for dashboard page
+        Label newDashboardLabel = new Label("Dashboard");
+
+        // Layout for dashboard
+        VBox dashboardLayout = new VBox(10);
+        dashboardLayout.getChildren().addAll(newDashboardLabel);
+        Scene dashboardScene = new Scene(dashboardLayout, 800, 600);
+
+        Button settingPageButton = new Button("[Settings]");
+
+
+        // Set the initial scene and show the stage
+        primaryStage.setScene(dashboardScene);
+        primaryStage.show();
+
     }
-}
 
-// create dashboard page
-/*
-//Layout for the dashboard
-vBox dashboardLayout = new Vbox(10);
-dashboardLayout.
-Scene dashboardScene = new Scene(dashboardLayout, 800, 600);
 
-            // Set the initial scene and show the stage
-            primaryStage.setScene(loginScene);
-            primaryStage.show();
+    public void LoginScreen(){
+
+    }
+
+    public void createAccountPage(){
+
+    }
+    public void DashboardPage(){
+
+    }
+
+
+    public void SettingsPage(){
+
+    }
+
  */

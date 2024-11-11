@@ -23,20 +23,12 @@ Users will be able to create their own Password Manager accounts and will have a
 - Arvindh Velrajan
 - Jack Wylie
 
-
 ![This is a screenshot.](images.png)
-# How to run
-Provide here instructions on how to use your application.   
-- Download the latest binary from the Release section on the right on GitHub.  
-- On the command line uncompress using
-```
-tar -xzf  
-```
-- On the command line run with
-```
-./hello
-```
-- You will see Hello World! on your terminal. 
+# How to run (Works only on Windows)
+Instructions to run the Password Manager Application.   
+- Download the latest .jar file from the Release section on the right on GitHub. It will be labeled Password_Manager.jar file. 
+- After the .jar file is downloaded, open the file in your downloads folder.
+- It will automatically run on your windows system.
 
 # How to contribute
 Follow this project board to know the latest status of the project: [http://...]([http://...])  

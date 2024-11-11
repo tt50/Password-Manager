@@ -30,8 +30,8 @@ public class PasswordEncryption {
 
     // Helper class to hold the encrypted text and the encryption key
     public static class EncryptionResult {
-        private String encryptedText;
-        private String key;
+        private final String encryptedText;
+        private final String key;
 
         public EncryptionResult(String encryptedText, String key) {
             this.encryptedText = encryptedText;

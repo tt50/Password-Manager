@@ -1,6 +1,6 @@
 public class CreateNewAccount {
     public static boolean CreateNewAcc(String usernameInput, String passwordInput) throws Exception {
-        if (usernameInput == null || passwordInput.isEmpty()) {
+        if (usernameInput == null || passwordInput == null) {
             System.out.println("Error: empty username or password");
             return false;
         }
@@ -31,7 +31,7 @@ public class CreateNewAccount {
             System.out.println("Encrypted Username: " + encryptedUsername); // If you test on the same username, the encrypted value should not change
             System.out.println("Encrypted Password: " + encryptedPassword);
             System.out.println("Encryption Key for account/password: " + passwordKey);
-            EncryptUsername.printEncodedKey(); // Should equal to "INqEeOyVRyv2ocfRZ02SHw=="
+            UsernameEncryption.printEncodedKey(); // Should equal to "INqEeOyVRyv2ocfRZ02SHw=="
 
             storeCredentials store = new storeCredentials("StoredCredentials.txt", encryptedPassword, encryptedUsername, passwordKey);
             return true; // Return success message

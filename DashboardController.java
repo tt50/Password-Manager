@@ -27,7 +27,16 @@ public class DashboardController {
     @FXML
     public void checkPasswordStrength(ActionEvent event)
     {
+        // Receive password from 'passwordInput'
 
+        // If no password is provided...
+
+            // Set the result of the check to be an error message to the user
+
+        // Call the password strength checker function using the 'PasswordStrengthChecker' module
+
+        // Display the result of the strength to the user of the function
+        
     }
 
     private final UsernameEncryption EncryptUsername = new UsernameEncryption();

@@ -9,6 +9,20 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 
 public class CreateAccController {
+    public static String StrengthCheck(String password) {
+        if (password.length() < 8) {
+            return "Password should be at least 8 characters";
+        } else if (!(password.matches(".*[A-Z].*") && password.matches(".*[a-z].*"))) {
+            return "Password should contain both uppercase and lowercase letters.";
+        } if (!password.matches(".*[0-9].*")){
+            return "Password should contain at least one number.";
+        } if (!password.matches(".*[!@#$%^&*(),.?\":{}|<>].*")) {
+            return "Password should contain at least one special character.";
+        }
+        else {
+            return "good";
+        }
+    }
     @FXML
     private TextField usernameField;
     @FXML
@@ -25,18 +39,27 @@ public class CreateAccController {
         String username = usernameField.getText();
         String password = passwordField.getText();
 
+        // Check password strength
+        String passwordStrengthMessage = StrengthCheck(password);
+        if (!passwordStrengthMessage.equals("good")) {
+            // Display the password strength message if it doesn't meet requirements
+            createAccResultLabel.setText(passwordStrengthMessage);
+            return; // Stop the account creation process
+        }
+
+        // Proceed with account creation if password meets all requirements
         boolean isAccountCreated = createAcc.CreateNewAcc(username, password);
         if (isAccountCreated) {
-            createAccResultLabel.setText("Account was sucessfully created!");
+            createAccResultLabel.setText("Account was successfully created!");
             switchToLoginScene(event);
         } else {
-            createAccResultLabel.setText("Login account creation failed, please try again!");
+            createAccResultLabel.setText("Account creation failed, please try again!");
         }
     }
 
     @FXML
     public void loginLinkClicked(ActionEvent event) {
-        // Switch to the create account scene
+        // Switch to the login scene
         switchToLoginScene(event);
     }
 

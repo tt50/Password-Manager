@@ -20,9 +20,14 @@ public class DashboardController {
     }
 
     @FXML
+    private TextField passwordInput;
+    @FXML
+    private Label strengthResult;
+
+    @FXML
     public void checkPasswordStrength(ActionEvent event)
     {
-        
+
     }
 
     private final UsernameEncryption EncryptUsername = new UsernameEncryption();

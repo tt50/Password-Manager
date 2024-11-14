@@ -132,6 +132,16 @@ public class storeCredentials {
         return writeUpdate(updated);
     }
 
+    /**
+     * @param password The password to check.
+     * @return A message indicating the password strength.
+     * @code Checks the strength of the given password.
+     */
+    public String checkPasswordStrength(String password)
+    {
+        throw new UnsupportedOperationException("Not yet implemented");
+    }
+
     public static void main(String[] args) { //an example of how the class works
         storeCredentials file = new storeCredentials("test.txt", "password", "user", "key");
         System.out.println("Content prior after file is created: \n");

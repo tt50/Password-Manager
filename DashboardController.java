@@ -19,6 +19,12 @@ public class DashboardController {
         switchToSettingsScene(event);
     }
 
+    @FXML
+    public void checkPasswordStrength(ActionEvent event)
+    {
+        
+    }
+
     private final UsernameEncryption EncryptUsername = new UsernameEncryption();
 
     // feature interface test

@@ -27,20 +27,24 @@ public class DashboardController {
     @FXML
     public void checkPasswordStrength(ActionEvent event)
     {
-        // Receive password from 'passwordInput'
+        // Receive password from 'passwordInput' field
         String password = passwordInput.getText().trim();
 
         // If no password is provided...
-        if(password.isEmpty())
-        {
-            // Set the result of the check to be an error message to the user
+        if (password.isEmpty()) {
+            // Display an error message
             strengthResult.setText("Password field is empty. Please enter a valid password.");
+            return;
         }
-        // Call the password strength checker function using the 'PasswordStrengthChecker' module
-        storeCredentials credentialStorage = new storeCredentials();
 
-        // Display the result of the strength to the user of the function
+        // Create an instance of storeCredentials to call the password strength checker
+        storeCredentials credentialStorage = new storeCredentials("dummy.txt");
 
+        // Call the password strength checker function from storeCredentials
+        String strengthMessage = credentialStorage.checkPasswordStrength(password);
+
+        // Display the result of the strength check to the user
+        strengthResult.setText(strengthMessage);
     }
 
     private final UsernameEncryption EncryptUsername = new UsernameEncryption();

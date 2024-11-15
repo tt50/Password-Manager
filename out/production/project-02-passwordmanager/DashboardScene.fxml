@@ -37,10 +37,10 @@
                   </VBox>
                   <VBox alignment="TOP_CENTER" layoutX="84.0" layoutY="187.0" prefHeight="86.0" prefWidth="439.0">
                      <children>
-                        <Label text="Label" />
-                        <Label alignment="CENTER" prefHeight="17.0" prefWidth="439.0" text="ResultLabel" />
-                        <TextField />
-                        <Button alignment="TOP_CENTER" mnemonicParsing="false" text="Button" />
+                        <Label text="Password Strength Checker"/>
+                        <Label fx:id="passwordStrengthCheckerLabel" alignment="CENTER" prefHeight="17.0" prefWidth="439.0" text="ResultLabel" />
+                        <TextField fx:id="passwordStrengthResult" prefHeight="25.0" prefWidth="389.0"/>
+                        <Button alignment="TOP_CENTER" mnemonicParsing="false" onAction="#checkPasswordStrength" text="Check Password Strength" />
                      </children>
                   </VBox>
                   <TableView layoutX="32.0" prefHeight="161.0" prefWidth="540.0">

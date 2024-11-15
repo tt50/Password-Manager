@@ -11,6 +11,7 @@ import javafx.scene.Node;
 
 public class DashboardController {
     public Label passwordStrengthCheckerLabel;
+    public TextField passwordStrengthResult;
     @FXML
     private TextField plainTextData;
     @FXML

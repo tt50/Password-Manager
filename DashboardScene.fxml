@@ -39,7 +39,7 @@
                      <children>
                         <Label text="Password Strength Checker"/>
                         <Label fx:id="passwordStrengthCheckerLabel" alignment="CENTER" prefHeight="17.0" prefWidth="439.0" text="ResultLabel" />
-                        <TextField prefHeight="25.0" prefWidth="389.0"/>
+                        <TextField fx:id="passwordStrengthResult" prefHeight="25.0" prefWidth="389.0"/>
                         <Button alignment="TOP_CENTER" mnemonicParsing="false" onAction="#checkPasswordStrength" text="Check Password Strength" />
                      </children>
                   </VBox>

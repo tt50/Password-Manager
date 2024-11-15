@@ -139,6 +139,28 @@ public class storeCredentials {
      */
     public String checkPasswordStrength(String password)
     {
+        // Check the password's length...
+
+            // And if not long enough, return a message saying so
+
+        // Check if the password contains any capital letters...
+
+            // And if not, return a message saying so
+
+        // Check if the password contains any lowercase letters...
+
+            // And if not, return a message saying so
+
+        // Check if the password contains any digits...
+
+            // And if not, return a message saying so
+
+        // Check if the password contains any special characters...
+
+            // And if not, return a message recommending them
+
+        // Otherwise, simple return that it is a strong password
+
         throw new UnsupportedOperationException("Not yet implemented");
     }
 

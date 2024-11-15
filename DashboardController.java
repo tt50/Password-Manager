@@ -28,15 +28,19 @@ public class DashboardController {
     public void checkPasswordStrength(ActionEvent event)
     {
         // Receive password from 'passwordInput'
+        String password = passwordInput.getText().trim();
 
         // If no password is provided...
-
+        if(password.isEmpty())
+        {
             // Set the result of the check to be an error message to the user
-
+            strengthResult.setText("Password field is empty. Please enter a valid password.");
+        }
         // Call the password strength checker function using the 'PasswordStrengthChecker' module
+        storeCredentials credentialStorage = new storeCredentials();
 
         // Display the result of the strength to the user of the function
-        
+
     }
 
     private final UsernameEncryption EncryptUsername = new UsernameEncryption();

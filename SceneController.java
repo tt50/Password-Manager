@@ -71,20 +71,24 @@ public class SceneController extends Application {
     public void checkPasswordStrength()
     {
         // Receive the password from the 'passwordInput' field
-
+        String password = passwordInput.getText();
 
         // If no password is provided...
-
+        if(password.isEmpty())
+        {
             // Display an error message
-
+            strengthFeedback.setText("Password is empty. Please enter a valid password.");
+            // Add an empty return so that the function doesn't keep running
+            return;
+        }
 
         // Create an instance of storeCredentials to be able to call the password strength checker
-
+        storeCredentials credentialsStored = new storeCredentials("dummy.txt");
 
         // Call the password strength checker function from storeCredentials
-
+        String messageStrength = credentialsStored.checkPasswordStrength(password);
 
         // Display the result of the strength check to the user
-        
+        strengthFeedback.setText(messageStrength);
     }
 }

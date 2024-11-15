@@ -72,9 +72,25 @@ public class DashboardController {
         }
     }
 
+    @FXML
+    public void PasswordChangeButtonClicked(ActionEvent event){ //NEW
+        switchtoPassChangeScene(event);
+    }
+
     private void switchToSettingsScene(ActionEvent event){
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("SettingsScene.fxml"));
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setScene(new Scene(loader.load()));
+            stage.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void switchtoPassChangeScene(ActionEvent event){ //NEW
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("PasswordChangeScene.fxml"));
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.setScene(new Scene(loader.load()));
             stage.show();

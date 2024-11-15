@@ -12,6 +12,13 @@ public class SceneController extends Application {
     private Scene scene;
     private Parent root;
 
+    // Fields necessary for password strength-checking
+    // To save the input password
+
+
+    // To save the feedback returned by the program
+
+
     @Override
     public void start(Stage primaryStage) throws Exception {
         this.stage = primaryStage;
@@ -54,4 +61,6 @@ public class SceneController extends Application {
         stage.setScene(scene);
         stage.show();
     }
+
+    // Function to check the strength of the provided password and set the label in the application
 }

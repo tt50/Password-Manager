@@ -6,6 +6,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.event.ActionEvent;
 import java.io.IOException;
+import javafx.fxml.FXML;
 
 public class SceneController extends Application {
     private Stage stage;

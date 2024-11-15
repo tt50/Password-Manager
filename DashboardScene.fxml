@@ -38,8 +38,8 @@
                   <VBox alignment="TOP_CENTER" layoutX="84.0" layoutY="187.0" prefHeight="86.0" prefWidth="439.0">
                      <children>
                         <Label text="Password Strength Checker"/>
-                        <Label fx:id="passwordStrengthCheckerLabel" alignment="CENTER" prefHeight="17.0" prefWidth="439.0" text="ResultLabel" />
-                        <TextField fx:id="passwordStrengthResult" prefHeight="25.0" prefWidth="389.0"/>
+                        <Label fx:id="passwordStrengthCheckerLabel" alignment="CENTER" prefHeight="17.0" prefWidth="439.0" text="PasswordStrengthResult" />
+                        <TextField fx:id="passwordInput" prefHeight="25.0" prefWidth="389.0"/>
                         <Button alignment="TOP_CENTER" mnemonicParsing="false" onAction="#checkPasswordStrength" text="Check Password Strength" />
                      </children>
                   </VBox>

@@ -10,8 +10,6 @@ import javafx.scene.Scene;
 import javafx.scene.Node;
 
 public class DashboardController {
-    public Label passwordStrengthCheckerLabel;
-    public TextField passwordStrengthResult;
     @FXML
     private TextField plainTextData;
     @FXML
@@ -20,22 +18,21 @@ public class DashboardController {
     public void settingButtonClicked(ActionEvent event){
         switchToSettingsScene(event);
     }
-
     @FXML
     private TextField passwordInput;
     @FXML
-    private Label strengthResult;
+    private Label passwordStrengthCheckerLabel;
 
     @FXML
     public void checkPasswordStrength(ActionEvent event)
     {
         // Receive password from 'passwordInput' field
-        String password = passwordInput.getText().trim();
+        String password = passwordInput.getText();
 
         // If no password is provided...
         if (password.isEmpty()) {
             // Display an error message
-            strengthResult.setText("Password field is empty. Please enter a valid password.");
+            passwordStrengthCheckerLabel.setText("Password field is empty. Please enter a valid password.");
             return;
         }
 
@@ -46,7 +43,7 @@ public class DashboardController {
         String strengthMessage = credentialStorage.checkPasswordStrength(password);
 
         // Display the result of the strength check to the user
-        strengthResult.setText(strengthMessage);
+        passwordStrengthCheckerLabel.setText(strengthMessage);
     }
 
     private final UsernameEncryption EncryptUsername = new UsernameEncryption();

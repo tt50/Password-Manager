@@ -63,4 +63,8 @@ public class SceneController extends Application {
     }
 
     // Function to check the strength of the provided password and set the label in the application
+    public void checkPasswordStrength()
+    {
+        
+    }
 }

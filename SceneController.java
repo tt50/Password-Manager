@@ -70,6 +70,21 @@ public class SceneController extends Application {
     // Function to check the strength of the provided password and set the label in the application
     public void checkPasswordStrength()
     {
+        // Receive the password from the 'passwordInput' field
 
+
+        // If no password is provided...
+
+            // Display an error message
+
+
+        // Create an instance of storeCredentials to be able to call the password strength checker
+
+
+        // Call the password strength checker function from storeCredentials
+
+
+        // Display the result of the strength check to the user
+        
     }
 }

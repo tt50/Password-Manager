@@ -1,5 +1,6 @@
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Parent;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
@@ -28,7 +29,8 @@ public class LoginController {
         boolean isAuthenticated = auth.AuthenticationForTextFile(username, password);
         if (isAuthenticated) {
             loginResultLabel.setText("Login successful!");
-            switchToDashboardScene(event);
+            switchToDashboardScene(event, username);
+
         } else {
             loginResultLabel.setText("Login failed. Try again.");
         }
@@ -40,11 +42,16 @@ public class LoginController {
         switchToCreateAccScene(event);
     }
 
-    private void switchToDashboardScene(ActionEvent event) {
+    private void switchToDashboardScene(ActionEvent event, String username) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("DashboardScene.fxml"));
+            Parent root = loader.load();
+
+            DashboardController newDashboardController = loader.getController();
+            newDashboardController.setUsername(username);
+
             Stage stage = (Stage) loginResultLabel.getScene().getWindow();
-            stage.setScene(new Scene(loader.load()));
+            stage.setScene(new Scene(root));
             stage.show();
         } catch (Exception e) {
             e.printStackTrace();

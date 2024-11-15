@@ -60,5 +60,6 @@
             </AnchorPane>
         </content>
       </ScrollPane>
+      <Label fx:id="userLabel" layoutX="14.0" layoutY="13.0" />
    </children>
 </AnchorPane>

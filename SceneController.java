@@ -14,10 +14,12 @@ public class SceneController extends Application {
 
     // Fields necessary for password strength-checking
     // To save the input password
-
+    @FXML
+    private TextField passwordInput;
 
     // To save the feedback returned by the program
-
+    @FXML
+    private Label strengthFeedback;
 
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -65,6 +67,6 @@ public class SceneController extends Application {
     // Function to check the strength of the provided password and set the label in the application
     public void checkPasswordStrength()
     {
-        
+
     }
 }

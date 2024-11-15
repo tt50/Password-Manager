@@ -9,6 +9,10 @@ public class LoginAuthenticationForTextFile {
     private static final String PASSWORD_PATTERN = "PASS: ";
     private static final String KEY_PATTERN = "KEY: ";
 
+    private final UsernameEncryption EncryptUsername = new UsernameEncryption(); // Instance of UsernameEncryption
+    private final PasswordEncryptionForExistingLogin encryptLoginPassword = new PasswordEncryptionForExistingLogin(); // Instance of PasswordEncryptionForExistingLogin
+
+
     public boolean AuthenticationForTextFile(String usernameInput, String passwordInput) throws Exception {
         if (usernameInput == null || passwordInput == null) {
             System.out.println("Error: empty username or password ");
@@ -16,8 +20,6 @@ public class LoginAuthenticationForTextFile {
         }
 
         List<String> AccountInfo;
-        UsernameEncryption EncryptUsername = new UsernameEncryption(); // Instance of UsernameEncryption
-        PasswordEncryptionForExistingLogin encryptLoginPassword = new PasswordEncryptionForExistingLogin(); // Instance of PasswordEncryptionForExistingLogin
 
         // Encrypt the username input
         String encryptedLoginUsername = EncryptUsername.EncryptedUsername(usernameInput);

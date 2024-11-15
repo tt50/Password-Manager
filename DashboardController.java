@@ -18,6 +18,15 @@ public class DashboardController {
     public void settingButtonClicked(ActionEvent event){
         switchToSettingsScene(event);
     }
+    @FXML
+    private Label userLabel;
+
+    private String username;
+
+    public void setUsername(String username){
+        this.username = username;
+        userLabel.setText("Welcome "+ username);
+    }
 
     private final UsernameEncryption EncryptUsername = new UsernameEncryption();
 

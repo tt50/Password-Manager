@@ -1,14 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ButtonBar?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.MenuButton?>
+<?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
-<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane prefHeight="418.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="DashboardController">
@@ -18,54 +20,32 @@
             <Font size="24.0" />
          </font>
       </Label>
-      <ButtonBar layoutX="386.0" layoutY="-1.0" prefHeight="45.0" prefWidth="212.0">
-        <buttons>
-          <Button mnemonicParsing="false" onAction="#settingButtonClicked" text="Settings" />
-        </buttons>
-      </ButtonBar>
-      <ScrollPane layoutX="-2.0" layoutY="38.0" prefHeight="600.0" prefWidth="600.0">
-        <content>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="596.0" prefWidth="599.0">
-               <children>
-                  <VBox alignment="TOP_CENTER" layoutX="86.0" layoutY="280.0" prefHeight="86.0" prefWidth="435.0">
-                     <children>
-                        <Label text="Label" />
-                        <Label alignment="CENTER" prefHeight="17.0" prefWidth="430.0" text="ResultLabel" />
-                        <TextField prefHeight="25.0" prefWidth="389.0" />
-                        <Button alignment="TOP_CENTER" mnemonicParsing="false" text="Button" />
-                     </children>
-                  </VBox>
-                  <VBox alignment="TOP_CENTER" layoutX="84.0" layoutY="187.0" prefHeight="86.0" prefWidth="439.0">
-                     <children>
-                        <Label text="Password Strength Checker"/>
-                        <Label fx:id="passwordStrengthCheckerLabel" alignment="CENTER" prefHeight="17.0" prefWidth="439.0" text="PasswordStrengthResult" />
-                        <TextField fx:id="passwordInput" prefHeight="25.0" prefWidth="389.0"/>
-                        <Button alignment="TOP_CENTER" mnemonicParsing="false" onAction="#checkPasswordStrength" text="Check Password Strength" />
-                     </children>
-                  </VBox>
-                  <TableView layoutX="32.0" prefHeight="161.0" prefWidth="540.0">
-                    <columns>
-                      <TableColumn prefWidth="75.0" text="Credentials" />
-                    </columns>
-                  </TableView>
-                  <VBox alignment="TOP_CENTER" layoutX="87.0" layoutY="390.0" prefHeight="86.0" prefWidth="432.0">
-                     <children>
-                        <Label text="Encryption TEST interface" />
-                        <Label fx:id="encryptionTestLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="17.0" prefWidth="435.0" text="Encryption results here" />
-                        <TextField fx:id="plainTextData" prefHeight="25.0" prefWidth="575.0" />
-                        <Button alignment="TOP_CENTER" mnemonicParsing="false" onAction="#encryptionTestButtonClicked" text="Button" />
-                     </children>
-                  </VBox>
-                   <VBox alignment="TOP_CENTER" layoutX="87.0" layoutY="490.0" prefHeight="86.0" prefWidth="432.0">
-                       <children>
-                           <Label text="Change Password" />
-                           <Button alignment="TOP_CENTER" mnemonicParsing="false" onAction="#PasswordChangeButtonClicked" text="Button" />
-                       </children>
-                   </VBox>
-               </children>
-            </AnchorPane>
-        </content>
+      <ScrollPane layoutX="97.0" layoutY="38.0" prefHeight="600.0" prefWidth="501.0">
+         <content>
+
+            <TableView prefHeight="594.0" prefWidth="390.0">
+              <columns>
+                <TableColumn prefWidth="99.0" text="Credentials" />
+              </columns>
+            </TableView>
+         </content>
       </ScrollPane>
       <Label fx:id="userLabel" layoutX="14.0" layoutY="13.0" />
+      <VBox layoutY="38.0" prefHeight="600.0" prefWidth="97.0">
+         <children>
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#51585e" height="35.0" stroke="BLACK" strokeType="INSIDE" width="97.0" />
+            <Separator prefHeight="15.0" prefWidth="97.0" />
+            <Button mnemonicParsing="false" onAction="#generatorButtonClicked" prefHeight="47.0" prefWidth="98.0" text="Generator" wrapText="true" />
+            <Separator prefHeight="14.0" prefWidth="97.0" />
+            <Button mnemonicParsing="false" onAction="#strengthCheckerButtonClicked" prefHeight="65.0" prefWidth="97.0" text="Password Strength Checker" textAlignment="CENTER" wrapText="true" />
+            <Separator prefHeight="13.0" prefWidth="97.0" />
+            <Button mnemonicParsing="false" onAction="#settingsButtonClicked" prefHeight="47.0" prefWidth="100.0" text="Settings" textAlignment="CENTER" wrapText="true" />
+         </children>
+      </VBox>
+      <MenuButton fx:id="userButton" layoutX="482.0" layoutY="10.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="103.0">
+        <items>
+           <MenuItem mnemonicParsing="false" onAction="#logoutMenuButtonClicked" text="Log Out" />
+        </items>
+      </MenuButton>
    </children>
 </AnchorPane>

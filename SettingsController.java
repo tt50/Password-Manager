@@ -11,6 +11,14 @@ import javafx.scene.Scene;
 import javafx.scene.Node;
 
 public class SettingsController {
+    @FXML
+    private Label userLabel;
+    private String username;
+
+    // Display Currently Logged in User
+    public void setUsername(String username){
+        userLabel.setText(username);
+    }
 
     @FXML
     public void dashboardButtonClicked(ActionEvent event){
@@ -20,6 +28,23 @@ public class SettingsController {
     private void switchToDashboardScene(ActionEvent event){
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("DashboardScene.fxml"));
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setScene(new Scene(loader.load()));
+            stage.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    // Password Change Button
+    @FXML
+    public void PasswordChangeButtonClicked(ActionEvent event){ //NEW
+        switchtoPassChangeScene(event);
+    }
+
+    private void switchtoPassChangeScene(ActionEvent event){ //NEW
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("PasswordChangeScene.fxml"));
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.setScene(new Scene(loader.load()));
             stage.show();

@@ -8,13 +8,15 @@ import javafx.scene.Scene;
 import javafx.scene.Node;
 
 public class DashboardController {
+
     @FXML
-    private MenuButton userButton;
+    private Label usernameLabel;
     private String username;
 
     // Display Currently Logged in User
     public void setUsername(String username){
-        userButton.setText(username);
+        this.username=username;
+        usernameLabel.setText(username);
     }
 
     // Settings Button
@@ -31,8 +33,8 @@ public class DashboardController {
                 SettingsController newSettingsController = loader.getController();
                 newSettingsController.setUsername(username);
                 Scene scene = new Scene(root);
-
                 Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                scene.getStylesheets().add(getClass().getResource("styles.css").toExternalForm());
                 stage.setScene(scene);
                 stage.show();
             } catch (Exception e) {
@@ -73,7 +75,7 @@ public class DashboardController {
     }
 
     @FXML
-    public void logoutMenuButtonClicked(ActionEvent event) {
+    public void logoutClicked(ActionEvent event) {
         // Switch to the login scene
         switchToLoginScene(event);
     }
@@ -81,10 +83,8 @@ public class DashboardController {
     private void switchToLoginScene(ActionEvent event) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("LoginScene.fxml"));
-            Parent root = loader.load();
-            Scene scene = new Scene(root);
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            stage.setScene(scene);
+            stage.setScene(new Scene(loader.load()));
             stage.show();
         } catch (Exception e) {
             e.printStackTrace();

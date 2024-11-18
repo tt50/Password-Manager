@@ -1,0 +1,18 @@
+.feature-button {
+    -fx-background-color: #3e4346; /* dark Grey background */
+    -fx-text-fill: white;         /* White text */
+}
+
+.feature-button:hover {
+    -fx-background-color: #6a7175; /* light Grey background */
+    -fx-text-fill: white;         /* White text */
+}
+
+.feature-button:pressed{
+    -fx-background-color: #6a7175; /* light Grey background */
+    -fx-text-fill: white;         /* White text */
+}
+
+.dashboard-background {
+    -fx-background-color: #9a9a9a; /* Grey background */
+}

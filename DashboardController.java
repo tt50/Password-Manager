@@ -1,85 +1,55 @@
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
-import javafx.scene.control.Hyperlink;
+import javafx.scene.Parent;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.Node;
 
 public class DashboardController {
-    @FXML
-    private TextField plainTextData;
-    @FXML
-    private Label encryptionTestLabel;
-    @FXML
-    public void settingButtonClicked(ActionEvent event){
-        switchToSettingsScene(event);
-    }
 
     @FXML
-    private Label userLabel;
-
+    private Label usernameLabel;
     private String username;
 
+    // Display Currently Logged in User
     public void setUsername(String username){
-        this.username = username;
-        userLabel.setText("Welcome "+ username);
+        this.username=username;
+        usernameLabel.setText(username);
     }
 
+    // Settings Button
     @FXML
-    private TextField passwordInput;
-    @FXML
-    private Label passwordStrengthCheckerLabel;
+    public void settingsButtonClicked(ActionEvent event){
+        switchToSettingsScene(event);
+    }
+    private void switchToSettingsScene(ActionEvent event) {
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("SettingsScene.fxml"));
+                Parent root = loader.load();
 
-    @FXML
-    public void checkPasswordStrength(ActionEvent event)
-    {
-        // Receive password from 'passwordInput' field
-        String password = passwordInput.getText();
-
-        // If no password is provided...
-        if (password.isEmpty()) {
-            // Display an error message
-            passwordStrengthCheckerLabel.setText("Password field is empty. Please enter a valid password.");
-            return;
-        }
-
-        // Create an instance of storeCredentials to call the password strength checker
-        storeCredentials credentialStorage = new storeCredentials("dummy.txt");
-
-        // Call the password strength checker function from storeCredentials
-        String strengthMessage = credentialStorage.checkPasswordStrength(password);
-
-        // Display the result of the strength check to the user
-        passwordStrengthCheckerLabel.setText(strengthMessage);
+                //Pass the username to the settings controller
+                SettingsController newSettingsController = loader.getController();
+                newSettingsController.setUsername(username);
+                Scene scene = new Scene(root);
+                Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                scene.getStylesheets().add(getClass().getResource("styles.css").toExternalForm());
+                stage.setScene(scene);
+                stage.show();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
     }
 
-    private final UsernameEncryption EncryptUsername = new UsernameEncryption();
-
-    // feature interface test
-    // returns the value of an encrypted username
+    // Strength Checker Button
     @FXML
-    public void encryptionTestButtonClicked(ActionEvent event) throws Exception {
-        String plainText = plainTextData.getText();
-        if(plainText != null){
-            String encryptedUsername = EncryptUsername.EncryptedUsername(plainText);
-            encryptionTestLabel.setText("Original username: '" + plainText + "'  Encrypted Username: '" + encryptedUsername +"'");
-        } else{
-            encryptionTestLabel.setText("Invalid input");
-        }
+    public void strengthCheckerButtonClicked(ActionEvent event){
+        switchtoPasswordStrengthChecker(event);
     }
-
-    @FXML
-    public void PasswordChangeButtonClicked(ActionEvent event){ //NEW
-        switchtoPassChangeScene(event);
-    }
-
-    private void switchToSettingsScene(ActionEvent event){
+    private void switchtoPasswordStrengthChecker(ActionEvent event){
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("SettingsScene.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("PasswordStrengthCheckerScene.fxml"));
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.setScene(new Scene(loader.load()));
             stage.show();
@@ -88,9 +58,31 @@ public class DashboardController {
         }
     }
 
-    private void switchtoPassChangeScene(ActionEvent event){ //NEW
+    // Password Generator Button
+    @FXML
+    public void generatorButtonClicked(ActionEvent event){
+        switchToPasswordGenerator(event);
+    }
+    private void switchToPasswordGenerator(ActionEvent event){
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("PasswordChangeScene.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("PasswordGeneratorScene.fxml"));
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setScene(new Scene(loader.load()));
+            stage.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    public void logoutClicked(ActionEvent event) {
+        // Switch to the login scene
+        switchToLoginScene(event);
+    }
+
+    private void switchToLoginScene(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("LoginScene.fxml"));
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.setScene(new Scene(loader.load()));
             stage.show();

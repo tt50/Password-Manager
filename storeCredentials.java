@@ -9,9 +9,24 @@ public class storeCredentials {
     String[] tokens = null;
     String updated = null;
 
-    public storeCredentials(String file, String password, String user, String key){ //used if no text file exists
+    public storeCredentials(String file, String password, String user, String key, String question1, String answer1, String question2, String answer2){ //used if no text file exists
         filename = file;
-        String contents = "PASS: " + password + "," + "USER: " + user + "," + "KEY: " + key;
+        // Encrypt security answers
+        SecurityEncryption encryption = new SecurityEncryption();
+        try {
+            answer1 = encryption.encryptAnswer(answer1);
+            answer2 = encryption.encryptAnswer(answer2);
+        } catch (Exception e) {
+            System.out.println("Error encrypting security answers.");
+        }
+
+        String contents = "PASS: " + password + "," +
+                "USER: " + user + "," +
+                "KEY: " + key + "," +
+                "QUESTION1: " + question1 + "," +
+                "ANSWER1: " + answer1 + "," +
+                "QUESTION2: " + question2 + "," +
+                "ANSWER2: " + answer2;
         createFile();
         try { //writes content to file
             FileWriter fw = new FileWriter(filename, true);
@@ -133,7 +148,7 @@ public class storeCredentials {
     }
 
     public static void main(String[] args) { //an example of how the class works
-        storeCredentials file = new storeCredentials("test.txt", "password", "user", "key");
+        storeCredentials file = new storeCredentials("test.txt", "password", "user", "key", "s", "s", "s", "s");
         System.out.println("Content prior after file is created: \n");
         file.printFile();
 

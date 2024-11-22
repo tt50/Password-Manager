@@ -1,9 +1,13 @@
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
-import javafx.scene.control.Hyperlink;
+import javafx.scene.Parent;
+import javafx.scene.control.*;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -11,32 +15,46 @@ import javafx.scene.Node;
 
 public class DashboardController {
     @FXML
-    private TextField plainTextData;
+    private Label usernameLabel;
+    private String username;
+
+    // Display Currently Logged in User
+    public void setUsername(String username){
+        this.username=username;
+        usernameLabel.setText(username);
+    }
+
+    // Settings Button
     @FXML
-    private Label encryptionTestLabel;
-    @FXML
-    public void settingButtonClicked(ActionEvent event){
+    public void settingsButtonClicked(ActionEvent event){
         switchToSettingsScene(event);
     }
+    private void switchToSettingsScene(ActionEvent event) {
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("SettingsScene.fxml"));
+                Parent root = loader.load();
 
-    private final UsernameEncryption EncryptUsername = new UsernameEncryption();
-
-    // feature interface test
-    // returns the value of an encrypted username
-    @FXML
-    public void encryptionTestButtonClicked(ActionEvent event) throws Exception {
-        String plainText = plainTextData.getText();
-        if(plainText != null){
-            String encryptedUsername = EncryptUsername.EncryptedUsername(plainText);
-            encryptionTestLabel.setText("Original username: '" + plainText + "'  Encrypted Username: '" + encryptedUsername +"'");
-        } else{
-            encryptionTestLabel.setText("Invalid input");
-        }
+                //Pass the username to the settings controller
+                SettingsController newSettingsController = loader.getController();
+                newSettingsController.setUsername(username);
+                Scene scene = new Scene(root);
+                Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                scene.getStylesheets().add(getClass().getResource("styles.css").toExternalForm());
+                stage.setScene(scene);
+                stage.show();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
     }
 
-    private void switchToSettingsScene(ActionEvent event){
+    // Strength Checker Button
+    @FXML
+    public void strengthCheckerButtonClicked(ActionEvent event){
+        switchtoPasswordStrengthChecker(event);
+    }
+    private void switchtoPasswordStrengthChecker(ActionEvent event){
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("SettingsScene.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("PasswordStrengthCheckerScene.fxml"));
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.setScene(new Scene(loader.load()));
             stage.show();
@@ -44,4 +62,80 @@ public class DashboardController {
             e.printStackTrace();
         }
     }
+
+    // Password Generator Button
+    @FXML
+    public void generatorButtonClicked(ActionEvent event){
+        switchToPasswordGenerator(event);
+    }
+    private void switchToPasswordGenerator(ActionEvent event){
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("PasswordGeneratorScene.fxml"));
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setScene(new Scene(loader.load()));
+            stage.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    public void logoutClicked(ActionEvent event) {
+        // Switch to the login scene
+        switchToLoginScene(event);
+    }
+
+    private void switchToLoginScene(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("LoginScene.fxml"));
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setScene(new Scene(loader.load()));
+            stage.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    private ListView<Credential> credentialsListView;
+
+    public void initialize() {
+        // list of credentials, hardcoded test examples
+        ObservableList<Credential> credentialsList = FXCollections.observableArrayList();
+        credentialsList.add(new Credential("Temple", "tun58761"));
+        credentialsList.add(new Credential("Github", "tt50"));
+
+        credentialsListView.setItems(credentialsList);
+
+        // set a custom cell factory
+        credentialsListView.setCellFactory(param -> new ListCell<Credential>() {
+            @Override
+            protected void updateItem(Credential item, boolean empty) {
+                super.updateItem(item, empty);
+                if (item != null && !empty) {
+                    // each credential detail is displayed in a vbox
+                    VBox vbox = new VBox(10);
+                    Label nicknameLabel = new Label(item.getNickname());
+                    Label usernameLabel = new Label(item.getUsername());
+                    vbox.getChildren().addAll(nicknameLabel, usernameLabel);
+                    setGraphic(vbox);
+                } else {
+                    setGraphic(null);
+                }
+            }
+        });
+    }
+
+    // set up reading from user credential file, to add to credentialsList
+
+    // set up add new credentials
+
+    // set up detailsPanel
+    /*
+    detail panel will display nickname, username, password, notes
+    and include clipboard buttons and a edit button
+     */
+
+    @FXML
+    private AnchorPane detailsPanel;
 }

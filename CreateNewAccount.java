@@ -3,7 +3,7 @@ public class CreateNewAccount {
         if (usernameInput == null || passwordInput == null) {
             System.out.println("Error: empty username or password");
             return false;
-        }
+        } 
 
         UsernameEncryption EncryptUsername = new UsernameEncryption(); // Instance of UsernameEncryption
         PasswordEncryption EncryptPassword = new PasswordEncryption(); // Instance of PasswordEncryption

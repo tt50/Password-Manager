@@ -13,22 +13,30 @@ import javafx.scene.Scene;
 public class CreateAccController {
     public static String StrengthCheck(String password) {
         if (password.length() < 8) {
-            return "Password should be at least 8 characters";
+            return "Password should be at least 8 characters.";
         } else if (!(password.matches(".*[A-Z].*") && password.matches(".*[a-z].*"))) {
             return "Password should contain both uppercase and lowercase letters.";
-        } if (!password.matches(".*[0-9].*")){
+        } else if (!password.matches(".*[0-9].*")) {
             return "Password should contain at least one number.";
-        } if (!password.matches(".*[!@#$%^&*(),.?\":{}|<>].*")) {
+        } else if (!password.matches(".*[!@#$%^&*(),.?\":{}|<>].*")) {
             return "Password should contain at least one special character.";
-        }
-        else {
+        } else {
             return "good";
         }
     }
+
     @FXML
     private TextField usernameField;
     @FXML
     private PasswordField passwordField;
+    @FXML
+    private TextField securityQuestion1Field;
+    @FXML
+    private TextField securityAnswer1Field;
+    @FXML
+    private TextField securityQuestion2Field;
+    @FXML
+    private TextField securityAnswer2Field;
     @FXML
     private Label createAccResultLabel;
     @FXML
@@ -40,17 +48,29 @@ public class CreateAccController {
     public void confirmButtonClicked(ActionEvent event) throws Exception {
         String username = usernameField.getText();
         String password = passwordField.getText();
+        String securityQuestion1 = securityQuestion1Field.getText();
+        String securityAnswer1 = securityAnswer1Field.getText();
+        String securityQuestion2 = securityQuestion2Field.getText();
+        String securityAnswer2 = securityAnswer2Field.getText();
 
         // Check password strength
         String passwordStrengthMessage = StrengthCheck(password);
         if (!passwordStrengthMessage.equals("good")) {
-            // Display the password strength message if it doesn't meet requirements
             createAccResultLabel.setText(passwordStrengthMessage);
             return; // Stop the account creation process
         }
 
-        // Proceed with account creation if password meets all requirements
-        boolean isAccountCreated = createAcc.CreateNewAcc(username, password);
+        // Validate security questions and answers
+        if (securityQuestion1.isBlank() || securityAnswer1.isBlank() ||
+                securityQuestion2.isBlank() || securityAnswer2.isBlank()) {
+            createAccResultLabel.setText("Please provide both security questions and answers.");
+            return;
+        }
+
+        // Proceed with account creation
+        boolean isAccountCreated = createAcc.CreateNewAcc(username, password,
+                securityQuestion1, securityAnswer1,
+                securityQuestion2, securityAnswer2);
         if (isAccountCreated) {
             createAccResultLabel.setText("Account was successfully created!");
             switchToLoginScene(event);

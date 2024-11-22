@@ -10,17 +10,21 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="CreateAccController">
+<AnchorPane prefHeight="500.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="CreateAccController">
    <children>
-      <Label layoutX="76.0" layoutY="49.0" prefHeight="30.0" prefWidth="448.0" text="Welcome to Password Manager. Create a free account!">
+      <Label layoutX="76.0" layoutY="30.0" prefHeight="30.0" prefWidth="448.0" text="Welcome to Password Manager. Create a free account!">
          <font>
             <Font size="19.0" />
          </font>
       </Label>
-      <VBox alignment="TOP_CENTER" layoutX="125.0" layoutY="92.0" prefHeight="174.0" prefWidth="350.0">
+      <VBox alignment="TOP_CENTER" layoutX="125.0" layoutY="80.0" prefHeight="330.0" prefWidth="350.0" spacing="10.0">
          <children>
             <TextField fx:id="usernameField" promptText="Username" />
             <PasswordField fx:id="passwordField" promptText="Password" />
+            <TextField fx:id="securityQuestion1Field" promptText="Security Question 1" />
+            <TextField fx:id="securityAnswer1Field" promptText="Answer to Question 1" />
+            <TextField fx:id="securityQuestion2Field" promptText="Security Question 2" />
+            <TextField fx:id="securityAnswer2Field" promptText="Answer to Question 2" />
             <Region prefHeight="20.0" prefWidth="350.0" />
             <Button contentDisplay="CENTER" mnemonicParsing="false" onAction="#confirmButtonClicked" text="Confirm" />
             <Region prefHeight="12.0" prefWidth="350.0" />

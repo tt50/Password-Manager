@@ -8,6 +8,7 @@ public class LoginAuthenticationForTextFile {
     private static final String USERNAME_PATTERN = "USER: ";
     private static final String PASSWORD_PATTERN = "PASS: ";
     private static final String KEY_PATTERN = "KEY: ";
+    private static final String QUESTION1_PATTERN = "QUESTION1: ";
 
     private final UsernameEncryption EncryptUsername = new UsernameEncryption(); // Instance of UsernameEncryption
     private final PasswordEncryptionForExistingLogin encryptLoginPassword = new PasswordEncryptionForExistingLogin(); // Instance of PasswordEncryptionForExistingLogin
@@ -58,12 +59,13 @@ public class LoginAuthenticationForTextFile {
                 int usernameStartIndex = line.indexOf(USERNAME_PATTERN);
                 int passwordStartIndex = line.indexOf(PASSWORD_PATTERN);
                 int keyStartIndex = line.indexOf(KEY_PATTERN);
-                if (passwordStartIndex == 0 && usernameStartIndex > passwordStartIndex && keyStartIndex > usernameStartIndex) {
+                int question1StartIndex = line.indexOf(QUESTION1_PATTERN);
+                if (passwordStartIndex == 0 && usernameStartIndex > passwordStartIndex && keyStartIndex > usernameStartIndex && question1StartIndex > keyStartIndex) {
                     System.out.println("|"+usernameSearched+"|");
 
                     String password = line.substring(passwordStartIndex + PASSWORD_PATTERN.length(), usernameStartIndex).replace(",","").trim();
                     String username = line.substring(usernameStartIndex + USERNAME_PATTERN.length(), keyStartIndex).replace(",","").trim();
-                    String key = line.substring(keyStartIndex + KEY_PATTERN.length()).replace(",","").trim();
+                    String key = line.substring(keyStartIndex + KEY_PATTERN.length(), question1StartIndex).replace(",","").trim();
 
                     System.out.println("Parsed Username: |" + username + "|");
                     System.out.println("Parsed Password: |" + password + "|");

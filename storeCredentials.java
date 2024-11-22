@@ -9,9 +9,16 @@ public class storeCredentials {
     String[] tokens = null;
     String updated = null;
 
-    public storeCredentials(String file, String password, String user, String key){ //used if no text file exists
+    public storeCredentials(String file, String password, String user, String key, String question1, String answer1, String question2, String answer2){ //used if no text file exists
         filename = file;
-        String contents = "PASS: " + password + "," + "USER: " + user + "," + "KEY: " + key;
+
+        String contents = "PASS: " + password + "," +
+                "USER: " + user + "," +
+                "KEY: " + key + "," +
+                "QUESTION1: " + question1 + "," +
+                "ANSWER1: " + answer1 + "," +
+                "QUESTION2: " + question2 + "," +
+                "ANSWER2: " + answer2;
         createFile();
         try { //writes content to file
             FileWriter fw = new FileWriter(filename, true);
@@ -132,12 +139,7 @@ public class storeCredentials {
         return writeUpdate(updated);
     }
 
-    /**
-     * @param password The password to check.
-     * @return A message indicating the password strength.
-     * @code Checks the strength of the given password.
-     */
-    public String checkPasswordStrength(String password)
+     public String checkPasswordStrength(String password)
     {
         // Check the password's length...
         if(password.length() < 8)
@@ -174,7 +176,7 @@ public class storeCredentials {
     }
 
     public static void main(String[] args) { //an example of how the class works
-        storeCredentials file = new storeCredentials("test.txt", "password", "user", "key");
+        storeCredentials file = new storeCredentials("test.txt", "password", "user", "key", "s", "s", "s", "s");
         System.out.println("Content prior after file is created: \n");
         file.printFile();
 

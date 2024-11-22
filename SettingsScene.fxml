@@ -12,7 +12,7 @@
             <Font size="20.0" />
          </font>
       </Label>
-      <Button alignment="TOP_CENTER" layoutX="283.0" layoutY="109.0" mnemonicParsing="false" onAction="#PasswordChangeButtonClicked" prefHeight="26.0" prefWidth="118.0" text="Change Password" textAlignment="CENTER" wrapText="true" />
+      <Button alignment="TOP_CENTER" layoutX="283.0" layoutY="109.0" mnemonicParsing="false" onAction="#changeToSecurityCheck" prefHeight="26.0" prefWidth="118.0" text="Change Password" textAlignment="CENTER" wrapText="true" />
       <Label layoutX="186.0" layoutY="109.0" prefHeight="26.0" prefWidth="105.0" text="*************" />
       <Label layoutX="99.0" layoutY="82.0" text="Username:">
          <font>

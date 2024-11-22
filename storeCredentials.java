@@ -9,6 +9,10 @@ public class storeCredentials {
     String[] tokens = null;
     String updated = null;
 
+    public storeCredentials() { //only to be used if you want to specifically use the password strength check method and no others
+        filename = null;
+    }
+
     public storeCredentials(String file, String password, String user, String key, String question1, String answer1, String question2, String answer2){ //used if no text file exists
         filename = file;
 

@@ -34,7 +34,7 @@ public class PasswordStrengthCheckerController {
         }
 
         // Create an instance of storeCredentials to call the password strength checker
-        storeCredentials credentialStorage = new storeCredentials("dummy.txt");
+        storeCredentials credentialStorage = new storeCredentials();
 
         // Call the password strength checker function from storeCredentials
         String strengthMessage = credentialStorage.checkPasswordStrength(password);

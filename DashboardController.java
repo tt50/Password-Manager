@@ -88,8 +88,10 @@ public class DashboardController {
     private void switchToLoginScene(ActionEvent event) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("LoginScene.fxml"));
+            Parent root = loader.load();
+            Scene scene = new Scene(root);
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            stage.setScene(new Scene(loader.load()));
+            stage.setScene(scene);
             stage.show();
         } catch (Exception e) {
             e.printStackTrace();

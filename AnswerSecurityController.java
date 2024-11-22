@@ -71,7 +71,7 @@ public class AnswerSecurityController implements Initializable {
 
         if(Answer1encrypted.equals(EncryptedAnswer1) && Answer2encrypted.equals(EncryptedAnswer2)){
             resultlabel.setText("Correct answers entered, proceeding to password changer");
-            //switchToPassChangeScene(event); REMOVE COMMENT KEEP CODE
+            switchToPassChangeScene(event);
         }
         else{
             resultlabel.setText("One or more of your answers are incorrect");

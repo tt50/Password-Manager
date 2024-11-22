@@ -139,6 +139,42 @@ public class storeCredentials {
         return writeUpdate(updated);
     }
 
+     public String checkPasswordStrength(String password)
+    {
+        // Check the password's length...
+        if(password.length() < 8)
+        {
+            // And if not long enough, return a message saying so
+            return "Weak: Password must be at least 8 characters.";
+        }
+        // Check if the password contains any capital letters...
+        if(!password.matches(".*[A-Z].*"))
+        {
+            // And if not, return a message saying so
+            return "Weak: Password must contain at least one uppercase letter.";
+        }
+        // Check if the password contains any lowercase letters...
+        if(!password.matches(".*[a-z].*"))
+        {
+            // And if not, return a message saying so
+            return "Weak: Password must contain at least one lower case letter.";
+        }
+        // Check if the password contains any digits...
+        if(!password.matches(".*\\d.*"))
+        {
+            // And if not, return a message saying so
+            return "Weak: Password must contain at least one digit.";
+        }
+        // Check if the password contains any special characters...
+        if(!password.matches(".*[!@#$%^&*()].*"))
+        {
+            // And if not, return a message recommending them
+            return "Moderate: Add a special character for more strength.";
+        }
+        // Otherwise, simple return that it is a strong password
+        return "String: Good password!";
+    }
+
     public static void main(String[] args) { //an example of how the class works
         storeCredentials file = new storeCredentials("test.txt", "password", "user", "key", "s", "s", "s", "s");
         System.out.println("Content prior after file is created: \n");

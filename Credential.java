@@ -33,14 +33,34 @@ public class Credential
 
 	// Getter methods
 	// 	Function to retrieve nickname
+	public String getNickname()
+	{
+		return nickname;
+	}
 
 	// 	Function to retrieve username
+	public String getUsername()
+	{
+		return username;
+	}
 
 	// 	Function to retrieve hashed password
+	public String getEncryptedPassword()
+	{
+		return encryptedPassword;
+	}
 
 	// 	Function to retrieve the encryption key
+	public String getEncryptionKey()
+	{
+		return encryptionKey;
+	}
 
 	// 	Function to get the note
+	public String getNote()
+	{
+		return note;
+	}
 
 	// 	Local method to retrieve decrypted password
 

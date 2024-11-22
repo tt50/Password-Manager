@@ -41,13 +41,17 @@ public class PasswordChanger {
         String AssociatedUsername = AccountInfo.get(0);
         String AssociatedPassword = AccountInfo.get(1);
         String AssociatedKey = AccountInfo.get(2);
+        String AssociatedQuestion1 = AccountInfo.get(3);
+        String AssociatedAnswer1 = AccountInfo.get(4);
+        String AssociatedQuestion2 = AccountInfo.get(5);
+        String AssociatedAnswer2 = AccountInfo.get(6);
 
-        String oldLine = "PASS: " + AssociatedPassword + "," + "USER: " + AssociatedUsername + "," + "KEY: " + AssociatedKey;
+        String oldLine = "PASS: " + AssociatedPassword + "," + "USER: " + AssociatedUsername + "," + "KEY: " + AssociatedKey + "," + "QUESTION1: " + AssociatedQuestion1 + "," + "ANSWER1: " + AssociatedAnswer1 + "," + "QUESTION2: " + AssociatedQuestion2 + "," + "ANSWER2: " + AssociatedAnswer2;
 
         // Encrypt the new password
         String encryptedNewPassword = encryptLoginPassword.EncryptedLoginPassword(newPassword, AssociatedKey);
 
-        String newLine = "PASS: " + encryptedNewPassword + "," + "USER: " + AssociatedUsername + "," + "KEY: " + AssociatedKey;
+        String newLine = "PASS: " + encryptedNewPassword + "," + "USER: " + AssociatedUsername + "," + "KEY: " + AssociatedKey + "," + "QUESTION1: " + AssociatedQuestion1 + "," + "ANSWER1: " + AssociatedAnswer1 + "," + "QUESTION2: " + AssociatedQuestion2 + "," + "ANSWER2: " + AssociatedAnswer2;;
         String filename = "StoredCredentials.txt";
 
         try {

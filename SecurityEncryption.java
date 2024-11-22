@@ -2,12 +2,20 @@ import javax.crypto.Cipher;
 import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Base64;
+import java.util.List;
+
 
 public class SecurityEncryption {
 
     private static final String ALGORITHM = "AES";
     private static final String SECRET_KEY = "MySuperSecretKey"; // Example secret key
+
+
 
     /**
      * Encrypts a given answer using AES encryption.
@@ -66,4 +74,5 @@ public class SecurityEncryption {
             e.printStackTrace();
         }
     }
+
 }

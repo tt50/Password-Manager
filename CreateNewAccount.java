@@ -27,8 +27,8 @@ public class CreateNewAccount {
             PasswordEncryption.EncryptionResult passwordResult = PasswordEncryption.encryptPassword(passwordInput);
 
             // Encrypt the security answers
-            String encryptedAnswer1 = EncryptSecurity.encryptAnswer(securityAnswer1);
-            String encryptedAnswer2 = EncryptSecurity.encryptAnswer(securityAnswer2);
+            String encryptedAnswer1 = EncryptSecurity.encryptAnswer(securityAnswer1); //fix
+            String encryptedAnswer2 = EncryptSecurity.encryptAnswer(securityAnswer2); //fix
 
             // Save encrypted password and password key
             String encryptedPassword = passwordResult.getEncryptedText();

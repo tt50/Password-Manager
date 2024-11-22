@@ -11,14 +11,6 @@ public class storeCredentials {
 
     public storeCredentials(String file, String password, String user, String key, String question1, String answer1, String question2, String answer2){ //used if no text file exists
         filename = file;
-        // Encrypt security answers
-        SecurityEncryption encryption = new SecurityEncryption();
-        try {
-            answer1 = encryption.encryptAnswer(answer1);
-            answer2 = encryption.encryptAnswer(answer2);
-        } catch (Exception e) {
-            System.out.println("Error encrypting security answers.");
-        }
 
         String contents = "PASS: " + password + "," +
                 "USER: " + user + "," +

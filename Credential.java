@@ -75,7 +75,14 @@ public class Credential
 	// 	Function to save to file
 	public void saveToFile(String filename)
 	{
+		// 'Try' creating a Buffered Writer connected to the provided file name
 
+			// If successful, write the content into the file...
+
+			// And append a new line feed so that saved data isn't one long line
+
+		// 'Catch' any IOExceptions that may be thrown
+		
 	}
 
 	// Function to read from file

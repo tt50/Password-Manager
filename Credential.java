@@ -73,7 +73,7 @@ public class Credential
 
 	// Other Functions
 	// 	Function to save to file
-	public void saveToFile()
+	public void saveToFile(String filename)
 	{
 
 	}

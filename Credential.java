@@ -1,7 +1,5 @@
 
-import java.io.BufferedWriter;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -98,12 +96,41 @@ public class Credential
 	public List<Credential> readFromFile(String fileName)
 	{
 		// Create a List of type 'Credential' to save all the values from file in
-
+		List<Credential> credentials = new ArrayList<>();
 		// Using a try-catch block, write details into the newly created List
+		try(BufferedReader reader = new BufferedReader(new FileReader(fileName)))
+		{
+			// Variable to save line
+			String line;
 
+			// While there are more lines to be read
+			while((line = reader.readLine()) != null)
+			{
+				// add each of the credentials that are of length 4 to credentials
+				String[] parts = line.trim().split(", ");
+
+				// If the length of the array is 4, create a Credential object with those values and add it to the ArrayList created above
+				if(parts.length == 4)
+				{
+					try
+					{
+						Credential credential = new Credential(parts[0], parts[1], parts[2], parts[3]);
+						credentials.add(credential);
+					}
+					catch(Exception e)
+					{
+						e.printStackTrace();
+					}
+				}
+			}
+		}
 		// If unsuccessful, throw an exception
-
+		catch(IOException e)
+		{
+			e.printStackTrace();
+		}
 
 		// If all works out, return the created List with the credentials in it
+		return credentials;
 	}
 }

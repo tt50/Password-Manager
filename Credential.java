@@ -21,7 +21,14 @@ public class Credential
 	// Constructors
 	public Credential(String nickname, String username, String password, String note) throws Exception
 	{
-		
+		this.nickname = nickname;
+		this.username = username;
+		this.note = note;
+
+		// Encrypt the password and store the result along with the encryption key
+		PasswordEncryption.EncryptionResult result = PasswordEncryption.encryptPassword(password);
+		this.encryptedPassword = result.getEncryptedText();
+		this.encryptionKey = result.getKey();
 	}
 
 	// Getter methods

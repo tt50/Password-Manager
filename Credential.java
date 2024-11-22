@@ -1,4 +1,7 @@
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.List;
 
 public class Credential
@@ -76,13 +79,18 @@ public class Credential
 	public void saveToFile(String filename)
 	{
 		// 'Try' creating a Buffered Writer connected to the provided file name
-
+		try(BufferedWriter writer = new BufferedWriter(new FileWriter(filename, true)))
+		{
 			// If successful, write the content into the file...
-
+			writer.write(nickname + ", " + username + ", " + encryptedPassword + ", " + note);
 			// And append a new line feed so that saved data isn't one long line
-
+			writer.newLine();
+		}
 		// 'Catch' any IOExceptions that may be thrown
-		
+		catch(IOException e)
+		{
+			e.printStackTrace();
+		}
 	}
 
 	// Function to read from file

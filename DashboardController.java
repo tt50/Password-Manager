@@ -1,14 +1,19 @@
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Parent;
 import javafx.scene.control.*;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.Node;
 
 public class DashboardController {
-
     @FXML
     private Label usernameLabel;
     private String username;
@@ -90,4 +95,47 @@ public class DashboardController {
             e.printStackTrace();
         }
     }
+
+    @FXML
+    private ListView<Credential> credentialsListView;
+
+    public void initialize() {
+        // list of credentials, hardcoded test examples
+        ObservableList<Credential> credentialsList = FXCollections.observableArrayList();
+        credentialsList.add(new Credential("Temple", "tun58761"));
+        credentialsList.add(new Credential("Github", "tt50"));
+
+        credentialsListView.setItems(credentialsList);
+
+        // set a custom cell factory
+        credentialsListView.setCellFactory(param -> new ListCell<Credential>() {
+            @Override
+            protected void updateItem(Credential item, boolean empty) {
+                super.updateItem(item, empty);
+                if (item != null && !empty) {
+                    // each credential detail is displayed in a vbox
+                    VBox vbox = new VBox(10);
+                    Label nicknameLabel = new Label(item.getNickname());
+                    Label usernameLabel = new Label(item.getUsername());
+                    vbox.getChildren().addAll(nicknameLabel, usernameLabel);
+                    setGraphic(vbox);
+                } else {
+                    setGraphic(null);
+                }
+            }
+        });
+    }
+
+    // set up reading from user credential file, to add to credentialsList
+
+    // set up add new credentials
+
+    // set up detailsPanel
+    /*
+    detail panel will display nickname, username, password, notes
+    and include clipboard buttons and a edit button
+     */
+
+    @FXML
+    private AnchorPane detailsPanel;
 }

@@ -2,6 +2,7 @@
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Credential
@@ -96,6 +97,13 @@ public class Credential
 	// Function to read from file
 	public List<Credential> readFromFile(String fileName)
 	{
-		throw new UnsupportedOperationException("Not supported yet.");
+		// Create a List of type 'Credential' to save all the values from file in
+
+		// Using a try-catch block, write details into the newly created List
+
+		// If unsuccessful, throw an exception
+
+
+		// If all works out, return the created List with the credentials in it
 	}
 }

@@ -4,14 +4,19 @@ public class Credential
 	// Variables
 
 	// 	1) For saving nickname
+	private String nickname;
 
 	// 	2) For saving username
+	private String username;
 
 	// 	3) For saving encrypted password
+	private String encryptedPassword;
 
 	// 	4) For saving encryption key
+	private String encryptionKey;		// AES key for encryption/decryption
 
 	// 	5) For saving note
+	private String note;
 
 	// Constructors
 
@@ -34,6 +39,6 @@ public class Credential
 	// 	Function to save to file
 	public void saveToFile()
 	{
-		
+
 	}
 }

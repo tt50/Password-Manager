@@ -63,6 +63,10 @@ public class Credential
 	}
 
 	// 	Local method to retrieve decrypted password
+	public String getDecryptedPassword() throws Exception
+	{
+		return PasswordDecryption.decryptPassword(this.encryptedPassword, this.encryptionKey);
+	}
 
 
 	// Other Functions

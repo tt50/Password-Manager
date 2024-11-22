@@ -75,4 +75,10 @@ public class Credential
 	{
 
 	}
+
+	// Function to read from file
+	public List<Credential> readFromFile(String fileName)
+	{
+		throw new UnsupportedOperationException("Not supported yet.");
+	}
 }

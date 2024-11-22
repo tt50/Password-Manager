@@ -26,6 +26,7 @@ Users will be able to create their own Password Manager accounts and will have a
 ![This is a screenshot.](images.png)
 # How to run (Works only on Windows)
 On Windows download the Java JDK 23 download: https://www.oracle.com/java/technologies/downloads/#jdk23-windows.
+
 Instructions to run the Password Manager Application.   
 - Download the latest .jar file from the Release section on the right on GitHub. It will be labeled Password_Manager.jar file. 
 - After the .jar file is downloaded, open the file in your downloads folder.

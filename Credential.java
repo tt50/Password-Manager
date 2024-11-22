@@ -19,7 +19,10 @@ public class Credential
 	private String note;
 
 	// Constructors
-
+	public Credential(String nickname, String username, String password, String note) throws Exception
+	{
+		
+	}
 
 	// Getter methods
 	// 	Function to retrieve nickname

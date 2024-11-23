@@ -13,22 +13,22 @@
             <Font name="System Bold" size="27.0" />
          </font>
       </Label>
-      <Label layoutX="14.0" layoutY="100.0" text="Question 1:" underline="true">
+      <Label fx:id="q1label" layoutX="14.0" layoutY="100.0" text="Question 1:" underline="true">
          <font>
             <Font size="14.0" />
          </font>
       </Label>
-      <Label layoutX="14.0" layoutY="136.0" text="Answer:">
+      <Label fx:id="a1label" layoutX="14.0" layoutY="136.0" text="Answer:">
          <font>
             <Font size="14.0" />
          </font>
       </Label>
-      <Label layoutX="14.0" layoutY="190.0" text="Question 2:" underline="true">
+      <Label fx:id="q2label" layoutX="14.0" layoutY="190.0" text="Question 2:" underline="true">
          <font>
             <Font size="14.0" />
          </font>
       </Label>
-      <Label layoutX="14.0" layoutY="229.0" text="Answer:">
+      <Label fx:id="a2label" layoutX="14.0" layoutY="229.0" text="Answer:">
          <font>
             <Font size="14.0" />
          </font>
@@ -45,8 +45,14 @@
             <Font size="14.0" />
          </font>
       </Label>
-      <Button layoutX="283.0" layoutY="342.0" mnemonicParsing="false" onAction="#goButtonClicked" text="Go" />
-      <Label fx:id="resultlabel" layoutX="155.0" layoutY="308.0" text="Please fill out both boxes, and then click the go button below" />
-      <Button layoutX="506.0" layoutY="21.0" mnemonicParsing="false" onAction="#dashButtonClicked" text="Dashboard" />
+      <Button fx:id="proceedbutton" layoutX="283.0" layoutY="342.0" mnemonicParsing="false" onAction="#goButtonClicked" text="Go" />
+      <Label fx:id="resultlabel" layoutX="155.0" layoutY="308.0" text="Please enter your username to proceed to the next step" />
+      <Label fx:id="ulabel" layoutX="14.0" layoutY="72.0" text="Enter your username:" underline="true">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <TextField fx:id="getuser" layoutX="149.0" layoutY="70.0" />
+      <Button fx:id="ubutton" layoutX="315.0" layoutY="70.0" mnemonicParsing="false" onAction="#ubuttonClicked" text="Go" />
    </children>
 </AnchorPane>

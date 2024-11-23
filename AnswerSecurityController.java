@@ -5,6 +5,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
@@ -28,6 +29,22 @@ public class AnswerSecurityController implements Initializable {
     private Label question1label;
     @FXML
     private Label question2label;
+    @FXML
+    private Label q1label;
+    @FXML
+    private Label a1label;
+    @FXML
+    private Label q2label;
+    @FXML
+    private Label a2label;
+    @FXML
+    private Label ulabel;
+    @FXML
+    private TextField getuser;
+    @FXML
+    private Button ubutton;
+    @FXML
+    private Button proceedbutton;
 
     private static final String USERNAME_PATTERN = "USER: ";
     private static final String KEY_PATTERN = "KEY: ";
@@ -38,15 +55,56 @@ public class AnswerSecurityController implements Initializable {
 
     private String Answer1encrypted = "";
     private String Answer2encrypted = "";
-    private String searchUser = "milky"; //TEMP FOR TESTING (IF YOU SEE THIS REMIND JACK TO FIX)
 
+    private final UsernameEncryption EncryptUsername = new UsernameEncryption(); // Instance of UsernameEncryption
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle){
+        q1label.setVisible(false); q1label.setDisable(true);
+        a1label.setVisible(false); a1label.setDisable(true);
+        q2label.setVisible(false); q2label.setDisable(true);
+        a2label.setVisible(false); a2label.setDisable(true);
+        answer1field.setVisible(false); answer1field.setDisable(true);
+        answer2field.setVisible(false); answer2field.setDisable(true);
+        question1label.setVisible(false); question1label.setDisable(true);
+        question2label.setVisible(false); question2label.setDisable(true);
+        proceedbutton.setVisible(false); proceedbutton.setDisable(true);
+    }
+
+    @FXML
+    public void ubuttonClicked(ActionEvent event) throws Exception{
+        String enteredUser = getuser.getText();
+
+        Boolean result = AuthenticationForTextFile(enteredUser);
+        if(result == true){
+            initial(enteredUser);
+            resultlabel.setText("Please fill both boxes and then click the go button below");
+        }
+        else{
+            resultlabel.setText("Username is either spelled incorrectly or isn't stored");
+        }
+
+
+    }
+
+    private void initial(String enteredUser){
+        q1label.setVisible(true); q1label.setDisable(false);
+        a1label.setVisible(true); a1label.setDisable(false);
+        q2label.setVisible(true); q2label.setDisable(false);
+        a2label.setVisible(true); a2label.setDisable(false);
+        answer1field.setVisible(true); answer1field.setDisable(false);
+        answer2field.setVisible(true); answer2field.setDisable(false);
+        question1label.setVisible(true); question1label.setDisable(false);
+        question2label.setVisible(true); question2label.setDisable(false);
+        proceedbutton.setVisible(true); proceedbutton.setDisable(false);
+        ulabel.setVisible(false); ulabel.setDisable(true);
+        getuser.setVisible(false); getuser.setDisable(true);
+        ubutton.setVisible(false); ubutton.setDisable(true);
+
         String encryptedLoginUsername = null;
         try {
             UsernameEncryption EncryptUsername = new UsernameEncryption();
-            encryptedLoginUsername = EncryptUsername.EncryptedUsername(searchUser);
+            encryptedLoginUsername = EncryptUsername.EncryptedUsername(enteredUser);
         }
         catch (Exception e){
             System.err.println("Problem occurred while initializing AnswerSecurity Scene: " + e.getMessage());
@@ -153,6 +211,40 @@ public class AnswerSecurityController implements Initializable {
         }
         System.out.println("Login Fail, username not found");
         return null; // Username was not found in .txt file
+    }
+
+    public boolean AuthenticationForTextFile(String usernameInput) throws Exception {
+        if (usernameInput == null) {
+            System.out.println("Error: empty username");
+            return false;
+        }
+
+        List<String> AccountInfo;
+
+        // Encrypt the username input
+        String encryptedLoginUsername = EncryptUsername.EncryptedUsername(usernameInput);
+        System.out.println("Encrypted Username: " + encryptedLoginUsername);
+
+        // parse the txt file for the username
+        AccountInfo = parseFile("StoredCredentials.txt", encryptedLoginUsername);
+        if (AccountInfo == null || AccountInfo.size() < 3)
+            return false;
+        String AssociatedUsername = AccountInfo.get(0);
+        String AssociatedPassword = AccountInfo.get(1);
+        String AssociatedKey = AccountInfo.get(2);
+
+
+        //Testing output
+        System.out.println("Associated Username: " + AssociatedUsername);
+        System.out.println("Associated Password: " + AssociatedPassword);
+        System.out.println("Associated Key: " + AssociatedKey);
+        System.out.println("Encrypted Username Input: " + encryptedLoginUsername);
+
+        if (!AssociatedUsername.equals(encryptedLoginUsername))
+            return false;
+        else{
+            return true;
+        }
     }
 
 }

@@ -1,9 +1,9 @@
 // Get nickname and username for the credentials table view
-public class Credential {
+public class CredentialDisplay {
     private String nickname;
     private String username;
 
-    public Credential(String nickname, String username) {
+    public CredentialDisplay(String nickname, String username) {
         this.nickname = nickname;
         this.username = username;
     }

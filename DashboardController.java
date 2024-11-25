@@ -5,9 +5,7 @@ import javafx.fxml.FXML;
 import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -19,7 +17,7 @@ public class DashboardController {
     private String username;
 
     // Display Currently Logged in User
-    public void setUsername(String username){
+    public void setUsername(String username) throws Exception {
         this.username=username;
         usernameLabel.setText(username);
     }
@@ -97,20 +95,26 @@ public class DashboardController {
     }
 
     @FXML
-    private ListView<Credential> credentialsListView;
+    private ListView<CredentialDisplay> credentialsListView;
 
     public void initialize() {
         // list of credentials, hardcoded test examples
-        ObservableList<Credential> credentialsList = FXCollections.observableArrayList();
-        credentialsList.add(new Credential("Temple", "tun58761"));
-        credentialsList.add(new Credential("Github", "tt50"));
+        ObservableList<CredentialDisplay> credentialsList = FXCollections.observableArrayList();
+        credentialsList.add(new CredentialDisplay("Temple", "tun58761"));
+        credentialsList.add(new CredentialDisplay("Github", "tt50"));
+        credentialsList.add(new CredentialDisplay("1", "1"));
+        credentialsList.add(new CredentialDisplay("2", "2"));
+        credentialsList.add(new CredentialDisplay("3", "3"));
+        credentialsList.add(new CredentialDisplay("4", "4"));
+        credentialsList.add(new CredentialDisplay("5", "5"));
+        credentialsList.add(new CredentialDisplay("6", "6"));
 
         credentialsListView.setItems(credentialsList);
 
         // set a custom cell factory
-        credentialsListView.setCellFactory(param -> new ListCell<Credential>() {
+        credentialsListView.setCellFactory(param -> new ListCell<CredentialDisplay>() {
             @Override
-            protected void updateItem(Credential item, boolean empty) {
+            protected void updateItem(CredentialDisplay item, boolean empty) {
                 super.updateItem(item, empty);
                 if (item != null && !empty) {
                     // each credential detail is displayed in a vbox
@@ -124,11 +128,13 @@ public class DashboardController {
                 }
             }
         });
+
     }
 
     // set up reading from user credential file, to add to credentialsList
 
     // set up add new credentials
+    // set up deleting credentials
 
     // set up detailsPanel
     /*

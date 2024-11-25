@@ -12,7 +12,6 @@ public class LoginAuthenticationForTextFile {
     private final UsernameEncryption EncryptUsername = new UsernameEncryption(); // Instance of UsernameEncryption
     private final PasswordEncryptionForExistingLogin encryptLoginPassword = new PasswordEncryptionForExistingLogin(); // Instance of PasswordEncryptionForExistingLogin
 
-
     public boolean AuthenticationForTextFile(String usernameInput, String passwordInput) throws Exception {
         if (usernameInput == null || passwordInput == null) {
             System.out.println("Error: empty username or password ");
@@ -48,6 +47,7 @@ public class LoginAuthenticationForTextFile {
 
         return AssociatedPassword.equals(encryptedLoginPassword);
     }
+
 
     public List<String> parseFile(String fileName, String usernameSearched) {
         List<String> accountInfo = new ArrayList<>();

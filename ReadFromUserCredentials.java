@@ -5,10 +5,41 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ReadFromUserCredentials {
-    private static final String USERNAME_PATTERN = "USER: ";
-    private static final String PASSWORD_PATTERN = "PASS: ";
+    private static final String USERID_PATTERN = "USERID: ";
     private static final String NAME_PATTERN = "NAME: ";
+    private static final String USERNAME_PATTERN = "USERNAME: ";
     private static final String NOTE_PATTERN = "NOTE: ";
+    private final UsernameEncryption EncryptUsername = new UsernameEncryption(); // Instance of UsernameEncryption
+    private final PasswordEncryptionForExistingLogin encryptLoginPassword = new PasswordEncryptionForExistingLogin(); // Instance of PasswordEncryptionForExistingLogin
+    public boolean ReadUserCredentials(String usernameInput) throws Exception {
+        if (usernameInput == null ) {
+            System.out.println("Error: empty username or password ");
+            return false;
+        }
+
+        List<String> AccountInfo;
+
+        // Encrypt the username input
+        String encryptedLoginUsername = EncryptUsername.EncryptedUsername(usernameInput);
+        System.out.println("Encrypted Username: " + encryptedLoginUsername);
+
+        // parse the txt file for the username
+        AccountInfo = parseUserCredentialFile("TestFile.txt", encryptedLoginUsername);
+        if (AccountInfo == null || AccountInfo.size() < 4)
+            return false;
+        String userID = AccountInfo.get(0); //user id
+        String Nickname = AccountInfo.get(1);
+        String Username = AccountInfo.get(2);
+        String Note = AccountInfo.get(3);
+
+        //Testing output
+        System.out.println("userID: " + userID); // user id
+        System.out.println("Nickname: " + Nickname);
+        System.out.println("Username: " + Username);
+        System.out.println("Note: " + Note);
+
+        return userID.equals(encryptedLoginUsername);
+    }
 
 
     // need to revise
@@ -18,28 +49,28 @@ public class ReadFromUserCredentials {
         try (BufferedReader br = new BufferedReader(new FileReader(fileName))) {
             String line;
             while ((line = br.readLine()) != null) {
-                int usernameStartIndex = line.indexOf(USERNAME_PATTERN);
-                int passwordStartIndex = line.indexOf(PASSWORD_PATTERN);
+                int useridStartIndex = line.indexOf(USERID_PATTERN);
                 int nameStartIndex = line.indexOf(NAME_PATTERN);
+                int usernameStartIndex = line.indexOf(USERNAME_PATTERN);
                 int noteStartIndex = line.indexOf(NOTE_PATTERN);
 
-                if (passwordStartIndex == 0 && usernameStartIndex > passwordStartIndex && nameStartIndex > usernameStartIndex && noteStartIndex > nameStartIndex) {
-                    String password = line.substring(passwordStartIndex + PASSWORD_PATTERN.length(), usernameStartIndex).replace(",","").trim();
-                    String username = line.substring(usernameStartIndex + USERNAME_PATTERN.length(), nameStartIndex).replace(",","").trim();
-                    String name = line.substring(nameStartIndex + USERNAME_PATTERN.length(), noteStartIndex).replace(",","").trim();
+                if (useridStartIndex == 0 && nameStartIndex > useridStartIndex && usernameStartIndex > nameStartIndex && noteStartIndex > usernameStartIndex) {
+                    String userID = line.substring(useridStartIndex + USERID_PATTERN.length(), usernameStartIndex).replace(",","").trim();
+                    String name = line.substring(nameStartIndex + NAME_PATTERN.length(), nameStartIndex).replace(",","").trim();
+                    String username = line.substring(nameStartIndex + USERNAME_PATTERN.length(), noteStartIndex).replace(",","").trim();
                     String note = line.substring(noteStartIndex + NOTE_PATTERN.length()).replace(",","").trim();
 
-                    System.out.println("Parsed Username: |" + username + "|");
-                    System.out.println("Parsed Password: |" + password + "|");
-                    System.out.println("Parsed Key: |" + name + "|");
-                    System.out.println("Parsed Key: |" + note + "|");
+                    System.out.println("userID:  |" + userID + "|");
+                    System.out.println("Nickname: |" + name + "|");
+                    System.out.println("Username:  |" + username + "|");
+                    System.out.println("Note: |" + note + "|");
 
                     if (username.equals(usernameSearched)) {
                         System.out.println("username found");
 
-                        accountInfo.add(username);
-                        accountInfo.add(password);
+                        accountInfo.add(userID);
                         accountInfo.add(name);
+                        accountInfo.add(username);
                         accountInfo.add(note);
                         return accountInfo;
                     }

@@ -39,9 +39,28 @@ public class SettingsController {
             e.printStackTrace();
         }
     }
+    @FXML
+    public void changeToSecurityCheck(ActionEvent event){
+        switchToAnswerSecurityScene(event);
+    }
+
+    private void switchToAnswerSecurityScene(ActionEvent event){
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("AnswerSecurityScene.fxml"));
+            Parent root = loader.load();
+            Scene scene = new Scene(root);
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            scene.getStylesheets().add(getClass().getResource("styles.css").toExternalForm());
+            stage.setScene(scene);
+            stage.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 
     // Password Change Button
-    @FXML
+    /*@FXML
     public void PasswordChangeButtonClicked(ActionEvent event){ //NEW
         switchtoPassChangeScene(event);
     }
@@ -58,5 +77,5 @@ public class SettingsController {
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
+    }*/
 }

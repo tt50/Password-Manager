@@ -30,6 +30,7 @@ public class LoginController {
         boolean isAuthenticated = auth.AuthenticationForTextFile(username, password);
         if (isAuthenticated) {
             loginResultLabel.setText("Login successful!");
+            UserSession.getInstance().setUsername(username); // Store username of user logged in
             switchToDashboardScene(event, username);
 
         } else {
@@ -50,8 +51,6 @@ public class LoginController {
 
             // Pass username to the dashboard controller
             DashboardController newDashboardController = loader.getController();
-            newDashboardController.setUsername(username);
-
             Scene scene = new Scene(root);
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             scene.getStylesheets().add(getClass().getResource("styles.css").toExternalForm());

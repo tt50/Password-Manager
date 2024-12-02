@@ -46,6 +46,9 @@ public class AnswerSecurityController implements Initializable {
     @FXML
     private Button proceedbutton;
 
+    private String username = UserSession.getInstance().getUsername();
+
+
     private static final String USERNAME_PATTERN = "USER: ";
     private static final String KEY_PATTERN = "KEY: ";
     private static final String QUESTION1_PATTERN = "QUESTION1: ";

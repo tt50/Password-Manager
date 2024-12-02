@@ -16,12 +16,6 @@ public class DashboardController {
     private Label usernameLabel;
     private String username;
 
-    // Display Currently Logged in User
-    public void setUsername(String username) throws Exception {
-        this.username=username;
-        usernameLabel.setText(username);
-    }
-
     // Settings Button
     @FXML
     public void settingsButtonClicked(ActionEvent event){
@@ -31,10 +25,6 @@ public class DashboardController {
             try {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("SettingsScene.fxml"));
                 Parent root = loader.load();
-
-                //Pass the username to the settings controller
-                SettingsController newSettingsController = loader.getController();
-                newSettingsController.setUsername(username);
                 Scene scene = new Scene(root);
                 Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
                 scene.getStylesheets().add(getClass().getResource("styles.css").toExternalForm());
@@ -89,6 +79,7 @@ public class DashboardController {
             Parent root = loader.load();
             Scene scene = new Scene(root);
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            scene.getStylesheets().add(getClass().getResource("styles.css").toExternalForm());
             stage.setScene(scene);
             stage.show();
         } catch (Exception e) {
@@ -96,31 +87,50 @@ public class DashboardController {
         }
     }
 
+
     @FXML
     private ListView<CredentialDisplay> credentialsListView;
 
+    @FXML
+    private AnchorPane detailsPanel;
+
+    @FXML
+    private Label detailNicknameLabel;
+
+    @FXML
+    private Label detailUsernameLabel;
+
+    @FXML
+    private Label detailPasswordLabel;
+
+    @FXML
+    private TextArea detailNotesTextArea;
+
+    private final ObservableList<DisplayCredentialDetails> credentialsList = FXCollections.observableArrayList();
+
     public void initialize() {
-        // list of credentials, hardcoded test examples
-        ObservableList<CredentialDisplay> credentialsList = FXCollections.observableArrayList();
-        credentialsList.add(new CredentialDisplay("Temple", "tun58761"));
-        credentialsList.add(new CredentialDisplay("Github", "tt50"));
-        credentialsList.add(new CredentialDisplay("1", "1"));
-        credentialsList.add(new CredentialDisplay("2", "2"));
-        credentialsList.add(new CredentialDisplay("3", "3"));
-        credentialsList.add(new CredentialDisplay("4", "4"));
-        credentialsList.add(new CredentialDisplay("5", "5"));
-        credentialsList.add(new CredentialDisplay("6", "6"));
+        if (usernameLabel != null) {
+            String username = UserSession.getInstance().getUsername();
+            if (username != null) {
+                usernameLabel.setText(username);
+            }
+        }
 
-        credentialsListView.setItems(credentialsList);
+        credentialsList.add(new DisplayCredentialDetails("Temple", "tun58761", "password123", "University account."));
+        credentialsList.add(new DisplayCredentialDetails("Github", "tt50", "securepass456", "GitHub development account."));
+        ObservableList<CredentialDisplay> displayList = FXCollections.observableArrayList();
+        for (DisplayCredentialDetails credential : credentialsList) {
+            displayList.add(new CredentialDisplay(credential.getNickname(), credential.getUsername()));
+        }
+        credentialsListView.setItems(displayList);
 
-        // set a custom cell factory
+        // Set custom cell factory
         credentialsListView.setCellFactory(param -> new ListCell<CredentialDisplay>() {
             @Override
             protected void updateItem(CredentialDisplay item, boolean empty) {
                 super.updateItem(item, empty);
                 if (item != null && !empty) {
-                    // each credential detail is displayed in a vbox
-                    VBox vbox = new VBox(10);
+                    VBox vbox = new VBox(5);
                     Label nicknameLabel = new Label(item.getNickname());
                     Label usernameLabel = new Label(item.getUsername());
                     vbox.getChildren().addAll(nicknameLabel, usernameLabel);
@@ -131,19 +141,31 @@ public class DashboardController {
             }
         });
 
+        credentialsListView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue != null) {
+                displayDetails(newValue);
+            }
+        });
+
+        detailsPanel.setVisible(false);
     }
 
-    // set up reading from user credential file, to add to credentialsList
+    private void displayDetails(CredentialDisplay selectedCredential) {
+        for (DisplayCredentialDetails credential : credentialsList) {
+            if (credential.getNickname().equals(selectedCredential.getNickname()) &&
+                    credential.getUsername().equals(selectedCredential.getUsername())) {
 
-    // set up add new credentials
-    // set up deleting credentials
+                // Populate details
+                detailNicknameLabel.setText(credential.getNickname());
+                detailUsernameLabel.setText(credential.getUsername());
+                detailPasswordLabel.setText(credential.getPassword());
+                detailNotesTextArea.setText(credential.getNotes());
 
-    // set up detailsPanel
-    /*
-    detail panel will display nickname, username, password, notes
-    and include clipboard buttons and a edit button
-     */
+                // Make the details panel visible
+                detailsPanel.setVisible(true);
+                return;
+            }
+        }
+    }
 
-    @FXML
-    private AnchorPane detailsPanel;
 }

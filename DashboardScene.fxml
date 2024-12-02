@@ -2,8 +2,8 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Rectangle?>
@@ -43,22 +43,34 @@
       <!-- credentials table -->
       <ScrollPane layoutX="98.0" layoutY="53.0" prefHeight="604.0" prefWidth="207.0">
          <content>
-            <ListView fx:id="credentialsListView" layoutX="98.0" layoutY="53.0" prefHeight="604.0" prefWidth="207.0"/>
+            <ListView fx:id="credentialsListView" layoutX="98.0" layoutY="53.0" prefHeight="604.0" prefWidth="207.0" />
          </content>
       </ScrollPane>
 
       <!-- add new credentials -->
-      <VBox alignment="CENTER" layoutX="98.0" layoutY="10.0" prefHeight="53.0" prefWidth="207.0">
+      <VBox alignment="CENTER" layoutX="98.0" layoutY="10.0" prefHeight="35.0" prefWidth="207.0">
          <children>
-            <Button mnemonicParsing="false" prefHeight="35.0" prefWidth="91.0" text="+" />
+            <Button mnemonicParsing="false" onAction="#addNewCredentialButton" prefHeight="35.0" prefWidth="91.0" text="+" />
          </children>
       </VBox>
 
-      <!-- details view -->
-      <AnchorPane fx:id="detailsPanel" layoutX="305.0" layoutY="53.0" prefHeight="604.0" prefWidth="450.0" visible="false" style="-fx-background-color: #f0f0f0;">
-         <children>
-            <AnchorPane fx:id="viewDetailsContainer" layoutX="10.0" layoutY="10.0" prefHeight="584.0" prefWidth="430.0"/>
-         </children>
-      </AnchorPane>
+            <!-- dashboard Pane -->
+      <AnchorPane fx:id="dashboardPane" layoutX="160.0" layoutY="30.0" prefHeight="432.0" prefWidth="362.0">
+
+               <!-- Details View -->
+         <AnchorPane fx:id="detailsPanel" layoutX="155.0" layoutY="30.0" prefHeight="432.0" prefWidth="362.0" style="-fx-background-color: #f0f0f0;" visible="false">
+            <children>
+               <AnchorPane fx:id="viewDetailsContainer" layoutX="10.0" layoutY="10.0" prefHeight="584.0" prefWidth="430.0" />
+            </children>
+         </AnchorPane>
+
+               <!-- Add Credential View -->
+         <AnchorPane fx:id="addCredentialPanel" layoutX="155.0" layoutY="30.0" prefHeight="432.0" prefWidth="362.0" style="-fx-background-color: #f0f0f0;" visible="false">
+            <children>
+               <AnchorPane fx:id="addCredentialContainer" layoutX="10.0" layoutY="10.0" prefHeight="584.0" prefWidth="430.0" />
+            </children>
+         </AnchorPane>
+
+            </AnchorPane>
    </children>
 </AnchorPane>

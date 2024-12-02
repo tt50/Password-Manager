@@ -150,8 +150,14 @@ public class DashboardController {
     @FXML
     private AnchorPane viewDetailsContainer;
 
+    @FXML
+    private AnchorPane addCredentialPanel;
+    @FXML
+    private AnchorPane addCredentialContainer;
+
     // open ViewDetails.fxml and displays onto the detailspanel within dashboardscene.fxml.
     private void displayDetails(CredentialDisplay selectedCredential) {
+        addCredentialPanel.setVisible(false);
         detailsPanel.setVisible(false);
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("ViewDetails.fxml"));
@@ -176,4 +182,23 @@ public class DashboardController {
         }
         return null;
     }
+
+    // Display the add credential panel
+    @FXML
+    private void addNewCredentialButton(){
+        detailsPanel.setVisible(false);
+        addCredentialPanel.setVisible(true);
+
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("AddCredentials.fxml"));
+            Parent root = loader.load();
+            AddCredentialController controller = loader.getController();
+            addCredentialContainer.getChildren().clear();
+            addCredentialContainer.getChildren().add(root);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 }

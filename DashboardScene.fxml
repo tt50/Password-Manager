@@ -57,11 +57,7 @@
       <!-- details view -->
       <AnchorPane fx:id="detailsPanel" layoutX="305.0" layoutY="53.0" prefHeight="604.0" prefWidth="450.0" visible="false" style="-fx-background-color: #f0f0f0;">
          <children>
-            <Label layoutX="20.0" layoutY="20.0" text="Details Panel">
-               <font>
-                  <Font name="Arial" size="16.0" />
-               </font>
-            </Label>
+            <AnchorPane fx:id="viewDetailsContainer" layoutX="10.0" layoutY="10.0" prefHeight="584.0" prefWidth="430.0"/>
          </children>
       </AnchorPane>
    </children>

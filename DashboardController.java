@@ -92,9 +92,6 @@ public class DashboardController {
     private ListView<CredentialDisplay> credentialsListView;
 
     @FXML
-    private AnchorPane detailsPanel;
-
-    @FXML
     private Label detailNicknameLabel;
 
     @FXML
@@ -146,26 +143,36 @@ public class DashboardController {
                 displayDetails(newValue);
             }
         });
-
-        detailsPanel.setVisible(false);
     }
 
+    @FXML
+    private AnchorPane detailsPanel;
+    @FXML
+    private AnchorPane viewDetailsContainer;
+
     private void displayDetails(CredentialDisplay selectedCredential) {
+        detailsPanel.setVisible(false);
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("ViewDetails.fxml"));
+            Parent root = loader.load();
+            ViewDetailsController controller = loader.getController();
+            controller.setCredential(getCredentialDetails(selectedCredential));
+            viewDetailsContainer.getChildren().clear();
+            viewDetailsContainer.getChildren().add(root);
+
+            detailsPanel.setVisible(true);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private DisplayCredentialDetails getCredentialDetails(CredentialDisplay selectedCredential) {
         for (DisplayCredentialDetails credential : credentialsList) {
-            if (credential.getNickname().equals(selectedCredential.getNickname()) &&
-                    credential.getUsername().equals(selectedCredential.getUsername())) {
-
-                // Populate details
-                detailNicknameLabel.setText(credential.getNickname());
-                detailUsernameLabel.setText(credential.getUsername());
-                detailPasswordLabel.setText(credential.getPassword());
-                detailNotesTextArea.setText(credential.getNotes());
-
-                // Make the details panel visible
-                detailsPanel.setVisible(true);
-                return;
+            if (credential.getNickname().equals(selectedCredential.getNickname()) && credential.getUsername().equals(selectedCredential.getUsername())) {
+                return credential;
             }
         }
+        return null;
     }
 
 }

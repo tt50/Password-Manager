@@ -112,7 +112,6 @@ public class DashboardController {
                 usernameLabel.setText(username);
             }
         }
-
         credentialsList.add(new DisplayCredentialDetails("Temple", "tun58761", "password123", "University account."));
         credentialsList.add(new DisplayCredentialDetails("Github", "tt50", "securepass456", "GitHub development account."));
         ObservableList<CredentialDisplay> displayList = FXCollections.observableArrayList();
@@ -138,6 +137,7 @@ public class DashboardController {
             }
         });
 
+        // Lister for if an item on the CredentialDisplay is clicked
         credentialsListView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue != null) {
                 displayDetails(newValue);
@@ -150,6 +150,7 @@ public class DashboardController {
     @FXML
     private AnchorPane viewDetailsContainer;
 
+    // open ViewDetails.fxml and displays onto the detailspanel within dashboardscene.fxml.
     private void displayDetails(CredentialDisplay selectedCredential) {
         detailsPanel.setVisible(false);
         try {
@@ -166,6 +167,7 @@ public class DashboardController {
         }
     }
 
+    // searches for selected nickname and username item, then returns the associated credential details.
     private DisplayCredentialDetails getCredentialDetails(CredentialDisplay selectedCredential) {
         for (DisplayCredentialDetails credential : credentialsList) {
             if (credential.getNickname().equals(selectedCredential.getNickname()) && credential.getUsername().equals(selectedCredential.getUsername())) {
@@ -174,5 +176,4 @@ public class DashboardController {
         }
         return null;
     }
-
 }

@@ -2,32 +2,38 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TextArea?>
-<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.Separator?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ViewDetailsController">
+<AnchorPane prefHeight="432.0" prefWidth="362.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ViewDetailsController">
     <children>
-        <VBox alignment="TOP_LEFT" layoutX="8.0" layoutY="15.0" prefHeight="417.0" prefWidth="514.0" spacing="10">
+        <VBox alignment="TOP_LEFT" layoutX="8.0" layoutY="6.0" prefHeight="426.0" prefWidth="237.0" spacing="10">
             <Label text="Nickname:" />
-            <TextField fx:id="nicknameField" editable="false" />
+            <Label fx:id="nicknameLabel" />
 
             <Label text="Username:" />
-            <TextField fx:id="usernameField" editable="false" />
+            <Label fx:id="usernameLabel" />
 
             <Label text="Password:" />
-            <TextField fx:id="passwordField" editable="false" />
+            <Label fx:id="passwordLabel" />
 
             <Label text="Notes:" />
-            <TextArea fx:id="notesArea" editable="false" prefHeight="46.0" prefWidth="514.0" />
-
-            <HBox spacing="10">
-                <Button onAction="#copyUsername" text="Copy Username" />
-                <Button onAction="#copyPassword" text="Copy Password" />
-                <Button onAction="#editDetails" text="Edit Details" />
-            </HBox>
+            <Label fx:id="notesLabel" />
+         <HBox alignment="CENTER" prefHeight="53.0" prefWidth="237.0">
+            <children>
+               <Button fx:id="editButtonClicked" mnemonicParsing="false" text="Edit" />
+            </children>
+         </HBox>
         </VBox>
+      <VBox layoutX="253.0" layoutY="3.0" prefHeight="426.0" prefWidth="100.0">
+         <children>
+            <Separator prefHeight="77.0" prefWidth="100.0" visible="false" />
+                <Button onAction="#copyUsername" text="Copy Username" />
+            <Separator prefHeight="25.0" prefWidth="100.0" visible="false" />
+                <Button onAction="#copyPassword" text="Copy Password" />
+         </children>
+      </VBox>
     </children>
 </AnchorPane>

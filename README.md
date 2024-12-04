@@ -23,7 +23,10 @@ Users will be able to create their own Password Manager accounts and will have a
 - Arvindh Velrajan
 - Jack Wylie
 
-![This is a screenshot.](images.png)
+![LoginScreen](LoginScreenInterface.png)
+
+![Dashboard](DashboardInterface.png)
+
 # How to run (Works only on Windows)
 On Windows download Java JDK 23: [https://www.oracle.com/java/technologies/downloads/#jdk23-windows].
 
@@ -32,15 +35,7 @@ Instructions to run the Password Manager Application.
 - After the .jar file is downloaded, open the file in your downloads folder.
 - It will automatically run on your windows system.
 
-We currently do not have a release working for MacOS or Linux systems.
-
-# How to contribute
-Follow this project board to know the latest status of the project: [http://...]([http://...])  
-
 ### How to build
-- Use this github repository: ... 
-- Specify what branch to use for a more stable release or for cutting edge development.  
-- Use IntelliJ 11
-- Specify additional library to download if needed 
-- What file and target to compile and run. 
-- What is expected to happen when the app start. 
+- Clone this github repository.
+- Have at least Intellj 2023 verison installed.
+- Open this document for further instructions: https://tuprd-my.sharepoint.com/:w:/g/personal/tun58761_temple_edu/EdYfw7fslDVPug5Ac9WG9GUBkA0axsSIdmLsbUCTppRhXw?e=cLKhBz

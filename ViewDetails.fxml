@@ -38,7 +38,7 @@
             <Separator prefHeight="25.0" prefWidth="100.0" visible="false" />
             <HBox prefHeight="31.0" prefWidth="100.0">
                <children>
-                  <Button mnemonicParsing="false" text="View" />
+                  <Button onAction="#viewPassword" mnemonicParsing="false" text="View" />
                       <Button onAction="#copyPassword" text="Copy" />
                </children>
             </HBox>

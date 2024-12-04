@@ -47,6 +47,11 @@ public class AddCredentialController {
         String password = passwordField.getText();
         String notes = notesArea.getText();
 
+        System.out.println("Nickname: " + nickname);
+        System.out.println("Username: " + username);
+        System.out.println("Password: " + password);
+        System.out.println("Notes: " + notes);
+
         String userID = UserSession.getInstance().getUsername(); // get current logged in user,
         //System.out.println("userID:" + userID);
 

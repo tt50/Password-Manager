@@ -41,13 +41,9 @@ public class ViewDetailsController {
             List<String> AccountInfo = Key.parseFile("StoredCredentials.txt", encrytedUserID);
             String AssociatedKey = AccountInfo.get(2);
 
-            // Decrypt details
-            PasswordDecryption decryptDetails = new PasswordDecryption();
-
-
             this.credential = credential;
             nicknameLabel.setText(PasswordDecryption.decryptPassword(credential.getNickname(), AssociatedKey));
-            usernameLabel.setText(PasswordDecryption.decryptPassword(credential.getUsername(),AssociatedKey));
+            usernameLabel.setText(PasswordDecryption.decryptPassword(credential.getUsername(), AssociatedKey));
             passwordLabel.setText(credential.getPassword());
             notesLabel.setText(PasswordDecryption.decryptPassword(credential.getNotes(), AssociatedKey));
         }else{
@@ -84,4 +80,30 @@ public class ViewDetailsController {
             System.out.println("Error: DashboardController or credential is null");
         }
     }
+
+    @FXML
+    public void viewPassword(ActionEvent actionEvent) throws Exception {
+        String encryptedPassword = credential.getPassword();
+        System.out.println("Encrypted password in viewPassword: " + encryptedPassword);
+
+        if (credential != null && credential.getPassword().equals(passwordLabel.getText())) {
+            // Get user id and key again to decrypt password if needed
+            String username = UserSession.getInstance().getUsername();
+            UsernameEncryption userIDEncrypt = new UsernameEncryption();
+            String encryptedUserID = userIDEncrypt.EncryptedUsername(username);
+
+            // Get key
+            LoginAuthenticationForTextFile key = new LoginAuthenticationForTextFile();
+            List<String> accountInfo = key.parseFile("StoredCredentials.txt", encryptedUserID);
+            String associatedKey = accountInfo.get(2);
+
+            String decryptedCredentialPassword = PasswordDecryption.decryptPassword(credential.getPassword(), associatedKey);
+            System.out.println("Decrypted password: " + decryptedCredentialPassword);
+            passwordLabel.setText(decryptedCredentialPassword);
+        } else {
+            System.out.print("Error or already decrypted");
+        }
+
+    }
+
 }

@@ -50,10 +50,6 @@ public class Credential
 			String AssociatedKey = AccountInfo.get(2);
 			System.out.println("Key HERE:" + AssociatedKey);
 
-			// Encrypt the password and store the result along with the encryption key
-			PasswordEncryptionForExistingLogin encryptLoginPassword = new PasswordEncryptionForExistingLogin(); // Instance of PasswordEncryptionForExistingLogin
-
-			this.encryptedPassword = encryptLoginPassword.EncryptedLoginPassword(password, AssociatedKey);
 			this.encryptionKey = AssociatedKey;
 		}
 	}
@@ -71,6 +67,13 @@ public class Credential
 	{
 		return username;
 	}
+
+	// 	Function to retrieve password
+	public String getPassword()
+	{
+		return password;
+	}
+
 
 	// 	Function to retrieve hashed password
 	public String getEncryptedPassword()
@@ -96,7 +99,6 @@ public class Credential
 		return PasswordDecryption.decryptPassword(this.encryptedPassword, this.encryptionKey);
 	}
 
-
 	// Other Functions
 
 	private String getText(){
@@ -121,7 +123,7 @@ public class Credential
 				writer.write("\r\n"); // add newline if the file has content
 			}
 
-			String newLine = USERID_PATTERN  + userID + ", " + NICKNAME_PATTERN + nickname + ", " + USERNAME_PATTERN + username + ", " + PASSWORD_PATTERN + encryptedPassword +  ", " + NOTE_PATTERN + note;
+			String newLine = USERID_PATTERN  + userID + ", " + NICKNAME_PATTERN + nickname + ", " + USERNAME_PATTERN + username + ", " + PASSWORD_PATTERN + password +  ", " + NOTE_PATTERN + note;
 			System.out.println(newLine);
 			// If successful, write the content into the file...
 			writer.write(newLine);

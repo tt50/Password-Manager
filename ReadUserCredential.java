@@ -37,7 +37,6 @@ public class ReadUserCredential {
                 int noteStartIndex = line.indexOf(NOTE_PATTERN);
 
                 if (usernameStartIndex >= 0 && passwordStartIndex > usernameStartIndex && userIDStartIndex >= 0 && nicknameStartIndex >= 0) {
-
                     String userID = line.substring(userIDStartIndex + USERID_PATTERN.length(), nicknameStartIndex).replace(",", "").trim();
                     String nickname = line.substring(nicknameStartIndex + NICKNAME_PATTERN.length(), usernameStartIndex).replace(",", "").trim();
                     String username = line.substring(usernameStartIndex + USERNAME_PATTERN.length(), passwordStartIndex).replace(",", "").trim();
@@ -76,7 +75,6 @@ public class ReadUserCredential {
                 int noteStartIndex = line.indexOf(NOTE_PATTERN);
 
                 if (usernameStartIndex >= 0 && passwordStartIndex > usernameStartIndex && userIDStartIndex >= 0 && nicknameStartIndex >= 0) {
-
                     String userID = line.substring(userIDStartIndex + USERID_PATTERN.length(), nicknameStartIndex).replace(",", "").trim();
                     String nickname = line.substring(nicknameStartIndex + NICKNAME_PATTERN.length(), usernameStartIndex).replace(",", "").trim();
                     String username = line.substring(usernameStartIndex + USERNAME_PATTERN.length(), passwordStartIndex).replace(",", "").trim();
@@ -94,7 +92,7 @@ public class ReadUserCredential {
                     if (userID.equals(userIDSearched)) {
                         CredentialDetails credential = new CredentialDetails(nickname, username, password, note);
                         credentialsList.add(credential);
-                        //System.out.println("Credential added: " + credential.toString());
+                        System.out.println("Credential added: " + credential.toString());
                     }
                 }
             }

@@ -119,14 +119,14 @@ public class DashboardController {
         usernameLabel.setText(username);
 
         UsernameEncryption userIDEncrypt = new UsernameEncryption();
-        String encrytedUserID = userIDEncrypt.EncryptedUsername(username);
+        String encryptedUserID = userIDEncrypt.EncryptedUsername(username);
 
         //credentialsList.add(new DisplayCredentialDetails("Temple", "tun58761", "password123", "University account."));
         //credentialsList.add(new DisplayCredentialDetails("Github", "tt50", "eeTesting123!?", "GitHub account."));
 
         // Read credentials from UserCredentials.txt, find all that are associated with logged in UserID, add to the credential list,
         ObservableList<CredentialDetails> displayList = FXCollections.observableArrayList();
-        List<CredentialDetails> credentials = readUserCredential.parseFileForUser("UserCredentials.txt", encrytedUserID);
+        List<CredentialDetails> credentials = readUserCredential.parseFileForUser("UserCredentials.txt", encryptedUserID);
         if(credentials == null){
             System.out.println("empty");
         }
@@ -139,12 +139,8 @@ public class DashboardController {
 
         // get key
         LoginAuthenticationForTextFile Key = new LoginAuthenticationForTextFile();
-        List<String> AccountInfo = Key.parseFile("StoredCredentials.txt", encrytedUserID);
+        List<String> AccountInfo = Key.parseFile("StoredCredentials.txt", encryptedUserID);
         String AssociatedKey = AccountInfo.get(2);
-
-        // Decrypt details
-        PasswordDecryption decryptDetails = new PasswordDecryption();
-
 
         // Set custom cell factory
         credentialsListView.setCellFactory(param -> new ListCell<CredentialDetails>() {
@@ -216,7 +212,8 @@ public class DashboardController {
     // searches for selected nickname and username item, then returns the associated credential details.
     private CredentialDetails getCredentialDetails(CredentialDetails selectedCredential) {
         for (CredentialDetails credential : credentialsList) {
-            if (credential.getNickname().equals(selectedCredential.getNickname()) && credential.getUsername().equals(selectedCredential.getUsername())) {
+            if (credential.getNickname().equals(selectedCredential.getNickname()) &&
+                    credential.getUsername().equals(selectedCredential.getUsername())) {
                 return credential;
             }
         }
@@ -250,10 +247,10 @@ public class DashboardController {
     private AnchorPane editCredentialPanel;
     @FXML
     private AnchorPane editCredentialContainer;
+
     public void displayEdit(CredentialDetails selectedCredential) {
         addCredentialPanel.setVisible(false);
         detailsPanel.setVisible(false);
-
         editCredentialPanel.setVisible(false);
 
         try {
@@ -261,8 +258,7 @@ public class DashboardController {
             Parent root = loader.load();
 
             EditController controller = loader.getController();
-
-            controller.setCredential(getCredentialDetails(selectedCredential));
+            controller.setCredential(selectedCredential);
 
             editCredentialContainer.getChildren().clear();
             editCredentialContainer.getChildren().add(root);
@@ -272,7 +268,4 @@ public class DashboardController {
             e.printStackTrace();
         }
     }
-
-
-
 }

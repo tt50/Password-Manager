@@ -15,6 +15,7 @@ import javafx.stage.Stage;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.List;
 
 public class EditController {
 
@@ -38,11 +39,26 @@ public class EditController {
         this.viewDetailsContainer = viewDetailsContainer;
     }
 
-    public void setCredential(CredentialDetails credential) {
-        nicknameField.setText(credential.getNickname());
-        usernameField.setText(credential.getUsername());
-        passwordField.setText(credential.getPassword());
-        notesArea.setText(credential.getNotes());
+    public void setCredential(CredentialDetails credential) throws Exception {
+        if(credential != null) {
+            // get userID
+            String username = UserSession.getInstance().getUsername();
+            UsernameEncryption userIDEncrypt = new UsernameEncryption();
+            String encrytedUserID = userIDEncrypt.EncryptedUsername(username);
+
+            // get key
+            LoginAuthenticationForTextFile Key = new LoginAuthenticationForTextFile();
+            List<String> AccountInfo = Key.parseFile("StoredCredentials.txt", encrytedUserID);
+            String AssociatedKey = AccountInfo.get(2);
+
+            this.credential = credential;
+            nicknameField.setText(PasswordDecryption.decryptPassword(credential.getNickname(), AssociatedKey));
+            usernameField.setText(PasswordDecryption.decryptPassword(credential.getUsername(),AssociatedKey));
+            passwordField.setText(PasswordDecryption.decryptPassword(credential.getPassword(), AssociatedKey));
+            notesArea.setText(PasswordDecryption.decryptPassword(credential.getNotes(), AssociatedKey));
+        }else{
+            System.out.println("Credential is null");
+        }
     }
 
     @FXML
@@ -75,10 +91,34 @@ public class EditController {
     }
 
     @FXML
+    public void cancelButton(ActionEvent event) {
+        switchToDashboardScene(event);
+    }
+
+    private void switchToDashboardScene(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("DashboardScene.fxml"));
+            Parent root = loader.load();
+            Scene scene = new Scene(root);
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+
+            DashboardController dashboardController = loader.getController();
+            dashboardController.initialize();
+
+            scene.getStylesheets().add(getClass().getResource("styles.css").toExternalForm());
+            stage.setScene(scene);
+            stage.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
     public void initialize() {
         nicknameField.setEditable(true);
         usernameField.setEditable(true);
         passwordField.setEditable(true);
         notesArea.setEditable(true);
     }
+
 }

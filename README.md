@@ -23,9 +23,9 @@ Users will be able to create their own Password Manager accounts and will have a
 - Arvindh Velrajan
 - Jack Wylie
 
-(LoginScreenInterface.png)
+![LoginScreen](LoginScreenInterface.png)
 
-(DashboardInterface.png)
+![Dashboard](DashboardInterface.png)
 
 # How to run (Works only on Windows)
 On Windows download Java JDK 23: [https://www.oracle.com/java/technologies/downloads/#jdk23-windows].

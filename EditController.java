@@ -1,8 +1,19 @@
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.input.Clipboard;
 import javafx.scene.input.ClipboardContent;
+import javafx.scene.layout.Pane;
+import javafx.stage.Stage;
+
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 
 public class EditController {
 
@@ -26,11 +37,56 @@ public class EditController {
     }
 
     @FXML
-    public void saveDetails(){
-        // call method to update file
+    public void saveDetails() {
+        String nickname = nicknameField.getText();
+        String username = usernameField.getText();
+        String password = passwordField.getText();
+        String notes = notesArea.getText();
+
+        System.out.println("Nickname: " + nickname);
+        System.out.println("Username: " + username);
+        System.out.println("Password: " + password);
+        System.out.println("Notes: " + notes);
     }
 
-    public void intialize() {
+    private void switchToViewDetailsScene(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("ViewDetails.fxml"));
+            Parent root = loader.load();
+
+            DashboardController dashboardController = (DashboardController) ((Node) event.getSource()).getScene().getUserData();
+            Pane contentPane = dashboardController.getContentPane();
+
+            contentPane.getChildren().clear();
+            contentPane.getChildren().add(root);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    public void cancelButton(ActionEvent event){
+        switchToViewDetailsSceneCancel(event);
+    }
+
+    private void switchToViewDetailsSceneCancel(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("ViewDetails.fxml"));
+            Parent root = loader.load();
+
+            DashboardController dashboardController = (DashboardController) ((Node) event.getSource()).getScene().getUserData();
+            Pane contentPane = dashboardController.getContentPane();
+
+            contentPane.getChildren().clear();
+            contentPane.getChildren().add(root);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    @FXML
+    public void initialize() {
         nicknameField.setEditable(true);
         usernameField.setEditable(true);
         passwordField.setEditable(true);

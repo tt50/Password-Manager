@@ -52,6 +52,7 @@ public class LoginController {
             // Pass username to the dashboard controller
             DashboardController newDashboardController = loader.getController();
             Scene scene = new Scene(root);
+            scene.setUserData(newDashboardController);
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             scene.getStylesheets().add(getClass().getResource("styles.css").toExternalForm());
             stage.setScene(scene);

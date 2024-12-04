@@ -5,6 +5,7 @@ import javafx.fxml.FXML;
 import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.fxml.FXMLLoader;
@@ -104,7 +105,7 @@ public class DashboardController {
     private TextArea detailNotesTextArea;
 
     private final ObservableList<DisplayCredentialDetails> credentialsList = FXCollections.observableArrayList();
-
+    private final ReadUserCredential readUserCredential = new ReadUserCredential();
     public void initialize() {
         if (usernameLabel != null) {
             String username = UserSession.getInstance().getUsername();
@@ -112,8 +113,11 @@ public class DashboardController {
                 usernameLabel.setText(username);
             }
         }
+
         credentialsList.add(new DisplayCredentialDetails("Temple", "tun58761", "password123", "University account."));
-        credentialsList.add(new DisplayCredentialDetails("Github", "tt50", "securepass456", "GitHub development account."));
+        credentialsList.add(new DisplayCredentialDetails("Github", "tt50", "eeTesting123!?", "GitHub account."));
+
+
         ObservableList<CredentialDisplay> displayList = FXCollections.observableArrayList();
         for (DisplayCredentialDetails credential : credentialsList) {
             displayList.add(new CredentialDisplay(credential.getNickname(), credential.getUsername()));
@@ -201,4 +205,8 @@ public class DashboardController {
         }
     }
 
+    // this pane is shared with editscene.fxml
+    public Pane getContentPane() {
+        return viewDetailsContainer;
+    }
 }

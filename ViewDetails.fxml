@@ -30,9 +30,18 @@
       <VBox layoutX="253.0" layoutY="3.0" prefHeight="426.0" prefWidth="100.0">
          <children>
             <Separator prefHeight="77.0" prefWidth="100.0" visible="false" />
-                <Button onAction="#copyUsername" text="Copy Username" />
+            <HBox alignment="CENTER" prefHeight="29.0" prefWidth="100.0">
+               <children>
+                      <Button onAction="#copyUsername" text="Copy" />
+               </children>
+            </HBox>
             <Separator prefHeight="25.0" prefWidth="100.0" visible="false" />
-                <Button onAction="#copyPassword" text="Copy Password" />
+            <HBox prefHeight="31.0" prefWidth="100.0">
+               <children>
+                  <Button mnemonicParsing="false" text="View" />
+                      <Button onAction="#copyPassword" text="Copy" />
+               </children>
+            </HBox>
          </children>
       </VBox>
     </children>

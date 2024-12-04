@@ -26,4 +26,9 @@ public class DisplayCredentialDetails {
     public String getNotes() {
         return notes;
     }
+
+    public void setNickname(String nickname) { this.nickname = nickname; }
+    public void setUsername(String username) { this.username = username; }
+    public void setPassword(String password) { this.password = password; }
+    public void setNotes(String notes) { this.notes = notes; }
 }

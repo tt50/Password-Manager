@@ -7,6 +7,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.input.Clipboard;
 import javafx.scene.input.ClipboardContent;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 public class ViewDetailsController {
@@ -22,6 +23,7 @@ public class ViewDetailsController {
 
     @FXML
     private Label notesLabel;
+    private DisplayCredentialDetails credential;
 
     public void setCredential(DisplayCredentialDetails credential) {
         nicknameLabel.setText(credential.getNickname());
@@ -49,18 +51,22 @@ public class ViewDetailsController {
         switchToEditScene(event);
     }
 
-    private void switchToEditScene(ActionEvent event) {
+    @FXML
+    public void switchToEditScene(ActionEvent event) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("EditScene.fxml"));
-            Parent root = loader.load();
-            Scene scene = new Scene(root);
-            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            scene.getStylesheets().add(getClass().getResource("styles.css").toExternalForm());
-            stage.setScene(scene);
-            stage.show();
+            Parent editRoot = loader.load();
+
+            DashboardController dashboardController = (DashboardController) ((Node) event.getSource()).getScene().getUserData();
+            Pane contentPane = dashboardController.getContentPane();
+
+            contentPane.getChildren().clear();
+            contentPane.getChildren().add(editRoot);
+
+            EditController editController = loader.getController();
+            editController.setCredential(this.credential);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
-
 }

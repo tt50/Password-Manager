@@ -1,2 +1,0 @@
-USERID: G80CqWjF0uBc+wS4p/SixA==,NAME: Temple,USERNAME: tun58761,NOTE: school
-USERID: G80CqWjF0uBc+wS4p/SixA==,NAME: github,USERNAME: tt50,NOTE: github

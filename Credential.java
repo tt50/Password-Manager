@@ -1,11 +1,20 @@
-
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Credential
 {
+
+	private static final String USERID_PATTERN = "USERID: ";
+	private static final String NICKNAME_PATTERN = "NICKNAME: ";
+	private static final String USERNAME_PATTERN = "USERNAME: ";
+	private static final String PASSWORD_PATTERN = "PASSWORD: ";
+	private static final String NOTE_PATTERN = "NOTE: ";
+
 	// Variables
+	private String userID;
 
 	// 	1) For saving nickname
 	private String nickname;
@@ -15,6 +24,7 @@ public class Credential
 
 	// 	3) For saving encrypted password
 	private String encryptedPassword;
+	private String password;
 
 	// 	4) For saving encryption key
 	private String encryptionKey;		// AES key for encryption/decryption
@@ -23,19 +33,33 @@ public class Credential
 	private String note;
 
 	// Constructors
-	public Credential(String nickname, String username, String password, String note) throws Exception
+	public Credential(String userID, String nickname, String username, String password, String note) throws Exception
 	{
+		this.userID = userID;
 		this.nickname = nickname;
 		this.username = username;
+		this.password = password;
 		this.note = note;
 
-		// Encrypt the password and store the result along with the encryption key
-		PasswordEncryption.EncryptionResult result = PasswordEncryption.encryptPassword(password);
-		this.encryptedPassword = result.getEncryptedText();
-		this.encryptionKey = result.getKey();
+		LoginAuthenticationForTextFile parseFileForKey = new LoginAuthenticationForTextFile();
+		List<String> AccountInfo;
+		AccountInfo = parseFileForKey.parseFile("StoredCredentials.txt", this.userID);
+		if (AccountInfo == null || AccountInfo.size() < 3){
+			System.out.println("AccountInfo is null");
+		}else{
+			String AssociatedKey = AccountInfo.get(2);
+			System.out.println("Key HERE:" + AssociatedKey);
+
+			// Encrypt the password and store the result along with the encryption key
+			PasswordEncryptionForExistingLogin encryptLoginPassword = new PasswordEncryptionForExistingLogin(); // Instance of PasswordEncryptionForExistingLogin
+
+			this.encryptedPassword = encryptLoginPassword.EncryptedLoginPassword(password, AssociatedKey);
+			this.encryptionKey = AssociatedKey;
+		}
 	}
 
 	// Getter methods
+	public String getUserID(){return userID; }
 	// 	Function to retrieve nickname
 	public String getNickname()
 	{
@@ -74,16 +98,33 @@ public class Credential
 
 
 	// Other Functions
+
+	private String getText(){
+		try{
+			Path getTxt = Path.of("UserCredentials.txt");
+			String filecontent = Files.readString(getTxt);
+			return filecontent;
+		} catch(IOException e){
+			System.out.println("Error occurred while getting text from file");
+			return null;
+		}
+	}
+
 	// 	Function to save to file
 	public void saveToFile(String filename)
 	{
 		// 'Try' creating a Buffered Writer connected to the provided file name
 		try(BufferedWriter writer = new BufferedWriter(new FileWriter(filename, true)))
 		{
+			String text = getText();
+			if (text != null && !text.trim().isEmpty()) {
+				writer.write("\r\n"); // add newline if the file has content
+			}
+
+			String newLine = USERID_PATTERN  + userID + ", " + NICKNAME_PATTERN + nickname + ", " + USERNAME_PATTERN + username + ", " + PASSWORD_PATTERN + encryptedPassword +  ", " + NOTE_PATTERN + note;
+			System.out.println(newLine);
 			// If successful, write the content into the file...
-			writer.write(nickname + ", " + username + ", " + encryptedPassword + ", " + note);
-			// And append a new line feed so that saved data isn't one long line
-			writer.newLine();
+			writer.write(newLine);
 		}
 		// 'Catch' any IOExceptions that may be thrown
 		catch(IOException e)
@@ -92,45 +133,4 @@ public class Credential
 		}
 	}
 
-	// Function to read from file
-	public List<Credential> readFromFile(String fileName)
-	{
-		// Create a List of type 'Credential' to save all the values from file in
-		List<Credential> credentials = new ArrayList<>();
-		// Using a try-catch block, write details into the newly created List
-		try(BufferedReader reader = new BufferedReader(new FileReader(fileName)))
-		{
-			// Variable to save line
-			String line;
-
-			// While there are more lines to be read
-			while((line = reader.readLine()) != null)
-			{
-				// add each of the credentials that are of length 4 to credentials
-				String[] parts = line.trim().split(", ");
-
-				// If the length of the array is 4, create a Credential object with those values and add it to the ArrayList created above
-				if(parts.length == 4)
-				{
-					try
-					{
-						Credential credential = new Credential(parts[0], parts[1], parts[2], parts[3]);
-						credentials.add(credential);
-					}
-					catch(Exception e)
-					{
-						e.printStackTrace();
-					}
-				}
-			}
-		}
-		// If unsuccessful, throw an exception
-		catch(IOException e)
-		{
-			e.printStackTrace();
-		}
-
-		// If all works out, return the created List with the credentials in it
-		return credentials;
-	}
 }

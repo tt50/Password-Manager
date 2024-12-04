@@ -38,9 +38,6 @@ We currently do not have a release working for MacOS or Linux systems.
 Follow this project board to know the latest status of the project: [http://...]([http://...])  
 
 ### How to build
-- Use this github repository: ... 
-- Specify what branch to use for a more stable release or for cutting edge development.  
-- Use IntelliJ 11
-- Specify additional library to download if needed 
-- What file and target to compile and run. 
-- What is expected to happen when the app start. 
+- Clone this github repository.
+- Have at least Intellj 2023 verison installed.
+- Open this document for further instructions: https://tuprd-my.sharepoint.com/:w:/g/personal/tun58761_temple_edu/EdYfw7fslDVPug5Ac9WG9GUBkA0axsSIdmLsbUCTppRhXw?e=cLKhBz

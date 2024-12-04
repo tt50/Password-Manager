@@ -66,9 +66,6 @@ public class PasswordChanger {
 
     // Replaces line using random access file
     public static boolean replaceLine(String filename, String oldLine, String newLine) throws IOException {
-        if (newLine.length() != oldLine.length()) {
-            throw new IllegalArgumentException("New line content must be the same length as the old line content");
-        }
         try (RandomAccessFile file = new RandomAccessFile(filename, "rw")) {
             String line;
             long pointerPosition = 0;

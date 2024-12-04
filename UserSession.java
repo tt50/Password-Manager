@@ -1,11 +1,21 @@
 public class UserSession {
-    private static String username;
+    private static UserSession instance;
+    private String username;
 
-    public static String getUsername() {
-        return username;
+    private UserSession() {}
+
+    public static UserSession getInstance() {
+        if (instance == null) {
+            instance = new UserSession();
+        }
+        return instance;
     }
 
-    public static void setUsername(String username) {
-        UserSession.username = username;
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getUsername() {
+        return this.username;
     }
 }

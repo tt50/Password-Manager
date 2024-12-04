@@ -11,13 +11,26 @@ import javafx.scene.Scene;
 
 public class PasswordChangeController {
     @FXML
-    private TextField username;
+    private TextField username; // Username input for security check
     @FXML
     private PasswordField oldpassword;
     @FXML
     private PasswordField newpassword;
     @FXML
     private Label PassChangeResult;
+
+    /*
+    @FXML
+    private Label usernameLabel;
+    private String usernameDisplay = UserSession.getInstance().getUsername();
+
+    // Displays currently logged in username
+    public void setUsername(String username) {
+        this.usernameDisplay = username;
+        usernameLabel.setText(username);
+    }
+
+     */
 
     @FXML
     public void PasswordChangeButtonClicked(ActionEvent event) throws Exception{

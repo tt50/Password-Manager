@@ -9,16 +9,19 @@ import javafx.scene.control.Hyperlink;
 import javafx.stage.Stage;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.Node;
 
 public class SettingsController {
     @FXML
-    private Label userLabel;
+    private Label usernameLabel;
     private String username;
 
-    // Display Currently Logged in User
-    public void setUsername(String username){
-        userLabel.setText(username);
+    public void initialize() {
+        if (usernameLabel != null) {
+            String username = UserSession.getInstance().getUsername();
+            if (username != null) {
+                usernameLabel.setText(username);
+            }
+        }
     }
 
     @FXML
@@ -57,7 +60,6 @@ public class SettingsController {
             e.printStackTrace();
         }
     }
-
 
     // Password Change Button
     /*@FXML

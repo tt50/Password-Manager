@@ -2,16 +2,16 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<?import javafx.scene.control.ListView?>
-<AnchorPane prefHeight="647.0" prefWidth="756.0" styleClass="dashboard-background" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="DashboardController">
+<AnchorPane prefHeight="654.0" prefWidth="772.0" styleClass="dashboard-background" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="DashboardController">
    <children>
-      <Button layoutX="681.0" layoutY="14.0" mnemonicParsing="false" onAction="#logoutClicked" text="Log Out">
+      <Button layoutX="694.0" layoutY="15.0" mnemonicParsing="false" onAction="#logoutClicked" text="Log Out">
          <font>
             <Font name="Arial Bold" size="13.0" />
          </font>
@@ -43,18 +43,40 @@
       <!-- credentials table -->
       <ScrollPane layoutX="98.0" layoutY="53.0" prefHeight="604.0" prefWidth="207.0">
          <content>
-            <ListView fx:id="credentialsListView" layoutX="98.0" layoutY="53.0" prefHeight="604.0" prefWidth="207.0"/>
+            <ListView fx:id="credentialsListView" layoutX="98.0" layoutY="53.0" prefHeight="604.0" prefWidth="207.0" />
          </content>
       </ScrollPane>
 
       <!-- add new credentials -->
-      <VBox alignment="CENTER" layoutX="98.0" prefHeight="53.0" prefWidth="207.0">
+      <VBox alignment="CENTER" layoutX="98.0" layoutY="10.0" prefHeight="35.0" prefWidth="207.0">
          <children>
-            <Button mnemonicParsing="false" prefHeight="35.0" prefWidth="91.0" text="+" />
+            <Button mnemonicParsing="false" onAction="#addNewCredentialButton" prefHeight="35.0" prefWidth="91.0" text="+" />
          </children>
       </VBox>
 
-      <!-- details view  -->
-      <fx:include fx:id="detailsPanel" source="ViewDetails.fxml" layoutX="305.0" layoutY="53.0" prefHeight="604.0" prefWidth="450.0" visible="false" />
+            <!-- dashboard Pane -->
+      <AnchorPane fx:id="dashboardPane" layoutX="160.0" layoutY="30.0" prefHeight="432.0" prefWidth="362.0">
+
+               <!-- Details View -->
+         <AnchorPane fx:id="detailsPanel" layoutX="155.0" layoutY="30.0" prefHeight="432.0" prefWidth="362.0" style="-fx-background-color: #f0f0f0;" visible="false">
+            <children>
+               <AnchorPane fx:id="viewDetailsContainer" layoutX="10.0" layoutY="10.0" prefHeight="584.0" prefWidth="430.0" />
+            </children>
+         </AnchorPane>
+
+               <!-- Add Credential View -->
+         <AnchorPane fx:id="addCredentialPanel" layoutX="155.0" layoutY="30.0" prefHeight="432.0" prefWidth="362.0" style="-fx-background-color: #f0f0f0;" visible="false">
+            <children>
+               <AnchorPane fx:id="addCredentialContainer" layoutX="10.0" layoutY="10.0" prefHeight="584.0" prefWidth="430.0" />
+            </children>
+         </AnchorPane>
+
+         <AnchorPane fx:id="editCredentialPanel" layoutX="155.0" layoutY="30.0" prefHeight="432.0" prefWidth="362.0" style="-fx-background-color: #f0f0f0;" visible="false">
+            <children>
+               <AnchorPane fx:id="editCredentialContainer" layoutX="10.0" layoutY="10.0" prefHeight="584.0" prefWidth="430.0" />
+            </children>
+         </AnchorPane>
+
+            </AnchorPane>
    </children>
 </AnchorPane>

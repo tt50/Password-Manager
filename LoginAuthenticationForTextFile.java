@@ -16,7 +16,6 @@ public class LoginAuthenticationForTextFile {
     private final UsernameEncryption EncryptUsername = new UsernameEncryption(); // Instance of UsernameEncryption
     private final PasswordEncryptionForExistingLogin encryptLoginPassword = new PasswordEncryptionForExistingLogin(); // Instance of PasswordEncryptionForExistingLogin
 
-
     public boolean AuthenticationForTextFile(String usernameInput, String passwordInput) throws Exception {
         if (usernameInput == null || passwordInput == null) {
             System.out.println("Error: empty username or password ");
@@ -27,7 +26,7 @@ public class LoginAuthenticationForTextFile {
 
         // Encrypt the username input
         String encryptedLoginUsername = EncryptUsername.EncryptedUsername(usernameInput);
-        System.out.println("Encrypted Username: " + encryptedLoginUsername);
+        //System.out.println("Encrypted Username: " + encryptedLoginUsername);
 
         // parse the txt file for the username
         AccountInfo = parseFile("StoredCredentials.txt", encryptedLoginUsername);
@@ -40,6 +39,7 @@ public class LoginAuthenticationForTextFile {
         // Encrypt the password input and get the result
         String encryptedLoginPassword = encryptLoginPassword.EncryptedLoginPassword(passwordInput, AssociatedKey);
 
+        /*
         //Testing output
         System.out.println("Associated Username: " + AssociatedUsername);
         System.out.println("Associated Password: " + AssociatedPassword);
@@ -47,11 +47,14 @@ public class LoginAuthenticationForTextFile {
         System.out.println("Encrypted Username Input: " + encryptedLoginUsername);
         System.out.println("Encrypted Password Input: " + encryptedLoginPassword);
 
+         */
+
         if (!AssociatedUsername.equals(encryptedLoginUsername))
             return false;
 
         return AssociatedPassword.equals(encryptedLoginPassword);
     }
+
 
     public List<String> parseFile(String fileName, String usernameSearched) {
         List<String> accountInfo = new ArrayList<>();
@@ -67,23 +70,25 @@ public class LoginAuthenticationForTextFile {
                 int answer1StartIndex = line.indexOf(ANSWER1_PATTERN);
                 int answer2StartIndex = line.indexOf(ANSWER2_PATTERN);
                 if (passwordStartIndex == 0 && usernameStartIndex > passwordStartIndex && keyStartIndex > usernameStartIndex && question1StartIndex > keyStartIndex) {
-                    System.out.println("|"+usernameSearched+"|");
+                    System.out.println("|" + usernameSearched + "|");
 
-                    String password = line.substring(passwordStartIndex + PASSWORD_PATTERN.length(), usernameStartIndex).replace(",","").trim();
-                    String username = line.substring(usernameStartIndex + USERNAME_PATTERN.length(), keyStartIndex).replace(",","").trim();
-                    String key = line.substring(keyStartIndex + KEY_PATTERN.length(), question1StartIndex).replace(",","").trim();
-                    String question1 = line.substring(question1StartIndex + QUESTION1_PATTERN.length(), answer1StartIndex).replace(",","").trim();
-                    String answer1 = line.substring(answer1StartIndex + ANSWER1_PATTERN.length(), question2StartIndex).replace(",","").trim();
-                    String question2 = line.substring(question2StartIndex + QUESTION2_PATTERN.length(), answer2StartIndex).replace(",","").trim();
-                    String answer2 = line.substring(answer2StartIndex + ANSWER2_PATTERN.length()).replace(",","").trim();
+                    String password = line.substring(passwordStartIndex + PASSWORD_PATTERN.length(), usernameStartIndex).replace(",", "").trim();
+                    String username = line.substring(usernameStartIndex + USERNAME_PATTERN.length(), keyStartIndex).replace(",", "").trim();
+                    String key = line.substring(keyStartIndex + KEY_PATTERN.length(), question1StartIndex).replace(",", "").trim();
+                    String question1 = line.substring(question1StartIndex + QUESTION1_PATTERN.length(), answer1StartIndex).replace(",", "").trim();
+                    String answer1 = line.substring(answer1StartIndex + ANSWER1_PATTERN.length(), question2StartIndex).replace(",", "").trim();
+                    String question2 = line.substring(question2StartIndex + QUESTION2_PATTERN.length(), answer2StartIndex).replace(",", "").trim();
+                    String answer2 = line.substring(answer2StartIndex + ANSWER2_PATTERN.length()).replace(",", "").trim();
 
+                    /*
                     System.out.println("Parsed Username: |" + username + "|");
                     System.out.println("Parsed Password: |" + password + "|");
                     System.out.println("Parsed Key: |" + key + "|");
 
-                    if (username.equals(usernameSearched)) {
-                        System.out.println("username found");
+                     */
 
+                    if (username.equals(usernameSearched)) {
+                       // System.out.println("username found");
                         accountInfo.add(username);
                         accountInfo.add(password);
                         accountInfo.add(key);

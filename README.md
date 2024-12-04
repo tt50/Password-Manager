@@ -35,7 +35,7 @@ Instructions to run the Password Manager Application.
 - After the .jar file is downloaded, open the file in your downloads folder.
 - It will automatically run on your windows system.
 
-### How to build
+# How to build (Windows and MacOS)
 - Clone this github repository.
 - Have at least Intellj 2023 verison installed.
 - Open this document for further instructions: https://tuprd-my.sharepoint.com/:w:/g/personal/tun58761_temple_edu/EdYfw7fslDVPug5Ac9WG9GUBkA0axsSIdmLsbUCTppRhXw?e=cLKhBz

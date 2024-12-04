@@ -11,6 +11,8 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
+import java.util.List;
+
 public class ViewDetailsController {
 
     @FXML
@@ -27,13 +29,27 @@ public class ViewDetailsController {
     private AnchorPane viewDetailsContainer;  // container reference holder
     private CredentialDetails credential;
 
-    public void setCredential(CredentialDetails credential) {
+    public void setCredential(CredentialDetails credential) throws Exception {
         if(credential != null) {
+            // get userID
+            String username = UserSession.getInstance().getUsername();
+            UsernameEncryption userIDEncrypt = new UsernameEncryption();
+            String encrytedUserID = userIDEncrypt.EncryptedUsername(username);
+
+            // get key
+            LoginAuthenticationForTextFile Key = new LoginAuthenticationForTextFile();
+            List<String> AccountInfo = Key.parseFile("StoredCredentials.txt", encrytedUserID);
+            String AssociatedKey = AccountInfo.get(2);
+
+            // Decrypt details
+            PasswordDecryption decryptDetails = new PasswordDecryption();
+
+
             this.credential = credential;
-            nicknameLabel.setText(credential.getNickname());
-            usernameLabel.setText(credential.getUsername());
+            nicknameLabel.setText(PasswordDecryption.decryptPassword(credential.getNickname(), AssociatedKey));
+            usernameLabel.setText(PasswordDecryption.decryptPassword(credential.getUsername(),AssociatedKey));
             passwordLabel.setText(credential.getPassword());
-            notesLabel.setText(credential.getNotes());
+            notesLabel.setText(PasswordDecryption.decryptPassword(credential.getNotes(), AssociatedKey));
         }else{
             System.out.println("Credential is null");
         }

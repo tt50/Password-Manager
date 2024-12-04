@@ -10,6 +10,8 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.Clipboard;
 import javafx.scene.input.ClipboardContent;
 import javafx.stage.Stage;
+import java.util.ArrayList;
+import java.util.List;
 
 public class AddCredentialController {
 
@@ -52,6 +54,15 @@ public class AddCredentialController {
         UsernameEncryption userEncrypt = new UsernameEncryption();
         userID = userEncrypt.EncryptedUsername(userID);
 
+        // get key
+        LoginAuthenticationForTextFile Key = new LoginAuthenticationForTextFile();
+        List<String> AccountInfo = Key.parseFile("StoredCredentials.txt", userID);
+        String AssociatedKey = AccountInfo.get(2);
+
+        // encrypt nickname in order to search for
+        PasswordEncryptionForExistingLogin detailEncrypt = new PasswordEncryptionForExistingLogin();
+        nickname = detailEncrypt.EncryptedLoginPassword(nickname, AssociatedKey);
+
         ReadUserCredential readUserCredential = new ReadUserCredential();
         if (nicknameField.getText() == null || nicknameField.getText().trim().isEmpty()) {
             creationLabel.setText("Nickname is required!");
@@ -59,6 +70,11 @@ public class AddCredentialController {
             //System.out.println("existing credential");
             creationLabel.setText("Nickname already exists, please use a different one!");
         } else {
+            // Encrypt rest of data using associated account key
+            username = detailEncrypt.EncryptedLoginPassword(username, AssociatedKey);
+            password = detailEncrypt.EncryptedLoginPassword(password, AssociatedKey);
+            notes = detailEncrypt.EncryptedLoginPassword(notes, AssociatedKey);
+
             try {
                 Credential credential = new Credential(userID, nickname, username, password, notes);
                 credential.saveToFile(fileName);

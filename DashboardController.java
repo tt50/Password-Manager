@@ -137,6 +137,15 @@ public class DashboardController {
         }
         credentialsListView.setItems(displayList);
 
+        // get key
+        LoginAuthenticationForTextFile Key = new LoginAuthenticationForTextFile();
+        List<String> AccountInfo = Key.parseFile("StoredCredentials.txt", encrytedUserID);
+        String AssociatedKey = AccountInfo.get(2);
+
+        // Decrypt details
+        PasswordDecryption decryptDetails = new PasswordDecryption();
+
+
         // Set custom cell factory
         credentialsListView.setCellFactory(param -> new ListCell<CredentialDetails>() {
             @Override
@@ -144,8 +153,14 @@ public class DashboardController {
                 super.updateItem(item, empty);
                 if (item != null && !empty) {
                     VBox vbox = new VBox(5);
-                    Label nicknameLabel = new Label(item.getNickname());
-                    Label usernameLabel = new Label(item.getUsername());
+                    Label nicknameLabel = null;
+                    Label usernameLabel = null;
+                    try {
+                         nicknameLabel = new Label(PasswordDecryption.decryptPassword(item.getNickname(), AssociatedKey));
+                         usernameLabel = new Label(PasswordDecryption.decryptPassword(item.getUsername(), AssociatedKey));
+                    } catch (Exception e) {
+                        throw new RuntimeException(e);
+                    }
                     vbox.getChildren().addAll(nicknameLabel, usernameLabel);
                     setGraphic(vbox);
                 } else {

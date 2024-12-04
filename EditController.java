@@ -8,6 +8,7 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.input.Clipboard;
 import javafx.scene.input.ClipboardContent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
@@ -29,7 +30,15 @@ public class EditController {
     @FXML
     private TextArea notesArea;
 
-    public void setCredential(DisplayCredentialDetails credential) {
+    private CredentialDetails credential;
+    private AnchorPane viewDetailsContainer;  // container reference holder
+
+    // set Pane
+    public void setViewDetailsContainer(AnchorPane viewDetailsContainer) {
+        this.viewDetailsContainer = viewDetailsContainer;
+    }
+
+    public void setCredential(CredentialDetails credential) {
         nicknameField.setText(credential.getNickname());
         usernameField.setText(credential.getUsername());
         passwordField.setText(credential.getPassword());
@@ -65,26 +74,6 @@ public class EditController {
         }
     }
 
-    @FXML
-    public void cancelButton(ActionEvent event){
-        switchToViewDetailsSceneCancel(event);
-    }
-
-    private void switchToViewDetailsSceneCancel(ActionEvent event) {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("ViewDetails.fxml"));
-            Parent root = loader.load();
-
-            DashboardController dashboardController = (DashboardController) ((Node) event.getSource()).getScene().getUserData();
-            Pane contentPane = dashboardController.getContentPane();
-
-            contentPane.getChildren().clear();
-            contentPane.getChildren().add(root);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
     @FXML
     public void initialize() {
         nicknameField.setEditable(true);

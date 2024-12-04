@@ -12,6 +12,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.Node;
 
+import java.util.List;
+
 public class DashboardController {
     @FXML
     private Label usernameLabel;
@@ -19,29 +21,31 @@ public class DashboardController {
 
     // Settings Button
     @FXML
-    public void settingsButtonClicked(ActionEvent event){
+    public void settingsButtonClicked(ActionEvent event) {
         switchToSettingsScene(event);
     }
+
     private void switchToSettingsScene(ActionEvent event) {
-            try {
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("SettingsScene.fxml"));
-                Parent root = loader.load();
-                Scene scene = new Scene(root);
-                Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-                scene.getStylesheets().add(getClass().getResource("styles.css").toExternalForm());
-                stage.setScene(scene);
-                stage.show();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("SettingsScene.fxml"));
+            Parent root = loader.load();
+            Scene scene = new Scene(root);
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            scene.getStylesheets().add(getClass().getResource("styles.css").toExternalForm());
+            stage.setScene(scene);
+            stage.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     // Strength Checker Button
     @FXML
-    public void strengthCheckerButtonClicked(ActionEvent event){
+    public void strengthCheckerButtonClicked(ActionEvent event) {
         switchtoPasswordStrengthChecker(event);
     }
-    private void switchtoPasswordStrengthChecker(ActionEvent event){
+
+    private void switchtoPasswordStrengthChecker(ActionEvent event) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("PasswordStrengthCheckerScene.fxml"));
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -54,10 +58,11 @@ public class DashboardController {
 
     // Password Generator Button
     @FXML
-    public void generatorButtonClicked(ActionEvent event){
+    public void generatorButtonClicked(ActionEvent event) {
         switchToPasswordGenerator(event);
     }
-    private void switchToPasswordGenerator(ActionEvent event){
+
+    private void switchToPasswordGenerator(ActionEvent event) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("PasswordGeneratorScene.fxml"));
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -88,9 +93,8 @@ public class DashboardController {
         }
     }
 
-
     @FXML
-    private ListView<CredentialDisplay> credentialsListView;
+    private ListView<CredentialDetails> credentialsListView;
 
     @FXML
     private Label detailNicknameLabel;
@@ -104,30 +108,39 @@ public class DashboardController {
     @FXML
     private TextArea detailNotesTextArea;
 
-    private final ObservableList<DisplayCredentialDetails> credentialsList = FXCollections.observableArrayList();
+    private final ObservableList<CredentialDetails> credentialsList = FXCollections.observableArrayList();
     private final ReadUserCredential readUserCredential = new ReadUserCredential();
-    public void initialize() {
-        if (usernameLabel != null) {
-            String username = UserSession.getInstance().getUsername();
-            if (username != null) {
-                usernameLabel.setText(username);
-            }
+
+    public void initialize() throws Exception {
+        String username = UserSession.getInstance().getUsername();
+        if (username == null) {
+            throw new IllegalStateException("Invalid user session");
+        }
+        usernameLabel.setText(username);
+
+        UsernameEncryption userIDEncrypt = new UsernameEncryption();
+        String encrytedUserID = userIDEncrypt.EncryptedUsername(username);
+
+        //credentialsList.add(new DisplayCredentialDetails("Temple", "tun58761", "password123", "University account."));
+        //credentialsList.add(new DisplayCredentialDetails("Github", "tt50", "eeTesting123!?", "GitHub account."));
+
+        // Read credentials from UserCredentials.txt, find all that are associated with logged in UserID, add to the credential list,
+        ObservableList<CredentialDetails> displayList = FXCollections.observableArrayList();
+        List<CredentialDetails> credentials = readUserCredential.parseFileForUser("UserCredentials.txt", encrytedUserID);
+        if(credentials == null){
+            System.out.println("empty");
         }
 
-        credentialsList.add(new DisplayCredentialDetails("Temple", "tun58761", "password123", "University account."));
-        credentialsList.add(new DisplayCredentialDetails("Github", "tt50", "eeTesting123!?", "GitHub account."));
-
-
-        ObservableList<CredentialDisplay> displayList = FXCollections.observableArrayList();
-        for (DisplayCredentialDetails credential : credentialsList) {
-            displayList.add(new CredentialDisplay(credential.getNickname(), credential.getUsername()));
+        // add nicknames and usernames from the credential list to the display list.
+        for (CredentialDetails credential : credentials) {
+            displayList.add(credential);
         }
         credentialsListView.setItems(displayList);
 
         // Set custom cell factory
-        credentialsListView.setCellFactory(param -> new ListCell<CredentialDisplay>() {
+        credentialsListView.setCellFactory(param -> new ListCell<CredentialDetails>() {
             @Override
-            protected void updateItem(CredentialDisplay item, boolean empty) {
+            protected void updateItem(CredentialDetails item, boolean empty) {
                 super.updateItem(item, empty);
                 if (item != null && !empty) {
                     VBox vbox = new VBox(5);
@@ -145,6 +158,9 @@ public class DashboardController {
         credentialsListView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue != null) {
                 displayDetails(newValue);
+                System.out.println("listen");
+            }else{
+                System.out.println("not listen");
             }
         });
     }
@@ -160,14 +176,18 @@ public class DashboardController {
     private AnchorPane addCredentialContainer;
 
     // open ViewDetails.fxml and displays onto the detailspanel within dashboardscene.fxml.
-    private void displayDetails(CredentialDisplay selectedCredential) {
+    private void displayDetails(CredentialDetails selectedCredential) {
         addCredentialPanel.setVisible(false);
         detailsPanel.setVisible(false);
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("ViewDetails.fxml"));
             Parent root = loader.load();
+
             ViewDetailsController controller = loader.getController();
-            controller.setCredential(getCredentialDetails(selectedCredential));
+            controller.setCredential(selectedCredential);  // Pass the CredentialDetails
+
+            controller.setViewDetailsContainer(viewDetailsContainer); // Pass viewDetails container
+
             viewDetailsContainer.getChildren().clear();
             viewDetailsContainer.getChildren().add(root);
 
@@ -177,9 +197,10 @@ public class DashboardController {
         }
     }
 
+
     // searches for selected nickname and username item, then returns the associated credential details.
-    private DisplayCredentialDetails getCredentialDetails(CredentialDisplay selectedCredential) {
-        for (DisplayCredentialDetails credential : credentialsList) {
+    private CredentialDetails getCredentialDetails(CredentialDetails selectedCredential) {
+        for (CredentialDetails credential : credentialsList) {
             if (credential.getNickname().equals(selectedCredential.getNickname()) && credential.getUsername().equals(selectedCredential.getUsername())) {
                 return credential;
             }
@@ -189,7 +210,7 @@ public class DashboardController {
 
     // Display the add credential panel
     @FXML
-    private void addNewCredentialButton(){
+    private void addNewCredentialButton() {
         detailsPanel.setVisible(false);
         addCredentialPanel.setVisible(true);
 
@@ -209,4 +230,34 @@ public class DashboardController {
     public Pane getContentPane() {
         return viewDetailsContainer;
     }
+
+    @FXML
+    private AnchorPane editCredentialPanel;
+    @FXML
+    private AnchorPane editCredentialContainer;
+    public void displayEdit(CredentialDetails selectedCredential) {
+        addCredentialPanel.setVisible(false);
+        detailsPanel.setVisible(false);
+
+        editCredentialPanel.setVisible(false);
+
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("EditScene.fxml"));
+            Parent root = loader.load();
+
+            EditController controller = loader.getController();
+
+            controller.setCredential(getCredentialDetails(selectedCredential));
+
+            editCredentialContainer.getChildren().clear();
+            editCredentialContainer.getChildren().add(root);
+
+            editCredentialPanel.setVisible(true);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
+
 }

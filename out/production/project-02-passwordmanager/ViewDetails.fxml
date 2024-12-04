@@ -23,7 +23,7 @@
             <Label fx:id="notesLabel" />
          <HBox alignment="CENTER" prefHeight="53.0" prefWidth="237.0">
             <children>
-               <Button fx:id="editButtonClicked" mnemonicParsing="false" text="Edit" />
+               <Button onAction="#editButtonClicked" mnemonicParsing="false" text="Edit" />
             </children>
          </HBox>
         </VBox>

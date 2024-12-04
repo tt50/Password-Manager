@@ -7,6 +7,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.input.Clipboard;
 import javafx.scene.input.ClipboardContent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
@@ -23,13 +24,24 @@ public class ViewDetailsController {
 
     @FXML
     private Label notesLabel;
-    private DisplayCredentialDetails credential;
+    private AnchorPane viewDetailsContainer;  // container reference holder
+    private CredentialDetails credential;
 
-    public void setCredential(DisplayCredentialDetails credential) {
-        nicknameLabel.setText(credential.getNickname());
-        usernameLabel.setText(credential.getUsername());
-        passwordLabel.setText(credential.getPassword());
-        notesLabel.setText(credential.getNotes());
+    public void setCredential(CredentialDetails credential) {
+        if(credential != null) {
+            this.credential = credential;
+            nicknameLabel.setText(credential.getNickname());
+            usernameLabel.setText(credential.getUsername());
+            passwordLabel.setText(credential.getPassword());
+            notesLabel.setText(credential.getNotes());
+        }else{
+            System.out.println("Credential is null");
+        }
+    }
+
+    // set Pane
+    public void setViewDetailsContainer(AnchorPane viewDetailsContainer) {
+        this.viewDetailsContainer = viewDetailsContainer;
     }
 
     @FXML
@@ -47,26 +59,13 @@ public class ViewDetailsController {
     }
 
     @FXML
-    public void editButtonClicked(ActionEvent event){
-        switchToEditScene(event);
-    }
-
-    @FXML
-    public void switchToEditScene(ActionEvent event) {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("EditScene.fxml"));
-            Parent editRoot = loader.load();
-
-            DashboardController dashboardController = (DashboardController) ((Node) event.getSource()).getScene().getUserData();
-            Pane contentPane = dashboardController.getContentPane();
-
-            contentPane.getChildren().clear();
-            contentPane.getChildren().add(editRoot);
-
-            EditController editController = loader.getController();
-            editController.setCredential(this.credential);
-        } catch (Exception e) {
-            e.printStackTrace();
+    public void editButtonClicked(ActionEvent event) {
+        DashboardController dashboardController = (DashboardController) ((Node) event.getSource()).getScene().getUserData();
+        if (dashboardController != null && credential != null) {
+            //System.out.println("Switching to edit view");
+            dashboardController.displayEdit(credential);
+        } else {
+            System.out.println("Error: DashboardController or credential is null");
         }
     }
 }

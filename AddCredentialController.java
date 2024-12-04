@@ -28,7 +28,7 @@ public class AddCredentialController {
     @FXML
     private Label creationLabel;
 
-    public void setCredential(DisplayCredentialDetails credential) {
+    public void setCredential(CredentialDetails credential) {
         nicknameField.setText(credential.getNickname());
         usernameField.setText(credential.getUsername());
         passwordField.setText(credential.getPassword());

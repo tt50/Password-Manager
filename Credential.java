@@ -123,7 +123,7 @@ public class Credential
 				writer.write("\r\n"); // add newline if the file has content
 			}
 
-			String newLine = USERID_PATTERN  + userID + ", " + NICKNAME_PATTERN + nickname + ", " + USERNAME_PATTERN + username + ", " + PASSWORD_PATTERN + password +  ", " + NOTE_PATTERN + note;
+			String newLine = USERID_PATTERN  + userID + "," + NICKNAME_PATTERN + nickname + "," + USERNAME_PATTERN + username + "," + PASSWORD_PATTERN + password +  "," + NOTE_PATTERN + note;
 			System.out.println(newLine);
 			// If successful, write the content into the file...
 			writer.write(newLine);

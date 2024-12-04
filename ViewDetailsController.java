@@ -72,12 +72,22 @@ public class ViewDetailsController {
 
     @FXML
     public void editButtonClicked(ActionEvent event) {
-        DashboardController dashboardController = (DashboardController) ((Node) event.getSource()).getScene().getUserData();
-        if (dashboardController != null && credential != null) {
-            //System.out.println("Switching to edit view");
-            dashboardController.displayEdit(credential);
+        if (credential != null) {
+            System.out.println("Credential: " + credential.toString());
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            Scene scene = stage.getScene();
+            DashboardController dashboardController = (DashboardController) scene.getUserData();
+            if (dashboardController == null) {
+                System.out.println("DashboardController is null.");
+                dashboardController = (DashboardController) stage.getUserData();
+            }
+            if (dashboardController != null) {
+                dashboardController.displayEdit(credential);
+            } else {
+                System.out.println("Error: DashboardController is null");
+            }
         } else {
-            System.out.println("Error: DashboardController or credential is null");
+            System.out.println("Error: Credential is null");
         }
     }
 

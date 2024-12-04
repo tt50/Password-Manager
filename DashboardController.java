@@ -169,9 +169,8 @@ public class DashboardController {
         credentialsListView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue != null) {
                 displayDetails(newValue);
-                System.out.println("listen");
             }else{
-                System.out.println("not listen");
+                System.out.println("no item selected");
             }
         });
     }
@@ -188,23 +187,27 @@ public class DashboardController {
 
     // open ViewDetails.fxml and displays onto the detailspanel within dashboardscene.fxml.
     private void displayDetails(CredentialDetails selectedCredential) {
-        addCredentialPanel.setVisible(false);
-        detailsPanel.setVisible(false);
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("ViewDetails.fxml"));
-            Parent root = loader.load();
+        if(selectedCredential!=null) {
+            addCredentialPanel.setVisible(false);
+            detailsPanel.setVisible(false);
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("ViewDetails.fxml"));
+                Parent root = loader.load();
 
-            ViewDetailsController controller = loader.getController();
-            controller.setCredential(selectedCredential);  // Pass the CredentialDetails
+                ViewDetailsController controller = loader.getController();
+                controller.setCredential(selectedCredential);  // Pass CredentialDetails
 
-            controller.setViewDetailsContainer(viewDetailsContainer); // Pass viewDetails container
+                controller.setViewDetailsContainer(viewDetailsContainer); // Pass viewDetails container
 
-            viewDetailsContainer.getChildren().clear();
-            viewDetailsContainer.getChildren().add(root);
+                viewDetailsContainer.getChildren().clear();
+                viewDetailsContainer.getChildren().add(root);
 
-            detailsPanel.setVisible(true);
-        } catch (Exception e) {
-            e.printStackTrace();
+                detailsPanel.setVisible(true);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }else{
+            System.out.println("Selected credential is null");
         }
     }
 
@@ -229,7 +232,9 @@ public class DashboardController {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("AddCredentials.fxml"));
             Parent root = loader.load();
+
             AddCredentialController controller = loader.getController();
+
             addCredentialContainer.getChildren().clear();
             addCredentialContainer.getChildren().add(root);
 
@@ -249,23 +254,30 @@ public class DashboardController {
     private AnchorPane editCredentialContainer;
 
     public void displayEdit(CredentialDetails selectedCredential) {
-        addCredentialPanel.setVisible(false);
-        detailsPanel.setVisible(false);
-        editCredentialPanel.setVisible(false);
+        if (selectedCredential != null) {
+            addCredentialPanel.setVisible(false);
+            detailsPanel.setVisible(false);
+            editCredentialPanel.setVisible(false);
 
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("EditScene.fxml"));
-            Parent root = loader.load();
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("EditScene.fxml"));
+                Parent root = loader.load();
+                if (root == null) {
+                    System.out.println("EditScene.fxml not loaded properly.");
+                }
 
-            EditController controller = loader.getController();
-            controller.setCredential(selectedCredential);
+                EditController controller = loader.getController();
+                controller.setCredential(selectedCredential);
 
-            editCredentialContainer.getChildren().clear();
-            editCredentialContainer.getChildren().add(root);
+                editCredentialContainer.getChildren().clear();
+                editCredentialContainer.getChildren().add(root);
 
-            editCredentialPanel.setVisible(true);
-        } catch (Exception e) {
-            e.printStackTrace();
+                editCredentialPanel.setVisible(true);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } else {
+            System.out.println("Selected credential is null in displayEdit");
         }
     }
 }

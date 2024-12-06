@@ -1,0 +1,357 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>Coverage Report > AnswerSecurityController</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">&lt;empty package name&gt;</a>
+</div>
+
+<h1>Coverage Summary for Class: AnswerSecurityController (&lt;empty package name&gt;)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">AnswerSecurityController</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/10)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/126)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;import javafx.event.ActionEvent;
+&nbsp;import javafx.fxml.FXML;
+&nbsp;import javafx.fxml.FXMLLoader;
+&nbsp;import javafx.fxml.Initializable;
+&nbsp;import javafx.scene.Node;
+&nbsp;import javafx.scene.Parent;
+&nbsp;import javafx.scene.Scene;
+&nbsp;import javafx.scene.control.Button;
+&nbsp;import javafx.scene.control.Label;
+&nbsp;import javafx.scene.control.TextField;
+&nbsp;import javafx.stage.Stage;
+&nbsp;
+&nbsp;import java.io.BufferedReader;
+&nbsp;import java.io.FileReader;
+&nbsp;import java.io.IOException;
+&nbsp;import java.net.URL;
+&nbsp;import java.util.ArrayList;
+&nbsp;import java.util.List;
+&nbsp;import java.util.ResourceBundle;
+&nbsp;
+<b class="nc">&nbsp;public class AnswerSecurityController implements Initializable {</b>
+&nbsp;    @FXML
+&nbsp;    private Label resultlabel;
+&nbsp;    @FXML
+&nbsp;    private TextField answer1field;
+&nbsp;    @FXML
+&nbsp;    private TextField answer2field;
+&nbsp;    @FXML
+&nbsp;    private Label question1label;
+&nbsp;    @FXML
+&nbsp;    private Label question2label;
+&nbsp;    @FXML
+&nbsp;    private Label q1label;
+&nbsp;    @FXML
+&nbsp;    private Label a1label;
+&nbsp;    @FXML
+&nbsp;    private Label q2label;
+&nbsp;    @FXML
+&nbsp;    private Label a2label;
+&nbsp;    @FXML
+&nbsp;    private Label ulabel;
+&nbsp;    @FXML
+&nbsp;    private TextField getuser;
+&nbsp;    @FXML
+&nbsp;    private Button ubutton;
+&nbsp;    @FXML
+&nbsp;    private Button proceedbutton;
+&nbsp;
+<b class="nc">&nbsp;    private String username = UserSession.getInstance().getUsername();</b>
+&nbsp;
+&nbsp;
+&nbsp;    private static final String USERNAME_PATTERN = &quot;USER: &quot;;
+&nbsp;    private static final String KEY_PATTERN = &quot;KEY: &quot;;
+&nbsp;    private static final String QUESTION1_PATTERN = &quot;QUESTION1: &quot;;
+&nbsp;    private static final String QUESTION2_PATTERN = &quot;QUESTION2: &quot;;
+&nbsp;    private static final String ANSWER1_PATTERN = &quot;ANSWER1: &quot;;
+&nbsp;    private static final String ANSWER2_PATTERN = &quot;ANSWER2: &quot;;
+&nbsp;
+<b class="nc">&nbsp;    private String Answer1encrypted = &quot;&quot;;</b>
+<b class="nc">&nbsp;    private String Answer2encrypted = &quot;&quot;;</b>
+&nbsp;
+<b class="nc">&nbsp;    private final UsernameEncryption EncryptUsername = new UsernameEncryption(); // Instance of UsernameEncryption</b>
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public void initialize(URL url, ResourceBundle resourceBundle){
+<b class="nc">&nbsp;        q1label.setVisible(false); q1label.setDisable(true);</b>
+<b class="nc">&nbsp;        a1label.setVisible(false); a1label.setDisable(true);</b>
+<b class="nc">&nbsp;        q2label.setVisible(false); q2label.setDisable(true);</b>
+<b class="nc">&nbsp;        a2label.setVisible(false); a2label.setDisable(true);</b>
+<b class="nc">&nbsp;        answer1field.setVisible(false); answer1field.setDisable(true);</b>
+<b class="nc">&nbsp;        answer2field.setVisible(false); answer2field.setDisable(true);</b>
+<b class="nc">&nbsp;        question1label.setVisible(false); question1label.setDisable(true);</b>
+<b class="nc">&nbsp;        question2label.setVisible(false); question2label.setDisable(true);</b>
+<b class="nc">&nbsp;        proceedbutton.setVisible(false); proceedbutton.setDisable(true);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @FXML
+&nbsp;    public void ubuttonClicked(ActionEvent event) throws Exception{
+<b class="nc">&nbsp;        String enteredUser = getuser.getText();</b>
+&nbsp;
+<b class="nc">&nbsp;        Boolean result = AuthenticationForTextFile(enteredUser);</b>
+<b class="nc">&nbsp;        if(result == true){</b>
+<b class="nc">&nbsp;            initial(enteredUser);</b>
+<b class="nc">&nbsp;            resultlabel.setText(&quot;Please fill both boxes and then click the go button below&quot;);</b>
+&nbsp;        }
+&nbsp;        else{
+<b class="nc">&nbsp;            resultlabel.setText(&quot;Username is either spelled incorrectly or isn&#39;t stored&quot;);</b>
+&nbsp;        }
+&nbsp;
+&nbsp;
+&nbsp;    }
+&nbsp;
+&nbsp;    private void initial(String enteredUser){
+<b class="nc">&nbsp;        q1label.setVisible(true); q1label.setDisable(false);</b>
+<b class="nc">&nbsp;        a1label.setVisible(true); a1label.setDisable(false);</b>
+<b class="nc">&nbsp;        q2label.setVisible(true); q2label.setDisable(false);</b>
+<b class="nc">&nbsp;        a2label.setVisible(true); a2label.setDisable(false);</b>
+<b class="nc">&nbsp;        answer1field.setVisible(true); answer1field.setDisable(false);</b>
+<b class="nc">&nbsp;        answer2field.setVisible(true); answer2field.setDisable(false);</b>
+<b class="nc">&nbsp;        question1label.setVisible(true); question1label.setDisable(false);</b>
+<b class="nc">&nbsp;        question2label.setVisible(true); question2label.setDisable(false);</b>
+<b class="nc">&nbsp;        proceedbutton.setVisible(true); proceedbutton.setDisable(false);</b>
+<b class="nc">&nbsp;        ulabel.setVisible(false); ulabel.setDisable(true);</b>
+<b class="nc">&nbsp;        getuser.setVisible(false); getuser.setDisable(true);</b>
+<b class="nc">&nbsp;        ubutton.setVisible(false); ubutton.setDisable(true);</b>
+&nbsp;
+<b class="nc">&nbsp;        String encryptedLoginUsername = null;</b>
+&nbsp;        try {
+<b class="nc">&nbsp;            UsernameEncryption EncryptUsername = new UsernameEncryption();</b>
+<b class="nc">&nbsp;            encryptedLoginUsername = EncryptUsername.EncryptedUsername(enteredUser);</b>
+&nbsp;        }
+<b class="nc">&nbsp;        catch (Exception e){</b>
+<b class="nc">&nbsp;            System.err.println(&quot;Problem occurred while initializing AnswerSecurity Scene: &quot; + e.getMessage());</b>
+<b class="nc">&nbsp;        }</b>
+<b class="nc">&nbsp;        List&lt;String&gt; results = parseFile(&quot;StoredCredentials.txt&quot;, encryptedLoginUsername);</b>
+&nbsp;
+<b class="nc">&nbsp;        String Question1Text = results.get(1);</b>
+<b class="nc">&nbsp;        String Question2Text = results.get(3);</b>
+<b class="nc">&nbsp;        Answer1encrypted = results.get(2);</b>
+<b class="nc">&nbsp;        Answer2encrypted = results.get(4);</b>
+<b class="nc">&nbsp;        question1label.setText(Question1Text);</b>
+<b class="nc">&nbsp;        question2label.setText(Question2Text);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @FXML
+&nbsp;    public void goButtonClicked(ActionEvent event) throws Exception{
+<b class="nc">&nbsp;        String EnteredAnswer1 = answer1field.getText();</b>
+<b class="nc">&nbsp;        String EnteredAnswer2 = answer2field.getText();</b>
+<b class="nc">&nbsp;        SecurityEncryption cryptor = new SecurityEncryption();</b>
+<b class="nc">&nbsp;        String EncryptedAnswer1 = cryptor.encryptAnswer(EnteredAnswer1);</b>
+<b class="nc">&nbsp;        String EncryptedAnswer2 = cryptor.encryptAnswer(EnteredAnswer2);</b>
+&nbsp;
+<b class="nc">&nbsp;        if(Answer1encrypted.equals(EncryptedAnswer1) &amp;&amp; Answer2encrypted.equals(EncryptedAnswer2)){</b>
+<b class="nc">&nbsp;            resultlabel.setText(&quot;Correct answers entered, proceeding to password changer&quot;);</b>
+<b class="nc">&nbsp;            switchToPassChangeScene(event);</b>
+&nbsp;        }
+&nbsp;        else{
+<b class="nc">&nbsp;            resultlabel.setText(&quot;One or more of your answers are incorrect&quot;);</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    @FXML
+&nbsp;    public void dashButtonClicked(ActionEvent event) {
+<b class="nc">&nbsp;        switchToDashScene(event);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    private void switchToPassChangeScene(ActionEvent event) {
+&nbsp;        try {
+<b class="nc">&nbsp;            FXMLLoader loader = new FXMLLoader(getClass().getResource(&quot;PasswordChangeScene.fxml&quot;));</b>
+<b class="nc">&nbsp;            Parent root = loader.load();</b>
+<b class="nc">&nbsp;            Scene scene = new Scene(root);</b>
+<b class="nc">&nbsp;            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();</b>
+<b class="nc">&nbsp;            scene.getStylesheets().add(getClass().getResource(&quot;styles.css&quot;).toExternalForm());</b>
+<b class="nc">&nbsp;            stage.setScene(scene);</b>
+<b class="nc">&nbsp;            stage.show();</b>
+<b class="nc">&nbsp;        } catch (Exception e) {</b>
+<b class="nc">&nbsp;            e.printStackTrace();</b>
+<b class="nc">&nbsp;        }</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    private void switchToDashScene(ActionEvent event) {
+&nbsp;        try {
+<b class="nc">&nbsp;            FXMLLoader loader = new FXMLLoader(getClass().getResource(&quot;DashboardScene.fxml&quot;));</b>
+<b class="nc">&nbsp;            Parent root = loader.load();</b>
+<b class="nc">&nbsp;            Scene scene = new Scene(root);</b>
+<b class="nc">&nbsp;            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();</b>
+<b class="nc">&nbsp;            scene.getStylesheets().add(getClass().getResource(&quot;styles.css&quot;).toExternalForm());</b>
+<b class="nc">&nbsp;            stage.setScene(scene);</b>
+<b class="nc">&nbsp;            stage.show();</b>
+<b class="nc">&nbsp;        } catch (Exception e) {</b>
+<b class="nc">&nbsp;            e.printStackTrace();</b>
+<b class="nc">&nbsp;        }</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public List&lt;String&gt; parseFile(String fileName, String usernameSearched) {
+<b class="nc">&nbsp;        List&lt;String&gt; accountInfo = new ArrayList&lt;&gt;();</b>
+&nbsp;
+<b class="nc">&nbsp;        try (BufferedReader br = new BufferedReader(new FileReader(fileName))) {</b>
+&nbsp;            String line;
+<b class="nc">&nbsp;            while ((line = br.readLine()) != null) {</b>
+<b class="nc">&nbsp;                int usernameStartIndex = line.indexOf(USERNAME_PATTERN);</b>
+<b class="nc">&nbsp;                int keyStartIndex = line.indexOf(KEY_PATTERN);</b>
+<b class="nc">&nbsp;                int question1StartIndex = line.indexOf(QUESTION1_PATTERN);</b>
+<b class="nc">&nbsp;                int question2StartIndex = line.indexOf(QUESTION2_PATTERN);</b>
+<b class="nc">&nbsp;                int answer1StartIndex = line.indexOf(ANSWER1_PATTERN);</b>
+<b class="nc">&nbsp;                int answer2StartIndex = line.indexOf(ANSWER2_PATTERN);</b>
+<b class="nc">&nbsp;                if (usernameStartIndex &lt; keyStartIndex &amp;&amp; keyStartIndex &lt; question1StartIndex &amp;&amp; question1StartIndex &lt; answer1StartIndex &amp;&amp; answer1StartIndex &lt; question2StartIndex &amp;&amp; question2StartIndex &lt; answer2StartIndex) {</b>
+<b class="nc">&nbsp;                    System.out.println(&quot;|&quot;+usernameSearched+&quot;|&quot;);</b>
+&nbsp;
+<b class="nc">&nbsp;                    String username = line.substring(usernameStartIndex + USERNAME_PATTERN.length(), keyStartIndex).replace(&quot;,&quot;,&quot;&quot;).trim();</b>
+<b class="nc">&nbsp;                    String key = line.substring(keyStartIndex + KEY_PATTERN.length(), question1StartIndex).replace(&quot;,&quot;,&quot;&quot;).trim();</b>
+<b class="nc">&nbsp;                    String question1 = line.substring(question1StartIndex + QUESTION1_PATTERN.length(), answer1StartIndex).replace(&quot;,&quot;,&quot;&quot;).trim();</b>
+<b class="nc">&nbsp;                    String answer1 = line.substring(answer1StartIndex + ANSWER1_PATTERN.length(), question2StartIndex).replace(&quot;,&quot;,&quot;&quot;).trim();</b>
+<b class="nc">&nbsp;                    String question2 = line.substring(question2StartIndex + QUESTION2_PATTERN.length(), answer2StartIndex).replace(&quot;,&quot;,&quot;&quot;).trim();</b>
+<b class="nc">&nbsp;                    String answer2 = line.substring(answer2StartIndex + ANSWER2_PATTERN.length()).replace(&quot;,&quot;,&quot;&quot;).trim();</b>
+&nbsp;
+<b class="nc">&nbsp;                    System.out.println(&quot;Parsed Username: |&quot; + username + &quot;|&quot;);</b>
+<b class="nc">&nbsp;                    System.out.println(&quot;Parsed Key: |&quot; + key + &quot;|&quot;);</b>
+&nbsp;
+<b class="nc">&nbsp;                    if (username.equals(usernameSearched)) {</b>
+<b class="nc">&nbsp;                        System.out.println(&quot;username found&quot;);</b>
+&nbsp;
+<b class="nc">&nbsp;                        accountInfo.add(username);</b>
+<b class="nc">&nbsp;                        accountInfo.add(question1);</b>
+<b class="nc">&nbsp;                        accountInfo.add(answer1);</b>
+<b class="nc">&nbsp;                        accountInfo.add(question2);</b>
+<b class="nc">&nbsp;                        accountInfo.add(answer2);</b>
+<b class="nc">&nbsp;                        return accountInfo;</b>
+&nbsp;                    }
+&nbsp;                }
+<b class="nc">&nbsp;            }</b>
+<b class="nc">&nbsp;        } catch (IOException e) {</b>
+<b class="nc">&nbsp;            System.err.println(&quot;Error reading file: &quot; + e.getMessage());</b>
+<b class="nc">&nbsp;        }</b>
+<b class="nc">&nbsp;        System.out.println(&quot;Login Fail, username not found&quot;);</b>
+<b class="nc">&nbsp;        return null; // Username was not found in .txt file</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public boolean AuthenticationForTextFile(String usernameInput) throws Exception {
+<b class="nc">&nbsp;        if (usernameInput == null) {</b>
+<b class="nc">&nbsp;            System.out.println(&quot;Error: empty username&quot;);</b>
+<b class="nc">&nbsp;            return false;</b>
+&nbsp;        }
+&nbsp;
+&nbsp;        List&lt;String&gt; AccountInfo;
+&nbsp;
+&nbsp;        // Encrypt the username input
+<b class="nc">&nbsp;        String encryptedLoginUsername = EncryptUsername.EncryptedUsername(usernameInput);</b>
+<b class="nc">&nbsp;        System.out.println(&quot;Encrypted Username: &quot; + encryptedLoginUsername);</b>
+&nbsp;
+&nbsp;        // parse the txt file for the username
+<b class="nc">&nbsp;        AccountInfo = parseFile(&quot;StoredCredentials.txt&quot;, encryptedLoginUsername);</b>
+<b class="nc">&nbsp;        if (AccountInfo == null || AccountInfo.size() &lt; 3)</b>
+<b class="nc">&nbsp;            return false;</b>
+<b class="nc">&nbsp;        String AssociatedUsername = AccountInfo.get(0);</b>
+<b class="nc">&nbsp;        String AssociatedPassword = AccountInfo.get(1);</b>
+<b class="nc">&nbsp;        String AssociatedKey = AccountInfo.get(2);</b>
+&nbsp;
+&nbsp;
+&nbsp;        //Testing output
+<b class="nc">&nbsp;        System.out.println(&quot;Associated Username: &quot; + AssociatedUsername);</b>
+<b class="nc">&nbsp;        System.out.println(&quot;Associated Password: &quot; + AssociatedPassword);</b>
+<b class="nc">&nbsp;        System.out.println(&quot;Associated Key: &quot; + AssociatedKey);</b>
+<b class="nc">&nbsp;        System.out.println(&quot;Encrypted Username Input: &quot; + encryptedLoginUsername);</b>
+&nbsp;
+<b class="nc">&nbsp;        if (!AssociatedUsername.equals(encryptedLoginUsername))</b>
+<b class="nc">&nbsp;            return false;</b>
+&nbsp;        else{
+<b class="nc">&nbsp;            return true;</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2024-12-06 00:17</div>
+</div>
+</body>
+</html>

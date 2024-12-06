@@ -1,0 +1,242 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>Coverage Report > Credential</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">&lt;empty package name&gt;</a>
+</div>
+
+<h1>Coverage Summary for Class: Credential (&lt;empty package name&gt;)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">Credential</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/11)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/38)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;import java.io.*;
+&nbsp;import java.nio.file.Files;
+&nbsp;import java.nio.file.Path;
+&nbsp;import java.util.ArrayList;
+&nbsp;import java.util.List;
+&nbsp;
+&nbsp;public class Credential
+&nbsp;{
+&nbsp;
+&nbsp;	private static final String USERID_PATTERN = &quot;USERID: &quot;;
+&nbsp;	private static final String NICKNAME_PATTERN = &quot;NICKNAME: &quot;;
+&nbsp;	private static final String USERNAME_PATTERN = &quot;USERNAME: &quot;;
+&nbsp;	private static final String PASSWORD_PATTERN = &quot;PASSWORD: &quot;;
+&nbsp;	private static final String NOTE_PATTERN = &quot;NOTE: &quot;;
+&nbsp;
+&nbsp;	// Variables
+&nbsp;	private String userID;
+&nbsp;
+&nbsp;	// 	1) For saving nickname
+&nbsp;	private String nickname;
+&nbsp;
+&nbsp;	// 	2) For saving username
+&nbsp;	private String username;
+&nbsp;
+&nbsp;	// 	3) For saving encrypted password
+&nbsp;	private String encryptedPassword;
+&nbsp;	private String password;
+&nbsp;
+&nbsp;	// 	4) For saving encryption key
+&nbsp;	private String encryptionKey;		// AES key for encryption/decryption
+&nbsp;
+&nbsp;	// 	5) For saving note
+&nbsp;	private String note;
+&nbsp;
+&nbsp;	// Constructors
+&nbsp;	public Credential(String userID, String nickname, String username, String password, String note) throws Exception
+<b class="nc">&nbsp;	{</b>
+<b class="nc">&nbsp;		this.userID = userID;</b>
+<b class="nc">&nbsp;		this.nickname = nickname;</b>
+<b class="nc">&nbsp;		this.username = username;</b>
+<b class="nc">&nbsp;		this.password = password;</b>
+<b class="nc">&nbsp;		this.note = note;</b>
+&nbsp;
+<b class="nc">&nbsp;		LoginAuthenticationForTextFile parseFileForKey = new LoginAuthenticationForTextFile();</b>
+&nbsp;		List&lt;String&gt; AccountInfo;
+<b class="nc">&nbsp;		AccountInfo = parseFileForKey.parseFile(&quot;StoredCredentials.txt&quot;, this.userID);</b>
+<b class="nc">&nbsp;		if (AccountInfo == null || AccountInfo.size() &lt; 3){</b>
+<b class="nc">&nbsp;			System.out.println(&quot;AccountInfo is null&quot;);</b>
+&nbsp;		}else{
+<b class="nc">&nbsp;			String AssociatedKey = AccountInfo.get(2);</b>
+<b class="nc">&nbsp;			System.out.println(&quot;Key HERE:&quot; + AssociatedKey);</b>
+&nbsp;
+<b class="nc">&nbsp;			this.encryptionKey = AssociatedKey;</b>
+&nbsp;		}
+&nbsp;	}
+&nbsp;
+&nbsp;	// Getter methods
+<b class="nc">&nbsp;	public String getUserID(){return userID; }</b>
+&nbsp;	// 	Function to retrieve nickname
+&nbsp;	public String getNickname()
+&nbsp;	{
+<b class="nc">&nbsp;		return nickname;</b>
+&nbsp;	}
+&nbsp;
+&nbsp;	// 	Function to retrieve username
+&nbsp;	public String getUsername()
+&nbsp;	{
+<b class="nc">&nbsp;		return username;</b>
+&nbsp;	}
+&nbsp;
+&nbsp;	// 	Function to retrieve password
+&nbsp;	public String getPassword()
+&nbsp;	{
+<b class="nc">&nbsp;		return password;</b>
+&nbsp;	}
+&nbsp;
+&nbsp;
+&nbsp;	// 	Function to retrieve hashed password
+&nbsp;	public String getEncryptedPassword()
+&nbsp;	{
+<b class="nc">&nbsp;		return encryptedPassword;</b>
+&nbsp;	}
+&nbsp;
+&nbsp;	// 	Function to retrieve the encryption key
+&nbsp;	public String getEncryptionKey()
+&nbsp;	{
+<b class="nc">&nbsp;		return encryptionKey;</b>
+&nbsp;	}
+&nbsp;
+&nbsp;	// 	Function to get the note
+&nbsp;	public String getNote()
+&nbsp;	{
+<b class="nc">&nbsp;		return note;</b>
+&nbsp;	}
+&nbsp;
+&nbsp;	// 	Local method to retrieve decrypted password
+&nbsp;	public String getDecryptedPassword() throws Exception
+&nbsp;	{
+<b class="nc">&nbsp;		return PasswordDecryption.decryptPassword(this.encryptedPassword, this.encryptionKey);</b>
+&nbsp;	}
+&nbsp;
+&nbsp;	// Other Functions
+&nbsp;
+&nbsp;	private String getText(){
+&nbsp;		try{
+<b class="nc">&nbsp;			Path getTxt = Path.of(&quot;UserCredentials.txt&quot;);</b>
+<b class="nc">&nbsp;			String filecontent = Files.readString(getTxt);</b>
+<b class="nc">&nbsp;			return filecontent;</b>
+<b class="nc">&nbsp;		} catch(IOException e){</b>
+<b class="nc">&nbsp;			System.out.println(&quot;Error occurred while getting text from file&quot;);</b>
+<b class="nc">&nbsp;			return null;</b>
+&nbsp;		}
+&nbsp;	}
+&nbsp;
+&nbsp;	// 	Function to save to file
+&nbsp;	public void saveToFile(String filename)
+&nbsp;	{
+&nbsp;		// &#39;Try&#39; creating a Buffered Writer connected to the provided file name
+<b class="nc">&nbsp;		try(BufferedWriter writer = new BufferedWriter(new FileWriter(filename, true)))</b>
+&nbsp;		{
+<b class="nc">&nbsp;			String text = getText();</b>
+<b class="nc">&nbsp;			if (text != null &amp;&amp; !text.trim().isEmpty()) {</b>
+<b class="nc">&nbsp;				writer.write(&quot;\r\n&quot;); // add newline if the file has content</b>
+&nbsp;			}
+&nbsp;
+<b class="nc">&nbsp;			String newLine = USERID_PATTERN  + userID + &quot;,&quot; + NICKNAME_PATTERN + nickname + &quot;,&quot; + USERNAME_PATTERN + username + &quot;,&quot; + PASSWORD_PATTERN + password +  &quot;,&quot; + NOTE_PATTERN + note;</b>
+<b class="nc">&nbsp;			System.out.println(newLine);</b>
+&nbsp;			// If successful, write the content into the file...
+<b class="nc">&nbsp;			writer.write(newLine);</b>
+<b class="nc">&nbsp;		}</b>
+&nbsp;		// &#39;Catch&#39; any IOExceptions that may be thrown
+<b class="nc">&nbsp;		catch(IOException e)</b>
+&nbsp;		{
+<b class="nc">&nbsp;			e.printStackTrace();</b>
+<b class="nc">&nbsp;		}</b>
+&nbsp;	}
+&nbsp;
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2024-12-06 00:17</div>
+</div>
+</body>
+</html>

@@ -1,4 +1,7 @@
+import junit.framework.TestCase;
 import org.junit.Test;
+
+import java.util.List;
 
 import static junit.framework.TestCase.assertEquals;
 
@@ -33,7 +36,59 @@ public class TestCases {
         assertEquals(decryptedPassword, "Temple123!");
     }
 
+    // Checks that Password Manager account is authenticated successfully
+    @Test
+    public void testLoginAuthentication() throws Exception {
+        LoginAuthenticationForTextFile auth = new LoginAuthenticationForTextFile();
+        String user = "tiffany";
+        String pass = "Truong123!";
+        boolean isAuthenticated = auth.AuthenticationForTextFile(user, pass);
+        TestCase.assertTrue(isAuthenticated);
+    }
 
+    // Checks that Password was changed successfully
+    @Test
+    public void testPasswordChange() throws Exception {
+        String user = "tiffany";
+        String oldpass = "Truong123!";
+        String newpass = "Temple123!";
+        Boolean result = PasswordChanger.PasswordChange(user, oldpass, newpass);
+        TestCase.assertTrue(result);
+    }
 
+    // Checks if account exists in the StoredCredentials.txt file
+    @Test
+    public void testIfAccountExists() throws Exception {
+        String user = "tiffany";
+        UsernameEncryption encrypt = new UsernameEncryption();
+        String encryptedUsername = encrypt.EncryptedUsername(user);
+        IfAccountExists acc = new IfAccountExists();
+        Boolean result = acc.checkIfAccExists(encryptedUsername);
+        TestCase.assertTrue(result);
+    }
+
+    // Checks if new account can be created
+    // this user already exists, so this test checks if it returns false
+    @Test
+    public void testCreateNewAccount() throws Exception {
+        CreateNewAccount acc = new CreateNewAccount();
+        boolean result;
+        result = CreateNewAccount.CreateNewAcc("Tiffany", "Temple",
+                "What is your favorite color?", "Blue",
+                "What is your mother's maiden name?", "Smith");
+
+        TestCase.assertFalse(result);
+    }
+
+    // Checks if credential can be found in txt file
+    @Test
+    public void testReadUserCredential() {
+        ReadUserCredential cred = new ReadUserCredential();
+        String filename = "UserCredentials.txt";
+        String user = "5GqV42OyW9keaSwJNfTSJg==";
+        String nickname = "XPC5PzXT++qoKZropGYOBA==";
+        Boolean result =  cred.readCredentials(filename, user, nickname);
+        TestCase.assertTrue(result);
+    }
 
 }

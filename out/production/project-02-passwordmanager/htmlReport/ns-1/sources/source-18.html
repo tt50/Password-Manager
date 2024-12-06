@@ -1,0 +1,163 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>Coverage Report > StrongPasswordGenerator</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">&lt;empty package name&gt;</a>
+</div>
+
+<h1>Coverage Summary for Class: StrongPasswordGenerator (&lt;empty package name&gt;)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">StrongPasswordGenerator</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/5)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/27)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;import java.security.SecureRandom;
+&nbsp;import java.util.Scanner;
+&nbsp;
+<b class="nc">&nbsp;public class StrongPasswordGenerator {</b>
+&nbsp;
+&nbsp;    private static final String LOWERCASE = &quot;abcdefghijklmnopqrstuvwxyz&quot;;
+&nbsp;    private static final String UPPERCASE = &quot;ABCDEFGHIJKLMNOPQRSTUVWXYZ&quot;;
+&nbsp;    private static final String DIGITS = &quot;0123456789&quot;;
+&nbsp;    private static final String SYMBOLS = &quot;!@#$%^&amp;*()-_=+&lt;&gt;?&quot;;
+&nbsp;
+&nbsp;    private static final String ALL_CHARACTERS = LOWERCASE + UPPERCASE + DIGITS + SYMBOLS;
+<b class="nc">&nbsp;    private static final SecureRandom RANDOM = new SecureRandom();</b>
+&nbsp;
+&nbsp;    public static String generateStrongPassword(int length) {
+<b class="nc">&nbsp;        if (length &lt; 8) {</b>
+<b class="nc">&nbsp;            throw new IllegalArgumentException(&quot;Password length should be at least 8 characters.&quot;);</b>
+&nbsp;        }
+&nbsp;
+<b class="nc">&nbsp;        StringBuilder password = new StringBuilder(length);</b>
+&nbsp;
+&nbsp;        // Ensure the password contains at least one character from each category
+<b class="nc">&nbsp;        password.append(LOWERCASE.charAt(RANDOM.nextInt(LOWERCASE.length())));</b>
+<b class="nc">&nbsp;        password.append(UPPERCASE.charAt(RANDOM.nextInt(UPPERCASE.length())));</b>
+<b class="nc">&nbsp;        password.append(DIGITS.charAt(RANDOM.nextInt(DIGITS.length())));</b>
+<b class="nc">&nbsp;        password.append(SYMBOLS.charAt(RANDOM.nextInt(SYMBOLS.length())));</b>
+&nbsp;
+&nbsp;        // Fill the remaining characters randomly from all categories
+<b class="nc">&nbsp;        for (int i = 4; i &lt; length; i++) {</b>
+<b class="nc">&nbsp;            password.append(ALL_CHARACTERS.charAt(RANDOM.nextInt(ALL_CHARACTERS.length())));</b>
+&nbsp;        }
+&nbsp;
+<b class="nc">&nbsp;        return shuffleString(password.toString());</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    private static String shuffleString(String input) {
+<b class="nc">&nbsp;        StringBuilder shuffled = new StringBuilder(input.length());</b>
+<b class="nc">&nbsp;        input.chars()</b>
+<b class="nc">&nbsp;                .mapToObj(c -&gt; (char) c)</b>
+<b class="nc">&nbsp;                .sorted((a, b) -&gt; RANDOM.nextInt(3) - 1)</b>
+<b class="nc">&nbsp;                .forEach(shuffled::append);</b>
+<b class="nc">&nbsp;        return shuffled.toString();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public static void main(String[] args) {
+<b class="nc">&nbsp;        Scanner scanner = new Scanner(System.in);</b>
+&nbsp;
+<b class="nc">&nbsp;        System.out.print(&quot;Enter the desired password length: &quot;);</b>
+<b class="nc">&nbsp;        int length = scanner.nextInt();</b>
+&nbsp;
+&nbsp;        try {
+<b class="nc">&nbsp;            String strongPassword = generateStrongPassword(length);</b>
+<b class="nc">&nbsp;            System.out.println(&quot;Generated Strong Password: &quot; + strongPassword);</b>
+<b class="nc">&nbsp;        } catch (IllegalArgumentException e) {</b>
+<b class="nc">&nbsp;            System.out.println(e.getMessage());</b>
+<b class="nc">&nbsp;        }</b>
+&nbsp;
+<b class="nc">&nbsp;        scanner.close();</b>
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2024-12-06 00:17</div>
+</div>
+</body>
+</html>

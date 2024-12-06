@@ -1,0 +1,195 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>Coverage Report > PasswordEncryption</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">&lt;empty package name&gt;</a>
+</div>
+
+<h1>Coverage Summary for Class: PasswordEncryption (&lt;empty package name&gt;)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">PasswordEncryption</td>
+<td class="coverageStat">
+  <span class="percent">
+    33.3%
+  </span>
+  <span class="absValue">
+    (1/3)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    5.9%
+  </span>
+  <span class="absValue">
+    (1/17)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">PasswordEncryption$EncryptionResult</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/3)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/5)
+  </span>
+</td>
+  </tr>
+<tr>
+  <td class="name"><strong>Total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    16.7%
+  </span>
+  <span class="absValue">
+    (1/6)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    4.5%
+  </span>
+  <span class="absValue">
+    (1/22)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;import javax.crypto.Cipher;
+&nbsp;import javax.crypto.KeyGenerator;
+&nbsp;import javax.crypto.SecretKey;
+&nbsp;import javax.crypto.spec.SecretKeySpec;
+&nbsp;import java.util.Base64;
+&nbsp;
+<b class="fc">&nbsp;public class PasswordEncryption {</b>
+&nbsp;
+&nbsp;    // Method to encrypt plain text data and return both encrypted text and AES key
+&nbsp;    public static EncryptionResult encryptPassword(String plainText) throws Exception {
+&nbsp;        // Step 1: Generate AES Key
+<b class="nc">&nbsp;        KeyGenerator keyGen = KeyGenerator.getInstance(&quot;AES&quot;);</b>
+<b class="nc">&nbsp;        keyGen.init(128); // AES key size (128, 192, or 256 bits)</b>
+<b class="nc">&nbsp;        SecretKey secretKey = keyGen.generateKey();</b>
+&nbsp;
+&nbsp;        // Step 2: Initialize Cipher for Encryption
+<b class="nc">&nbsp;        Cipher cipher = Cipher.getInstance(&quot;AES&quot;);</b>
+<b class="nc">&nbsp;        cipher.init(Cipher.ENCRYPT_MODE, secretKey);</b>
+&nbsp;
+&nbsp;        // Step 3: Encrypt the Plain Text
+<b class="nc">&nbsp;        byte[] encryptedBytes = cipher.doFinal(plainText.getBytes());</b>
+<b class="nc">&nbsp;        String encryptedText = Base64.getEncoder().encodeToString(encryptedBytes);</b>
+&nbsp;
+&nbsp;        // Step 4: Encode the Key as Base64 for storage/transmission
+<b class="nc">&nbsp;        String encodedKey = Base64.getEncoder().encodeToString(secretKey.getEncoded());</b>
+&nbsp;
+&nbsp;        // Return encrypted text and key
+<b class="nc">&nbsp;        return new EncryptionResult(encryptedText, encodedKey);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    // Helper class to hold the encrypted text and the encryption key
+&nbsp;    public static class EncryptionResult {
+&nbsp;        private final String encryptedText;
+&nbsp;        private final String key;
+&nbsp;
+<b class="nc">&nbsp;        public EncryptionResult(String encryptedText, String key) {</b>
+<b class="nc">&nbsp;            this.encryptedText = encryptedText;</b>
+<b class="nc">&nbsp;            this.key = key;</b>
+&nbsp;        }
+&nbsp;
+&nbsp;        public String getEncryptedText() {
+<b class="nc">&nbsp;            return encryptedText;</b>
+&nbsp;        }
+&nbsp;
+&nbsp;        public String getKey() {
+<b class="nc">&nbsp;            return key;</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    public static void main(String[] args) {
+&nbsp;        try {
+<b class="nc">&nbsp;            String plainPassword = &quot;mySecurePassword123&quot;;</b>
+&nbsp;
+&nbsp;            // Encrypt the password and get the result
+<b class="nc">&nbsp;            EncryptionResult result = encryptPassword(plainPassword);</b>
+&nbsp;
+&nbsp;            // Output encrypted password and key
+<b class="nc">&nbsp;            System.out.println(&quot;Encrypted Password: &quot; + result.getEncryptedText());</b>
+<b class="nc">&nbsp;            System.out.println(&quot;Encryption Key: &quot; + result.getKey());</b>
+&nbsp;
+<b class="nc">&nbsp;        } catch (Exception e) {</b>
+<b class="nc">&nbsp;            e.printStackTrace();</b>
+<b class="nc">&nbsp;        }</b>
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2024-12-06 00:17</div>
+</div>
+</body>
+</html>

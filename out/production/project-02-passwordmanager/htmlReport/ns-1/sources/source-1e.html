@@ -1,0 +1,308 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>Coverage Report > storeCredentials</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">&lt;empty package name&gt;</a>
+</div>
+
+<h1>Coverage Summary for Class: storeCredentials (&lt;empty package name&gt;)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">storeCredentials</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/12)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/101)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;import java.io.*;
+&nbsp;import java.io.IOException;
+&nbsp;import java.nio.file.Files;
+&nbsp;import java.nio.file.Path;
+&nbsp;
+&nbsp;public class storeCredentials {
+&nbsp;
+&nbsp;    private final String filename;
+<b class="nc">&nbsp;    String[] tokens = null;</b>
+<b class="nc">&nbsp;    String updated = null;</b>
+&nbsp;
+<b class="nc">&nbsp;    public storeCredentials() { //only to be used if you want to specifically use the password strength check method and no others</b>
+<b class="nc">&nbsp;        filename = null;</b>
+&nbsp;    }
+&nbsp;
+<b class="nc">&nbsp;    public storeCredentials(String file, String password, String user, String key, String question1, String answer1, String question2, String answer2){ //used if no text file exists</b>
+<b class="nc">&nbsp;        filename = file;</b>
+&nbsp;
+<b class="nc">&nbsp;        String contents = &quot;PASS: &quot; + password + &quot;,&quot; +</b>
+&nbsp;                &quot;USER: &quot; + user + &quot;,&quot; +
+&nbsp;                &quot;KEY: &quot; + key + &quot;,&quot; +
+&nbsp;                &quot;QUESTION1: &quot; + question1 + &quot;,&quot; +
+&nbsp;                &quot;ANSWER1: &quot; + answer1 + &quot;,&quot; +
+&nbsp;                &quot;QUESTION2: &quot; + question2 + &quot;,&quot; +
+&nbsp;                &quot;ANSWER2: &quot; + answer2;
+<b class="nc">&nbsp;        createFile();</b>
+&nbsp;        try { //writes content to file
+<b class="nc">&nbsp;            FileWriter fw = new FileWriter(filename, true);</b>
+&nbsp;
+&nbsp;            // if file is not empty add a newline
+<b class="nc">&nbsp;            String text = getText();</b>
+<b class="nc">&nbsp;            if (text != null &amp;&amp; !text.trim().isEmpty()) {</b>
+<b class="nc">&nbsp;                fw.write(&quot;\r\n&quot;); // add newline if the file has content</b>
+&nbsp;            }
+&nbsp;
+<b class="nc">&nbsp;            fw.write(contents);</b>
+<b class="nc">&nbsp;            fw.close();</b>
+<b class="nc">&nbsp;        } catch (IOException e) {</b>
+<b class="nc">&nbsp;            System.out.println(&quot;Error occurred while creating file contents&quot;);</b>
+<b class="nc">&nbsp;        }</b>
+&nbsp;
+&nbsp;    }
+&nbsp;
+<b class="nc">&nbsp;    public storeCredentials(String file){ //used if text file exists and certain contents need updating</b>
+<b class="nc">&nbsp;        filename = file;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void printFile(){
+<b class="nc">&nbsp;        createFile(); //makes sure that the text file exists, and creates it if not</b>
+<b class="nc">&nbsp;        String text = getText(); //gets all content from text file</b>
+<b class="nc">&nbsp;        System.out.println(&quot;[File Content] = &quot; + &quot;[&quot; + text + &quot;]&quot;);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    private boolean createFile(){
+&nbsp;        try{
+<b class="nc">&nbsp;            File file = new File(filename);</b>
+<b class="nc">&nbsp;            file.createNewFile();</b>
+<b class="nc">&nbsp;            return true;</b>
+<b class="nc">&nbsp;        } catch(IOException e){</b>
+<b class="nc">&nbsp;            System.out.println(&quot;Error occurred during file creation&quot;);</b>
+<b class="nc">&nbsp;            return false;</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    private String getText(){
+&nbsp;        try{
+<b class="nc">&nbsp;            Path getTxt = Path.of(filename);</b>
+<b class="nc">&nbsp;            String filecontent = Files.readString(getTxt);</b>
+<b class="nc">&nbsp;            return filecontent;</b>
+<b class="nc">&nbsp;        } catch(IOException e){</b>
+<b class="nc">&nbsp;            System.out.println(&quot;Error occurred while getting text from file&quot;);</b>
+<b class="nc">&nbsp;            return null;</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    private boolean writeUpdate(String updated){
+&nbsp;        try { //writes new content to file
+<b class="nc">&nbsp;            FileWriter fw = new FileWriter(filename);</b>
+&nbsp;
+&nbsp;            // if file is not empty add a newline
+<b class="nc">&nbsp;            String text = getText();</b>
+<b class="nc">&nbsp;            if (text != null &amp;&amp; !text.trim().isEmpty()) {</b>
+<b class="nc">&nbsp;                fw.write(&quot;\r\n&quot;); // add newline if the file has content</b>
+&nbsp;            }
+&nbsp;
+<b class="nc">&nbsp;            fw.write(updated);</b>
+<b class="nc">&nbsp;            fw.close();</b>
+<b class="nc">&nbsp;            return true;</b>
+<b class="nc">&nbsp;        } catch (IOException e) {</b>
+<b class="nc">&nbsp;            System.out.println(&quot;Error occurred while storing either password, username, or key&quot;);</b>
+<b class="nc">&nbsp;            return false;</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    public boolean storePass(String password) {
+<b class="nc">&nbsp;        createFile(); //makes sure that the text file exists, and creates it if not</b>
+<b class="nc">&nbsp;        String text = getText(); //gets all content from text file</b>
+&nbsp;
+&nbsp;        try { //breaks down content on file by password, user, key and stores in array
+<b class="nc">&nbsp;            tokens = text.split(&quot;,&quot;);</b>
+<b class="nc">&nbsp;            password = &quot;PASS: &quot; + password + &quot;,&quot;; //prepares the new password for storage</b>
+<b class="nc">&nbsp;            tokens[0] = password;</b>
+<b class="nc">&nbsp;            updated = tokens[0] + tokens[1]+ &quot;,&quot; + tokens[2]; //updates entire contents of file</b>
+<b class="nc">&nbsp;        } catch (NullPointerException e) {</b>
+<b class="nc">&nbsp;            System.out.println(&quot;Error occurred while splitting text file contents&quot;);</b>
+<b class="nc">&nbsp;            return false;</b>
+<b class="nc">&nbsp;        }</b>
+&nbsp;
+<b class="nc">&nbsp;        return writeUpdate(updated);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public boolean storeUser(String user){
+<b class="nc">&nbsp;        createFile(); //makes sure that the text file exists, and creates it if not</b>
+<b class="nc">&nbsp;        String text = getText(); //gets all content from text file</b>
+&nbsp;        
+&nbsp;        try { //breaks down content on file by password, user, key and stores in array
+<b class="nc">&nbsp;            tokens = text.split(&quot;,&quot;);</b>
+<b class="nc">&nbsp;            user = &quot;USER: &quot; + user + &quot;,&quot;; //prepares the new username for storage</b>
+<b class="nc">&nbsp;            tokens[1] = user;</b>
+<b class="nc">&nbsp;            updated = tokens[0] + &quot;,&quot; + tokens[1] + tokens[2];</b>
+<b class="nc">&nbsp;        } catch (NullPointerException e) {</b>
+<b class="nc">&nbsp;            System.out.println(&quot;Error occurred while splitting text file contents&quot;);</b>
+<b class="nc">&nbsp;            return false;</b>
+<b class="nc">&nbsp;        }</b>
+&nbsp;
+<b class="nc">&nbsp;        return writeUpdate(updated);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public boolean storeKey(String key){
+<b class="nc">&nbsp;        createFile(); //makes sure that the text file exists, and creates it if not</b>
+<b class="nc">&nbsp;        String text = getText(); //gets all content from text file</b>
+&nbsp;
+&nbsp;        try { //breaks down content on file by password, user, key and stores in array
+<b class="nc">&nbsp;            tokens = text.split(&quot;,&quot;);</b>
+<b class="nc">&nbsp;            key = &quot;KEY: &quot; + key; //prepares the new key for storage</b>
+<b class="nc">&nbsp;            tokens[2] = key;</b>
+<b class="nc">&nbsp;            updated = tokens[0] + &quot;,&quot; + tokens[1] + &quot;,&quot; + tokens[2];</b>
+<b class="nc">&nbsp;        } catch (NullPointerException e) {</b>
+<b class="nc">&nbsp;            System.out.println(&quot;Error occurred while splitting text file contents&quot;);</b>
+<b class="nc">&nbsp;            return false;</b>
+<b class="nc">&nbsp;        }</b>
+&nbsp;
+<b class="nc">&nbsp;        return writeUpdate(updated);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;     public String checkPasswordStrength(String password)
+&nbsp;    {
+&nbsp;        // Check the password&#39;s length...
+<b class="nc">&nbsp;        if(password.length() &lt; 8)</b>
+&nbsp;        {
+&nbsp;            // And if not long enough, return a message saying so
+<b class="nc">&nbsp;            return &quot;Weak: Password must be at least 8 characters.&quot;;</b>
+&nbsp;        }
+&nbsp;        // Check if the password contains any capital letters...
+<b class="nc">&nbsp;        if(!password.matches(&quot;.*[A-Z].*&quot;))</b>
+&nbsp;        {
+&nbsp;            // And if not, return a message saying so
+<b class="nc">&nbsp;            return &quot;Weak: Password must contain at least one uppercase letter.&quot;;</b>
+&nbsp;        }
+&nbsp;        // Check if the password contains any lowercase letters...
+<b class="nc">&nbsp;        if(!password.matches(&quot;.*[a-z].*&quot;))</b>
+&nbsp;        {
+&nbsp;            // And if not, return a message saying so
+<b class="nc">&nbsp;            return &quot;Weak: Password must contain at least one lower case letter.&quot;;</b>
+&nbsp;        }
+&nbsp;        // Check if the password contains any digits...
+<b class="nc">&nbsp;        if(!password.matches(&quot;.*\\d.*&quot;))</b>
+&nbsp;        {
+&nbsp;            // And if not, return a message saying so
+<b class="nc">&nbsp;            return &quot;Weak: Password must contain at least one digit.&quot;;</b>
+&nbsp;        }
+&nbsp;        // Check if the password contains any special characters...
+<b class="nc">&nbsp;        if(!password.matches(&quot;.*[!@#$%^&amp;*()].*&quot;))</b>
+&nbsp;        {
+&nbsp;            // And if not, return a message recommending them
+<b class="nc">&nbsp;            return &quot;Moderate: Add a special character for more strength.&quot;;</b>
+&nbsp;        }
+&nbsp;        // Otherwise, simple return that it is a strong password
+<b class="nc">&nbsp;        return &quot;String: Good password!&quot;;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public static void main(String[] args) { //an example of how the class works
+<b class="nc">&nbsp;        storeCredentials file = new storeCredentials(&quot;test.txt&quot;, &quot;password&quot;, &quot;user&quot;, &quot;key&quot;, &quot;s&quot;, &quot;s&quot;, &quot;s&quot;, &quot;s&quot;);</b>
+<b class="nc">&nbsp;        System.out.println(&quot;Content prior after file is created: \n&quot;);</b>
+<b class="nc">&nbsp;        file.printFile();</b>
+&nbsp;
+<b class="nc">&nbsp;        storeCredentials update_file = new storeCredentials(&quot;StoredCredentials.txt&quot;);</b>
+&nbsp;
+<b class="nc">&nbsp;        update_file.storePass(&quot;newPass&quot;);</b>
+<b class="nc">&nbsp;        System.out.println(&quot;\nContent after updating password: \n&quot;);</b>
+<b class="nc">&nbsp;        file.printFile();</b>
+&nbsp;
+<b class="nc">&nbsp;        update_file.storeUser(&quot;newUser&quot;);</b>
+<b class="nc">&nbsp;        System.out.println(&quot;\nContent after updating username: \n&quot;);</b>
+<b class="nc">&nbsp;        file.printFile();</b>
+&nbsp;
+<b class="nc">&nbsp;        update_file.storeKey(&quot;newKey&quot;);</b>
+<b class="nc">&nbsp;        System.out.println(&quot;\nContent after updating key: \n&quot;);</b>
+<b class="nc">&nbsp;        file.printFile();</b>
+&nbsp;    }
+&nbsp;}
+&nbsp;
+&nbsp;
+&nbsp;
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2024-12-06 00:17</div>
+</div>
+</body>
+</html>

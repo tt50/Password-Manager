@@ -1,0 +1,233 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>Coverage Report > PasswordGeneratorController</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">&lt;empty package name&gt;</a>
+</div>
+
+<h1>Coverage Summary for Class: PasswordGeneratorController (&lt;empty package name&gt;)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">PasswordGeneratorController</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/8)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/56)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;import javafx.application.Application;
+&nbsp;import javafx.event.ActionEvent;
+&nbsp;import javafx.fxml.FXML;
+&nbsp;import javafx.fxml.FXMLLoader;
+&nbsp;import javafx.scene.Node;
+&nbsp;import javafx.scene.Parent;
+&nbsp;import javafx.scene.Scene;
+&nbsp;import javafx.scene.control.Label;
+&nbsp;import javafx.scene.control.TextField;
+&nbsp;import javafx.stage.Stage;
+&nbsp;import java.security.SecureRandom;
+&nbsp;import javafx.scene.input.Clipboard;
+&nbsp;import javafx.scene.input.ClipboardContent;
+&nbsp;import javafx.scene.control.Button;
+&nbsp;
+<b class="nc">&nbsp;public class PasswordGeneratorController{</b>
+&nbsp;    @FXML
+&nbsp;    private Label generatorLabel;
+&nbsp;    @FXML
+&nbsp;    private TextField generatorInput;
+&nbsp;    @FXML
+&nbsp;    private Button copyButton;
+<b class="nc">&nbsp;    private String generatedPassword = &quot;&quot;;</b>
+&nbsp;
+&nbsp;    @FXML
+&nbsp;    public void BackToDashClicked(ActionEvent event){
+<b class="nc">&nbsp;        switchToDashboardScene(event);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    private void switchToDashboardScene(ActionEvent event){
+&nbsp;        try {
+<b class="nc">&nbsp;            FXMLLoader loader = new FXMLLoader(getClass().getResource(&quot;DashboardScene.fxml&quot;));</b>
+<b class="nc">&nbsp;            Parent root = loader.load();</b>
+<b class="nc">&nbsp;            Scene scene = new Scene(root);</b>
+<b class="nc">&nbsp;            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();</b>
+<b class="nc">&nbsp;            scene.getStylesheets().add(getClass().getResource(&quot;styles.css&quot;).toExternalForm());</b>
+<b class="nc">&nbsp;            stage.setScene(scene);</b>
+<b class="nc">&nbsp;            stage.show();</b>
+<b class="nc">&nbsp;        } catch (Exception e) {</b>
+<b class="nc">&nbsp;            e.printStackTrace();</b>
+<b class="nc">&nbsp;        }</b>
+&nbsp;    }
+&nbsp;    @FXML
+&nbsp;    public void passwordGeneratorButtonClicked(ActionEvent event){
+<b class="nc">&nbsp;        passwordGenerator();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    private void passwordGenerator() {
+<b class="nc">&nbsp;        int defaultLength = 12;</b>
+&nbsp;        int length;
+&nbsp;
+&nbsp;        try {
+<b class="nc">&nbsp;            length = Integer.parseInt(generatorInput.getText());</b>
+<b class="nc">&nbsp;            if (length &lt;= 0) {</b>
+<b class="nc">&nbsp;                throw new NumberFormatException(&quot;Password length must be greater than zero.&quot;);</b>
+&nbsp;            }
+<b class="nc">&nbsp;        } catch (NumberFormatException e) {</b>
+<b class="nc">&nbsp;            generatorLabel.setText(&quot;Invalid input! Using default length of &quot; + defaultLength + &quot;.&quot;);</b>
+<b class="nc">&nbsp;            length = defaultLength;</b>
+<b class="nc">&nbsp;        }</b>
+&nbsp;
+&nbsp;        // Generate and store the password
+<b class="nc">&nbsp;        generatedPassword = generateSecurePassword(length);</b>
+&nbsp;
+&nbsp;        // Display the password
+<b class="nc">&nbsp;        generatorLabel.setText(&quot;Generated Password: &quot; + generatedPassword);</b>
+&nbsp;
+&nbsp;        // Enable the copy button
+<b class="nc">&nbsp;        copyButton.setDisable(false);</b>
+&nbsp;
+&nbsp;        // Debugging: Log the password
+<b class="nc">&nbsp;        System.out.println(&quot;Generated Password: &quot; + generatedPassword);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;    private String generateSecurePassword(int length) {
+<b class="nc">&nbsp;        final String upperCase = &quot;ABCDEFGHIJKLMNOPQRSTUVWXYZ&quot;;</b>
+<b class="nc">&nbsp;        final String lowerCase = &quot;abcdefghijklmnopqrstuvwxyz&quot;;</b>
+<b class="nc">&nbsp;        final String digits = &quot;0123456789&quot;;</b>
+<b class="nc">&nbsp;        final String specialChars = &quot;!@#$%^&amp;*()-_=+&lt;&gt;?&quot;;</b>
+<b class="nc">&nbsp;        final String allChars = upperCase + lowerCase + digits + specialChars;</b>
+&nbsp;
+<b class="nc">&nbsp;        SecureRandom random = new SecureRandom();</b>
+<b class="nc">&nbsp;        StringBuilder password = new StringBuilder();</b>
+&nbsp;
+&nbsp;        // Ensure password contains at least one character from each category
+<b class="nc">&nbsp;        password.append(upperCase.charAt(random.nextInt(upperCase.length())));</b>
+<b class="nc">&nbsp;        password.append(lowerCase.charAt(random.nextInt(lowerCase.length())));</b>
+<b class="nc">&nbsp;        password.append(digits.charAt(random.nextInt(digits.length())));</b>
+<b class="nc">&nbsp;        password.append(specialChars.charAt(random.nextInt(specialChars.length())));</b>
+&nbsp;
+&nbsp;        // Fill the rest of the password with random characters
+<b class="nc">&nbsp;        for (int i = 4; i &lt; length; i++) {</b>
+<b class="nc">&nbsp;            password.append(allChars.charAt(random.nextInt(allChars.length())));</b>
+&nbsp;        }
+&nbsp;
+&nbsp;        // Shuffle the password to ensure randomness
+<b class="nc">&nbsp;        return shuffleString(password.toString(), random);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    private String shuffleString(String input, SecureRandom random) {
+<b class="nc">&nbsp;        char[] characters = input.toCharArray();</b>
+<b class="nc">&nbsp;        for (int i = 0; i &lt; characters.length; i++) {</b>
+<b class="nc">&nbsp;            int j = random.nextInt(characters.length);</b>
+<b class="nc">&nbsp;            char temp = characters[i];</b>
+<b class="nc">&nbsp;            characters[i] = characters[j];</b>
+<b class="nc">&nbsp;            characters[j] = temp;</b>
+&nbsp;        }
+<b class="nc">&nbsp;        return new String(characters);</b>
+&nbsp;    }
+&nbsp;    @FXML
+&nbsp;    public void copyToClipboard() {
+<b class="nc">&nbsp;        if (!generatedPassword.isEmpty()) {</b>
+&nbsp;            // Copy the password to the clipboard
+<b class="nc">&nbsp;            Clipboard clipboard = Clipboard.getSystemClipboard();</b>
+<b class="nc">&nbsp;            ClipboardContent content = new ClipboardContent();</b>
+<b class="nc">&nbsp;            content.putString(generatedPassword);</b>
+<b class="nc">&nbsp;            clipboard.setContent(content);</b>
+&nbsp;
+<b class="nc">&nbsp;            generatorLabel.setText(&quot;Password copied to clipboard!&quot;);</b>
+<b class="nc">&nbsp;        } else {</b>
+<b class="nc">&nbsp;            generatorLabel.setText(&quot;No password to copy! Please generate one.&quot;);</b>
+&nbsp;        }
+&nbsp;
+&nbsp;        // Debugging: Print the current password
+<b class="nc">&nbsp;        System.out.println(&quot;Copy attempt with password: &quot; + generatedPassword);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2024-12-06 00:17</div>
+</div>
+</body>
+</html>

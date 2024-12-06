@@ -1,0 +1,413 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>Coverage Report > DashboardController</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">&lt;empty package name&gt;</a>
+</div>
+
+<h1>Coverage Summary for Class: DashboardController (&lt;empty package name&gt;)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">DashboardController</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/16)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/112)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">DashboardController$1</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/15)
+  </span>
+</td>
+  </tr>
+<tr>
+  <td class="name"><strong>Total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/18)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/127)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;import javafx.collections.FXCollections;
+&nbsp;import javafx.collections.ObservableList;
+&nbsp;import javafx.event.ActionEvent;
+&nbsp;import javafx.fxml.FXML;
+&nbsp;import javafx.scene.Parent;
+&nbsp;import javafx.scene.control.*;
+&nbsp;import javafx.scene.layout.AnchorPane;
+&nbsp;import javafx.scene.layout.Pane;
+&nbsp;import javafx.scene.layout.VBox;
+&nbsp;import javafx.stage.Stage;
+&nbsp;import javafx.fxml.FXMLLoader;
+&nbsp;import javafx.scene.Scene;
+&nbsp;import javafx.scene.Node;
+&nbsp;
+&nbsp;import java.util.List;
+&nbsp;
+<b class="nc">&nbsp;public class DashboardController {</b>
+&nbsp;    @FXML
+&nbsp;    private Label usernameLabel;
+&nbsp;    private String username;
+&nbsp;
+&nbsp;    // Settings Button
+&nbsp;    @FXML
+&nbsp;    public void settingsButtonClicked(ActionEvent event) {
+<b class="nc">&nbsp;        switchToSettingsScene(event);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    private void switchToSettingsScene(ActionEvent event) {
+&nbsp;        try {
+<b class="nc">&nbsp;            FXMLLoader loader = new FXMLLoader(getClass().getResource(&quot;SettingsScene.fxml&quot;));</b>
+<b class="nc">&nbsp;            Parent root = loader.load();</b>
+<b class="nc">&nbsp;            Scene scene = new Scene(root);</b>
+<b class="nc">&nbsp;            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();</b>
+<b class="nc">&nbsp;            scene.getStylesheets().add(getClass().getResource(&quot;styles.css&quot;).toExternalForm());</b>
+<b class="nc">&nbsp;            stage.setScene(scene);</b>
+<b class="nc">&nbsp;            stage.show();</b>
+<b class="nc">&nbsp;        } catch (Exception e) {</b>
+<b class="nc">&nbsp;            e.printStackTrace();</b>
+<b class="nc">&nbsp;        }</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    // Strength Checker Button
+&nbsp;    @FXML
+&nbsp;    public void strengthCheckerButtonClicked(ActionEvent event) {
+<b class="nc">&nbsp;        switchtoPasswordStrengthChecker(event);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    private void switchtoPasswordStrengthChecker(ActionEvent event) {
+&nbsp;        try {
+<b class="nc">&nbsp;            FXMLLoader loader = new FXMLLoader(getClass().getResource(&quot;PasswordStrengthCheckerScene.fxml&quot;));</b>
+<b class="nc">&nbsp;            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();</b>
+<b class="nc">&nbsp;            stage.setScene(new Scene(loader.load()));</b>
+<b class="nc">&nbsp;            stage.show();</b>
+<b class="nc">&nbsp;        } catch (Exception e) {</b>
+<b class="nc">&nbsp;            e.printStackTrace();</b>
+<b class="nc">&nbsp;        }</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    // Password Generator Button
+&nbsp;    @FXML
+&nbsp;    public void generatorButtonClicked(ActionEvent event) {
+<b class="nc">&nbsp;        switchToPasswordGenerator(event);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    private void switchToPasswordGenerator(ActionEvent event) {
+&nbsp;        try {
+<b class="nc">&nbsp;            FXMLLoader loader = new FXMLLoader(getClass().getResource(&quot;PasswordGeneratorScene.fxml&quot;));</b>
+<b class="nc">&nbsp;            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();</b>
+<b class="nc">&nbsp;            stage.setScene(new Scene(loader.load()));</b>
+<b class="nc">&nbsp;            stage.show();</b>
+<b class="nc">&nbsp;        } catch (Exception e) {</b>
+<b class="nc">&nbsp;            e.printStackTrace();</b>
+<b class="nc">&nbsp;        }</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @FXML
+&nbsp;    public void logoutClicked(ActionEvent event) {
+&nbsp;        // Switch to the login scene
+<b class="nc">&nbsp;        switchToLoginScene(event);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    private void switchToLoginScene(ActionEvent event) {
+&nbsp;        try {
+<b class="nc">&nbsp;            FXMLLoader loader = new FXMLLoader(getClass().getResource(&quot;LoginScene.fxml&quot;));</b>
+<b class="nc">&nbsp;            Parent root = loader.load();</b>
+<b class="nc">&nbsp;            Scene scene = new Scene(root);</b>
+<b class="nc">&nbsp;            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();</b>
+<b class="nc">&nbsp;            scene.getStylesheets().add(getClass().getResource(&quot;styles.css&quot;).toExternalForm());</b>
+<b class="nc">&nbsp;            stage.setScene(scene);</b>
+<b class="nc">&nbsp;            stage.show();</b>
+<b class="nc">&nbsp;        } catch (Exception e) {</b>
+<b class="nc">&nbsp;            e.printStackTrace();</b>
+<b class="nc">&nbsp;        }</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @FXML
+&nbsp;    private ListView&lt;CredentialDetails&gt; credentialsListView;
+&nbsp;
+&nbsp;    @FXML
+&nbsp;    private Label detailNicknameLabel;
+&nbsp;
+&nbsp;    @FXML
+&nbsp;    private Label detailUsernameLabel;
+&nbsp;
+&nbsp;    @FXML
+&nbsp;    private Label detailPasswordLabel;
+&nbsp;
+&nbsp;    @FXML
+&nbsp;    private TextArea detailNotesTextArea;
+&nbsp;
+<b class="nc">&nbsp;    private final ObservableList&lt;CredentialDetails&gt; credentialsList = FXCollections.observableArrayList();</b>
+<b class="nc">&nbsp;    private final ReadUserCredential readUserCredential = new ReadUserCredential();</b>
+&nbsp;
+&nbsp;    public void initialize() throws Exception {
+<b class="nc">&nbsp;        String username = UserSession.getInstance().getUsername();</b>
+<b class="nc">&nbsp;        if (username == null) {</b>
+<b class="nc">&nbsp;            throw new IllegalStateException(&quot;Invalid user session&quot;);</b>
+&nbsp;        }
+<b class="nc">&nbsp;        usernameLabel.setText(username);</b>
+&nbsp;
+<b class="nc">&nbsp;        UsernameEncryption userIDEncrypt = new UsernameEncryption();</b>
+<b class="nc">&nbsp;        String encryptedUserID = userIDEncrypt.EncryptedUsername(username);</b>
+&nbsp;
+&nbsp;        //credentialsList.add(new DisplayCredentialDetails(&quot;Temple&quot;, &quot;tun58761&quot;, &quot;password123&quot;, &quot;University account.&quot;));
+&nbsp;        //credentialsList.add(new DisplayCredentialDetails(&quot;Github&quot;, &quot;tt50&quot;, &quot;eeTesting123!?&quot;, &quot;GitHub account.&quot;));
+&nbsp;
+&nbsp;        // Read credentials from UserCredentials.txt, find all that are associated with logged in UserID, add to the credential list,
+<b class="nc">&nbsp;        ObservableList&lt;CredentialDetails&gt; displayList = FXCollections.observableArrayList();</b>
+<b class="nc">&nbsp;        List&lt;CredentialDetails&gt; credentials = readUserCredential.parseFileForUser(&quot;UserCredentials.txt&quot;, encryptedUserID);</b>
+<b class="nc">&nbsp;        if(credentials == null){</b>
+<b class="nc">&nbsp;            System.out.println(&quot;empty&quot;);</b>
+&nbsp;        }
+&nbsp;
+&nbsp;        // add nicknames and usernames from the credential list to the display list.
+<b class="nc">&nbsp;        for (CredentialDetails credential : credentials) {</b>
+<b class="nc">&nbsp;            displayList.add(credential);</b>
+<b class="nc">&nbsp;        }</b>
+<b class="nc">&nbsp;        credentialsListView.setItems(displayList);</b>
+&nbsp;
+&nbsp;        // get key
+<b class="nc">&nbsp;        LoginAuthenticationForTextFile Key = new LoginAuthenticationForTextFile();</b>
+<b class="nc">&nbsp;        List&lt;String&gt; AccountInfo = Key.parseFile(&quot;StoredCredentials.txt&quot;, encryptedUserID);</b>
+<b class="nc">&nbsp;        String AssociatedKey = AccountInfo.get(2);</b>
+&nbsp;
+&nbsp;        // Set custom cell factory
+<b class="nc">&nbsp;        credentialsListView.setCellFactory(param -&gt; new ListCell&lt;CredentialDetails&gt;() {</b>
+&nbsp;            @Override
+&nbsp;            protected void updateItem(CredentialDetails item, boolean empty) {
+<b class="nc">&nbsp;                super.updateItem(item, empty);</b>
+<b class="nc">&nbsp;                if (item != null &amp;&amp; !empty) {</b>
+<b class="nc">&nbsp;                    VBox vbox = new VBox(5);</b>
+<b class="nc">&nbsp;                    Label nicknameLabel = null;</b>
+<b class="nc">&nbsp;                    Label usernameLabel = null;</b>
+&nbsp;                    try {
+<b class="nc">&nbsp;                         nicknameLabel = new Label(PasswordDecryption.decryptPassword(item.getNickname(), AssociatedKey));</b>
+<b class="nc">&nbsp;                         usernameLabel = new Label(PasswordDecryption.decryptPassword(item.getUsername(), AssociatedKey));</b>
+<b class="nc">&nbsp;                    } catch (Exception e) {</b>
+<b class="nc">&nbsp;                        throw new RuntimeException(e);</b>
+<b class="nc">&nbsp;                    }</b>
+<b class="nc">&nbsp;                    vbox.getChildren().addAll(nicknameLabel, usernameLabel);</b>
+<b class="nc">&nbsp;                    setGraphic(vbox);</b>
+<b class="nc">&nbsp;                } else {</b>
+<b class="nc">&nbsp;                    setGraphic(null);</b>
+&nbsp;                }
+&nbsp;            }
+&nbsp;        });
+&nbsp;
+&nbsp;        // Lister for if an item on the CredentialDisplay is clicked
+<b class="nc">&nbsp;        credentialsListView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -&gt; {</b>
+<b class="nc">&nbsp;            if (newValue != null) {</b>
+<b class="nc">&nbsp;                displayDetails(newValue);</b>
+&nbsp;            }else{
+<b class="nc">&nbsp;                System.out.println(&quot;no item selected&quot;);</b>
+&nbsp;            }
+&nbsp;        });
+&nbsp;    }
+&nbsp;
+&nbsp;    @FXML
+&nbsp;    private AnchorPane detailsPanel;
+&nbsp;    @FXML
+&nbsp;    private AnchorPane viewDetailsContainer;
+&nbsp;
+&nbsp;    @FXML
+&nbsp;    private AnchorPane addCredentialPanel;
+&nbsp;    @FXML
+&nbsp;    private AnchorPane addCredentialContainer;
+&nbsp;
+&nbsp;    // open ViewDetails.fxml and displays onto the detailspanel within dashboardscene.fxml.
+&nbsp;    private void displayDetails(CredentialDetails selectedCredential) {
+<b class="nc">&nbsp;        if(selectedCredential!=null) {</b>
+<b class="nc">&nbsp;            addCredentialPanel.setVisible(false);</b>
+<b class="nc">&nbsp;            detailsPanel.setVisible(false);</b>
+&nbsp;            try {
+<b class="nc">&nbsp;                FXMLLoader loader = new FXMLLoader(getClass().getResource(&quot;ViewDetails.fxml&quot;));</b>
+<b class="nc">&nbsp;                Parent root = loader.load();</b>
+&nbsp;
+<b class="nc">&nbsp;                ViewDetailsController controller = loader.getController();</b>
+<b class="nc">&nbsp;                controller.setCredential(selectedCredential);  // Pass CredentialDetails</b>
+&nbsp;
+<b class="nc">&nbsp;                controller.setViewDetailsContainer(viewDetailsContainer); // Pass viewDetails container</b>
+&nbsp;
+<b class="nc">&nbsp;                viewDetailsContainer.getChildren().clear();</b>
+<b class="nc">&nbsp;                viewDetailsContainer.getChildren().add(root);</b>
+&nbsp;
+<b class="nc">&nbsp;                detailsPanel.setVisible(true);</b>
+<b class="nc">&nbsp;            } catch (Exception e) {</b>
+<b class="nc">&nbsp;                e.printStackTrace();</b>
+<b class="nc">&nbsp;            }</b>
+&nbsp;        }else{
+<b class="nc">&nbsp;            System.out.println(&quot;Selected credential is null&quot;);</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;    // searches for selected nickname and username item, then returns the associated credential details.
+&nbsp;    private CredentialDetails getCredentialDetails(CredentialDetails selectedCredential) {
+<b class="nc">&nbsp;        for (CredentialDetails credential : credentialsList) {</b>
+<b class="nc">&nbsp;            if (credential.getNickname().equals(selectedCredential.getNickname()) &amp;&amp;</b>
+<b class="nc">&nbsp;                    credential.getUsername().equals(selectedCredential.getUsername())) {</b>
+<b class="nc">&nbsp;                return credential;</b>
+&nbsp;            }
+<b class="nc">&nbsp;        }</b>
+<b class="nc">&nbsp;        return null;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    // Display the add credential panel
+&nbsp;    @FXML
+&nbsp;    private void addNewCredentialButton() {
+<b class="nc">&nbsp;        detailsPanel.setVisible(false);</b>
+<b class="nc">&nbsp;        addCredentialPanel.setVisible(true);</b>
+&nbsp;
+&nbsp;        try {
+<b class="nc">&nbsp;            FXMLLoader loader = new FXMLLoader(getClass().getResource(&quot;AddCredentials.fxml&quot;));</b>
+<b class="nc">&nbsp;            Parent root = loader.load();</b>
+&nbsp;
+<b class="nc">&nbsp;            AddCredentialController controller = loader.getController();</b>
+&nbsp;
+<b class="nc">&nbsp;            addCredentialContainer.getChildren().clear();</b>
+<b class="nc">&nbsp;            addCredentialContainer.getChildren().add(root);</b>
+&nbsp;
+<b class="nc">&nbsp;        } catch (Exception e) {</b>
+<b class="nc">&nbsp;            e.printStackTrace();</b>
+<b class="nc">&nbsp;        }</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    // this pane is shared with editscene.fxml
+&nbsp;    public Pane getContentPane() {
+<b class="nc">&nbsp;        return viewDetailsContainer;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @FXML
+&nbsp;    private AnchorPane editCredentialPanel;
+&nbsp;    @FXML
+&nbsp;    private AnchorPane editCredentialContainer;
+&nbsp;
+&nbsp;    public void displayEdit(CredentialDetails selectedCredential) {
+<b class="nc">&nbsp;        if (selectedCredential != null) {</b>
+<b class="nc">&nbsp;            addCredentialPanel.setVisible(false);</b>
+<b class="nc">&nbsp;            detailsPanel.setVisible(false);</b>
+<b class="nc">&nbsp;            editCredentialPanel.setVisible(false);</b>
+&nbsp;
+&nbsp;            try {
+<b class="nc">&nbsp;                FXMLLoader loader = new FXMLLoader(getClass().getResource(&quot;EditScene.fxml&quot;));</b>
+<b class="nc">&nbsp;                Parent root = loader.load();</b>
+<b class="nc">&nbsp;                if (root == null) {</b>
+<b class="nc">&nbsp;                    System.out.println(&quot;EditScene.fxml not loaded properly.&quot;);</b>
+&nbsp;                }
+&nbsp;
+<b class="nc">&nbsp;                EditController controller = loader.getController();</b>
+<b class="nc">&nbsp;                controller.setCredential(selectedCredential);</b>
+&nbsp;
+<b class="nc">&nbsp;                editCredentialContainer.getChildren().clear();</b>
+<b class="nc">&nbsp;                editCredentialContainer.getChildren().add(root);</b>
+&nbsp;
+<b class="nc">&nbsp;                editCredentialPanel.setVisible(true);</b>
+<b class="nc">&nbsp;            } catch (Exception e) {</b>
+<b class="nc">&nbsp;                e.printStackTrace();</b>
+<b class="nc">&nbsp;            }</b>
+&nbsp;        } else {
+<b class="nc">&nbsp;            System.out.println(&quot;Selected credential is null in displayEdit&quot;);</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2024-12-06 00:17</div>
+</div>
+</body>
+</html>

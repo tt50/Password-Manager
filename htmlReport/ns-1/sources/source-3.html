@@ -1,0 +1,205 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>Coverage Report > CreateAccController</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">&lt;empty package name&gt;</a>
+</div>
+
+<h1>Coverage Summary for Class: CreateAccController (&lt;empty package name&gt;)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">CreateAccController</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/5)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/39)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;import javafx.event.ActionEvent;
+&nbsp;import javafx.fxml.FXML;
+&nbsp;import javafx.scene.Node;
+&nbsp;import javafx.scene.Parent;
+&nbsp;import javafx.scene.control.Label;
+&nbsp;import javafx.scene.control.PasswordField;
+&nbsp;import javafx.scene.control.TextField;
+&nbsp;import javafx.scene.control.Hyperlink;
+&nbsp;import javafx.stage.Stage;
+&nbsp;import javafx.fxml.FXMLLoader;
+&nbsp;import javafx.scene.Scene;
+&nbsp;
+<b class="nc">&nbsp;public class CreateAccController {</b>
+&nbsp;    public static String StrengthCheck(String password) {
+<b class="nc">&nbsp;        if (password.length() &lt; 8) {</b>
+<b class="nc">&nbsp;            return &quot;Password should be at least 8 characters.&quot;;</b>
+<b class="nc">&nbsp;        } else if (!(password.matches(&quot;.*[A-Z].*&quot;) &amp;&amp; password.matches(&quot;.*[a-z].*&quot;))) {</b>
+<b class="nc">&nbsp;            return &quot;Password should contain both uppercase and lowercase letters.&quot;;</b>
+<b class="nc">&nbsp;        } else if (!password.matches(&quot;.*[0-9].*&quot;)) {</b>
+<b class="nc">&nbsp;            return &quot;Password should contain at least one number.&quot;;</b>
+<b class="nc">&nbsp;        } else if (!password.matches(&quot;.*[!@#$%^&amp;*(),.?\&quot;:{}|&lt;&gt;].*&quot;)) {</b>
+<b class="nc">&nbsp;            return &quot;Password should contain at least one special character.&quot;;</b>
+&nbsp;        } else {
+<b class="nc">&nbsp;            return &quot;good&quot;;</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    @FXML
+&nbsp;    private TextField usernameField;
+&nbsp;    @FXML
+&nbsp;    private PasswordField passwordField;
+&nbsp;    @FXML
+&nbsp;    private TextField securityQuestion1Field;
+&nbsp;    @FXML
+&nbsp;    private TextField securityAnswer1Field;
+&nbsp;    @FXML
+&nbsp;    private TextField securityQuestion2Field;
+&nbsp;    @FXML
+&nbsp;    private TextField securityAnswer2Field;
+&nbsp;    @FXML
+&nbsp;    private Label createAccResultLabel;
+&nbsp;    @FXML
+&nbsp;    private Hyperlink loginLink;
+&nbsp;
+<b class="nc">&nbsp;    private final CreateNewAccount createAcc = new CreateNewAccount();</b>
+&nbsp;
+&nbsp;    @FXML
+&nbsp;    public void confirmButtonClicked(ActionEvent event) throws Exception {
+<b class="nc">&nbsp;        String username = usernameField.getText();</b>
+<b class="nc">&nbsp;        String password = passwordField.getText();</b>
+<b class="nc">&nbsp;        String securityQuestion1 = securityQuestion1Field.getText();</b>
+<b class="nc">&nbsp;        String securityAnswer1 = securityAnswer1Field.getText();</b>
+<b class="nc">&nbsp;        String securityQuestion2 = securityQuestion2Field.getText();</b>
+<b class="nc">&nbsp;        String securityAnswer2 = securityAnswer2Field.getText();</b>
+&nbsp;
+&nbsp;        // Check password strength
+<b class="nc">&nbsp;        String passwordStrengthMessage = StrengthCheck(password);</b>
+<b class="nc">&nbsp;        if (!passwordStrengthMessage.equals(&quot;good&quot;)) {</b>
+<b class="nc">&nbsp;            createAccResultLabel.setText(passwordStrengthMessage);</b>
+&nbsp;            return; // Stop the account creation process
+&nbsp;        }
+&nbsp;
+&nbsp;        // Validate security questions and answers
+<b class="nc">&nbsp;        if (securityQuestion1.isBlank() || securityAnswer1.isBlank() ||</b>
+<b class="nc">&nbsp;                securityQuestion2.isBlank() || securityAnswer2.isBlank()) {</b>
+<b class="nc">&nbsp;            createAccResultLabel.setText(&quot;Please provide both security questions and answers.&quot;);</b>
+&nbsp;            return;
+&nbsp;        }
+&nbsp;
+&nbsp;        // Proceed with account creation
+<b class="nc">&nbsp;        boolean isAccountCreated = createAcc.CreateNewAcc(username, password,</b>
+&nbsp;                securityQuestion1, securityAnswer1,
+&nbsp;                securityQuestion2, securityAnswer2);
+<b class="nc">&nbsp;        if (isAccountCreated) {</b>
+<b class="nc">&nbsp;            createAccResultLabel.setText(&quot;Account was successfully created!&quot;);</b>
+<b class="nc">&nbsp;            switchToLoginScene(event);</b>
+&nbsp;        } else {
+<b class="nc">&nbsp;            createAccResultLabel.setText(&quot;Account creation failed, please try again!&quot;);</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    @FXML
+&nbsp;    public void loginLinkClicked(ActionEvent event) {
+&nbsp;        // Switch to the login scene
+<b class="nc">&nbsp;        switchToLoginScene(event);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    private void switchToLoginScene(ActionEvent event) {
+&nbsp;        try {
+<b class="nc">&nbsp;            FXMLLoader loader = new FXMLLoader(getClass().getResource(&quot;LoginScene.fxml&quot;));</b>
+<b class="nc">&nbsp;            Parent root = loader.load();</b>
+<b class="nc">&nbsp;            Scene scene = new Scene(root);</b>
+<b class="nc">&nbsp;            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();</b>
+<b class="nc">&nbsp;            scene.getStylesheets().add(getClass().getResource(&quot;styles.css&quot;).toExternalForm());</b>
+<b class="nc">&nbsp;            stage.setScene(scene);</b>
+<b class="nc">&nbsp;            stage.show();</b>
+<b class="nc">&nbsp;        } catch (Exception e) {</b>
+<b class="nc">&nbsp;            e.printStackTrace();</b>
+<b class="nc">&nbsp;        }</b>
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2024-12-06 00:17</div>
+</div>
+</body>
+</html>

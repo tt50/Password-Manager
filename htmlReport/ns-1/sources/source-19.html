@@ -1,0 +1,198 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>Coverage Report > TestCases</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">&lt;empty package name&gt;</a>
+</div>
+
+<h1>Coverage Summary for Class: TestCases (&lt;empty package name&gt;)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">TestCases</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    50%
+  </span>
+  <span class="absValue">
+    (5/10)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    32.7%
+  </span>
+  <span class="absValue">
+    (18/55)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;import junit.framework.TestCase;
+&nbsp;import org.junit.Test;
+&nbsp;
+&nbsp;import java.util.List;
+&nbsp;
+<b class="fc">&nbsp;import static junit.framework.TestCase.assertEquals;</b>
+&nbsp;
+<b class="fc">&nbsp;public class TestCases {</b>
+&nbsp;
+&nbsp;    // Checks value of encrypted username using username input
+<b class="nc">&nbsp;    @Test</b>
+<b class="nc">&nbsp;    public void testUsernameEncryption() throws Exception {</b>
+<b class="nc">&nbsp;        UsernameEncryption usernameEncryption = new UsernameEncryption();</b>
+<b class="nc">&nbsp;        String username = &quot;Tiffany&quot;;</b>
+<b class="nc">&nbsp;        String encryptedUsername = usernameEncryption.EncryptedUsername(username);</b>
+<b class="nc">&nbsp;        assertEquals(encryptedUsername, &quot;SOWPJOcQ16KYBcTNvwFT1w==&quot;);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    // Checks value of encrypted password using password and key input
+<b class="nc">&nbsp;    @Test</b>
+<b class="nc">&nbsp;    public void testLoginPasswordEncryption() throws Exception {</b>
+<b class="nc">&nbsp;        PasswordEncryptionForExistingLogin encryptLoginPassword = new PasswordEncryptionForExistingLogin();</b>
+<b class="nc">&nbsp;        String password = &quot;Temple123!&quot;;</b>
+<b class="nc">&nbsp;        String AssociatedKey = &quot;yyGyQU8JdwnET3+P8N7aDQ==&quot;;</b>
+<b class="nc">&nbsp;        String encryptedLoginPassword = encryptLoginPassword.EncryptedLoginPassword(password, AssociatedKey);</b>
+<b class="nc">&nbsp;        assertEquals(encryptedLoginPassword, &quot;AW2/LGyrpmrqsCqglhEj5g==&quot;);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    // Checks value of an encrypted password that gets decrypted
+<b class="nc">&nbsp;    @Test</b>
+<b class="nc">&nbsp;    public void testPasswordDecryption() throws Exception {</b>
+<b class="nc">&nbsp;        PasswordDecryption decryptPass = new PasswordDecryption();</b>
+<b class="nc">&nbsp;        String encryptedPassword = &quot;AW2/LGyrpmrqsCqglhEj5g==&quot;;</b>
+<b class="nc">&nbsp;        String AssociatedKey = &quot;yyGyQU8JdwnET3+P8N7aDQ==&quot;;</b>
+<b class="nc">&nbsp;        String decryptedPassword = decryptPass.decryptPassword(encryptedPassword,AssociatedKey);</b>
+<b class="nc">&nbsp;        assertEquals(decryptedPassword, &quot;Temple123!&quot;);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    // Checks that Password Manager account is authenticated successfully
+<b class="nc">&nbsp;    @Test</b>
+<b class="nc">&nbsp;    public void testLoginAuthentication() throws Exception {</b>
+<b class="nc">&nbsp;        LoginAuthenticationForTextFile auth = new LoginAuthenticationForTextFile();</b>
+<b class="nc">&nbsp;        String user = &quot;tiffany&quot;;</b>
+<b class="nc">&nbsp;        String pass = &quot;Truong123!&quot;;</b>
+<b class="nc">&nbsp;        boolean isAuthenticated = auth.AuthenticationForTextFile(user, pass);</b>
+<b class="nc">&nbsp;        TestCase.assertTrue(isAuthenticated);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    // Checks that Password was changed successfully
+<b class="fc">&nbsp;    @Test</b>
+<b class="fc">&nbsp;    public void testPasswordChange() throws Exception {</b>
+<b class="fc">&nbsp;        String user = &quot;tiffany&quot;;</b>
+<b class="fc">&nbsp;        String oldpass = &quot;Temple123!&quot;;</b>
+<b class="fc">&nbsp;        String newpass = &quot;Truong123!&quot;;</b>
+<b class="nc">&nbsp;        Boolean result = PasswordChanger.PasswordChange(user, oldpass, newpass);</b>
+<b class="nc">&nbsp;        TestCase.assertTrue(result);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    // Checks if account exists in the StoredCredentials.txt file
+<b class="nc">&nbsp;    @Test</b>
+<b class="nc">&nbsp;    public void testIfAccountExists() throws Exception {</b>
+<b class="nc">&nbsp;        String user = &quot;tiffany&quot;;</b>
+<b class="nc">&nbsp;        UsernameEncryption encrypt = new UsernameEncryption();</b>
+<b class="nc">&nbsp;        String encryptedUsername = encrypt.EncryptedUsername(user);</b>
+<b class="nc">&nbsp;        IfAccountExists acc = new IfAccountExists();</b>
+<b class="nc">&nbsp;        Boolean result = acc.checkIfAccExists(encryptedUsername);</b>
+<b class="nc">&nbsp;        TestCase.assertTrue(result);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    // Checks if new account can be created
+&nbsp;    // this user already exists, so this test checks if it returns false
+<b class="fc">&nbsp;    @Test</b>
+&nbsp;    public void testCreateNewAccount() throws Exception {
+<b class="fc">&nbsp;        CreateNewAccount acc = new CreateNewAccount();</b>
+&nbsp;        boolean result;
+<b class="fc">&nbsp;        result = CreateNewAccount.CreateNewAcc(&quot;Tiffany&quot;, &quot;Temple&quot;,</b>
+&nbsp;                &quot;What is your favorite color?&quot;, &quot;Blue&quot;,
+<b class="fc">&nbsp;                &quot;What is your mother&#39;s maiden name?&quot;, &quot;Smith&quot;);</b>
+&nbsp;
+<b class="fc">&nbsp;        TestCase.assertFalse(result);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    // Checks if credential can be found in txt file
+&nbsp;    @Test
+&nbsp;    public void testReadUserCredential() {
+<b class="fc">&nbsp;        ReadUserCredential cred = new ReadUserCredential();</b>
+<b class="fc">&nbsp;        String filename = &quot;UserCredentials.txt&quot;;</b>
+<b class="fc">&nbsp;        String user = &quot;5GqV42OyW9keaSwJNfTSJg==&quot;;</b>
+<b class="fc">&nbsp;        String nickname = &quot;XPC5PzXT++qoKZropGYOBA==&quot;;</b>
+<b class="fc">&nbsp;        Boolean result =  cred.readCredentials(filename, user, nickname);</b>
+<b class="fc">&nbsp;        TestCase.assertTrue(result);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2024-12-06 00:17</div>
+</div>
+</body>
+</html>

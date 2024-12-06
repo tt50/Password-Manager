@@ -1,6 +1,8 @@
 import junit.framework.TestCase;
 import org.junit.Test;
 
+import java.util.List;
+
 import static junit.framework.TestCase.assertEquals;
 
 public class TestCases {
@@ -48,8 +50,8 @@ public class TestCases {
     @Test
     public void testPasswordChange() throws Exception {
         String user = "tiffany";
-        String oldpass = "Temple123!";
-        String newpass = "Truong123!";
+        String oldpass = "Truong123!";
+        String newpass = "Temple123!";
         Boolean result = PasswordChanger.PasswordChange(user, oldpass, newpass);
         TestCase.assertTrue(result);
     }
@@ -68,7 +70,7 @@ public class TestCases {
     // Checks if new account can be created
     // this user already exists, so this test checks if it returns false
     @Test
-    public void createNewAccount() throws Exception {
+    public void testCreateNewAccount() throws Exception {
         CreateNewAccount acc = new CreateNewAccount();
         boolean result;
         result = CreateNewAccount.CreateNewAcc("Tiffany", "Temple",
@@ -78,5 +80,15 @@ public class TestCases {
         TestCase.assertFalse(result);
     }
 
-
+    // Checks if credential can be found in txt file
+    @Test
+    public void testReadUserCredential() {
+        ReadUserCredential cred = new ReadUserCredential();
+        String filename = "UserCredentials.txt";
+        String user = "5GqV42OyW9keaSwJNfTSJg==";
+        String nickname = "XPC5PzXT++qoKZropGYOBA==";
+        Boolean result =  cred.readCredentials(filename, user, nickname);
+        TestCase.assertTrue(result);
     }
+
+}

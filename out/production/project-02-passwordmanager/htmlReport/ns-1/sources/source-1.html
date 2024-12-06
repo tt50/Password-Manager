@@ -1,0 +1,223 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>Coverage Report > AddCredentialController</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">&lt;empty package name&gt;</a>
+</div>
+
+<h1>Coverage Summary for Class: AddCredentialController (&lt;empty package name&gt;)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">AddCredentialController</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/5)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/54)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;import javafx.event.ActionEvent;
+&nbsp;import javafx.fxml.FXML;
+&nbsp;import javafx.fxml.FXMLLoader;
+&nbsp;import javafx.scene.Node;
+&nbsp;import javafx.scene.Parent;
+&nbsp;import javafx.scene.Scene;
+&nbsp;import javafx.scene.control.Label;
+&nbsp;import javafx.scene.control.TextArea;
+&nbsp;import javafx.scene.control.TextField;
+&nbsp;import javafx.scene.input.Clipboard;
+&nbsp;import javafx.scene.input.ClipboardContent;
+&nbsp;import javafx.stage.Stage;
+&nbsp;import java.util.ArrayList;
+&nbsp;import java.util.List;
+&nbsp;
+<b class="nc">&nbsp;public class AddCredentialController {</b>
+&nbsp;
+&nbsp;    @FXML
+&nbsp;    private TextField nicknameField;
+&nbsp;
+&nbsp;    @FXML
+&nbsp;    private TextField usernameField;
+&nbsp;
+&nbsp;    @FXML
+&nbsp;    private TextField passwordField;
+&nbsp;
+&nbsp;    @FXML
+&nbsp;    private TextArea notesArea;
+&nbsp;
+&nbsp;    @FXML
+&nbsp;    private Label creationLabel;
+&nbsp;
+&nbsp;    public void setCredential(CredentialDetails credential) {
+<b class="nc">&nbsp;        nicknameField.setText(credential.getNickname());</b>
+<b class="nc">&nbsp;        usernameField.setText(credential.getUsername());</b>
+<b class="nc">&nbsp;        passwordField.setText(credential.getPassword());</b>
+<b class="nc">&nbsp;        notesArea.setText(credential.getNotes());</b>
+&nbsp;    }
+&nbsp;
+<b class="nc">&nbsp;    String fileName = &quot;UserCredentials.txt&quot;;</b>
+&nbsp;
+&nbsp;    @FXML
+&nbsp;    public void saveDetails() throws Exception {
+<b class="nc">&nbsp;        creationLabel.setText(&quot;&quot;);</b>
+<b class="nc">&nbsp;        String nickname = nicknameField.getText();</b>
+<b class="nc">&nbsp;        String username = usernameField.getText();</b>
+<b class="nc">&nbsp;        String password = passwordField.getText();</b>
+<b class="nc">&nbsp;        String notes = notesArea.getText();</b>
+&nbsp;
+<b class="nc">&nbsp;        System.out.println(&quot;Nickname: &quot; + nickname);</b>
+<b class="nc">&nbsp;        System.out.println(&quot;Username: &quot; + username);</b>
+<b class="nc">&nbsp;        System.out.println(&quot;Password: &quot; + password);</b>
+<b class="nc">&nbsp;        System.out.println(&quot;Notes: &quot; + notes);</b>
+&nbsp;
+<b class="nc">&nbsp;        String userID = UserSession.getInstance().getUsername(); // get current logged in user,</b>
+&nbsp;        //System.out.println(&quot;userID:&quot; + userID);
+&nbsp;
+&nbsp;        // Encrypt the userID
+<b class="nc">&nbsp;        UsernameEncryption userEncrypt = new UsernameEncryption();</b>
+<b class="nc">&nbsp;        userID = userEncrypt.EncryptedUsername(userID);</b>
+&nbsp;
+&nbsp;        // get key
+<b class="nc">&nbsp;        LoginAuthenticationForTextFile Key = new LoginAuthenticationForTextFile();</b>
+<b class="nc">&nbsp;        List&lt;String&gt; AccountInfo = Key.parseFile(&quot;StoredCredentials.txt&quot;, userID);</b>
+<b class="nc">&nbsp;        String AssociatedKey = AccountInfo.get(2);</b>
+&nbsp;
+&nbsp;        // encrypt nickname in order to search for
+<b class="nc">&nbsp;        PasswordEncryptionForExistingLogin detailEncrypt = new PasswordEncryptionForExistingLogin();</b>
+<b class="nc">&nbsp;        nickname = detailEncrypt.EncryptedLoginPassword(nickname, AssociatedKey);</b>
+&nbsp;
+<b class="nc">&nbsp;        ReadUserCredential readUserCredential = new ReadUserCredential();</b>
+<b class="nc">&nbsp;        if (nicknameField.getText() == null || nicknameField.getText().trim().isEmpty()) {</b>
+<b class="nc">&nbsp;            creationLabel.setText(&quot;Nickname is required!&quot;);</b>
+<b class="nc">&nbsp;        } else if (readUserCredential.readCredentials(fileName, userID, nickname)) {</b>
+&nbsp;            //System.out.println(&quot;existing credential&quot;);
+<b class="nc">&nbsp;            creationLabel.setText(&quot;Nickname already exists, please use a different one!&quot;);</b>
+&nbsp;        } else {
+&nbsp;            // Encrypt rest of data using associated account key
+<b class="nc">&nbsp;            username = detailEncrypt.EncryptedLoginPassword(username, AssociatedKey);</b>
+<b class="nc">&nbsp;            password = detailEncrypt.EncryptedLoginPassword(password, AssociatedKey);</b>
+<b class="nc">&nbsp;            notes = detailEncrypt.EncryptedLoginPassword(notes, AssociatedKey);</b>
+&nbsp;
+&nbsp;            try {
+<b class="nc">&nbsp;                Credential credential = new Credential(userID, nickname, username, password, notes);</b>
+<b class="nc">&nbsp;                credential.saveToFile(fileName);</b>
+&nbsp;
+<b class="nc">&nbsp;                System.out.println(&quot;Credential saved successfully!&quot;);</b>
+<b class="nc">&nbsp;                System.out.println(&quot;UserID: &quot; + userID);</b>
+<b class="nc">&nbsp;                System.out.println(&quot;Nickname: &quot; + nickname);</b>
+<b class="nc">&nbsp;                System.out.println(&quot;Username: &quot; + username);</b>
+<b class="nc">&nbsp;                System.out.println(&quot;Password: &quot; + password);</b>
+<b class="nc">&nbsp;                System.out.println(&quot;Notes: &quot; + notes);</b>
+<b class="nc">&nbsp;            } catch (Exception e) {</b>
+<b class="nc">&nbsp;                e.printStackTrace();</b>
+<b class="nc">&nbsp;                System.err.println(&quot;Error saving credential.&quot;);</b>
+<b class="nc">&nbsp;            }</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    @FXML
+&nbsp;    public void cancelButton(ActionEvent event) {
+<b class="nc">&nbsp;        switchToDashboardScene(event);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    private void switchToDashboardScene(ActionEvent event) {
+&nbsp;        try {
+<b class="nc">&nbsp;            FXMLLoader loader = new FXMLLoader(getClass().getResource(&quot;DashboardScene.fxml&quot;));</b>
+<b class="nc">&nbsp;            Parent root = loader.load();</b>
+<b class="nc">&nbsp;            Scene scene = new Scene(root);</b>
+<b class="nc">&nbsp;            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();</b>
+<b class="nc">&nbsp;            scene.getStylesheets().add(getClass().getResource(&quot;styles.css&quot;).toExternalForm());</b>
+<b class="nc">&nbsp;            stage.setScene(scene);</b>
+<b class="nc">&nbsp;            stage.show();</b>
+<b class="nc">&nbsp;        } catch (Exception e) {</b>
+<b class="nc">&nbsp;            e.printStackTrace();</b>
+<b class="nc">&nbsp;        }</b>
+&nbsp;    }
+&nbsp;
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2024-12-06 00:17</div>
+</div>
+</body>
+</html>

@@ -1,6 +1,9 @@
 # Password Manager
 Password Manager Application 
 
+# Note
+I worked on this group project for the course Software Design at Temple University with the members listed below. This forked verison includes my own changes/improvements on the user interface.
+
 # Description
 Users will be able to create their own Password Manager accounts and will have a dashboard displaying stored User credentials. Usernames, associated user platform or nickname, will be displayed on the dashboard and passwords hidden, which can be revealed with a button click. Additional features on the dashboard will include a Password Generator to generate strong random passwords, and a Password Strength checker to evaluate security of users’ passwords.
 
